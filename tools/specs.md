@@ -21,20 +21,20 @@ Ml repo structure and setup (1-3) to be created by the tool:
 - production
 
 2) file & dir structure:
-data/: data or configuration that points to data (like the one used in pull_data step in the example pipeline)
-notebooks/: Jupyter notebooks for interactive use of pipeline and additional explanations about the steps
-src/: source code for the project, including file that define pipeline steps regarding data processing, model training and evaluation
-src/steps: for code with functions that define steps in the pipeline
-src/pipelines: for all the different pipeline definition code and configuration files
-src/pipelines/<branch name>/main.py: main pipeline and its configuration (endpoint URLs etc.) for a CI/CD pipeline related to a branch
-src/helpers: all support code
-models/: saved models (and model "checkpoints") or configuration that points to where the models reside (like URL referring to MLflow/minio in the platform)
-tests/: unit tests for your code, also code for running inference tests against deployed models
-docs/: documentation for the project
-README.md: Overview of the repo, including setup instructions and crucial configuration file locations, where to put code for pipeline steps and pipeline definition, and examples.
-requirements.txt or environment.yml: List of dependencies required for the project.
-.gitignore: specifies which files and directories to ignore in the repository.
-LICENSE: license for the Project (put in place but left empty and with instructions to fill it out with some options to consider)
+- data/: data or configuration that points to data (like the one used in pull_data step in the example pipeline)
+- notebooks/: Jupyter notebooks for interactive use of pipeline and additional explanations about the steps
+- src/: source code for the project, including file that define pipeline steps regarding data processing, model training and evaluation
+- src/steps: for code with functions that define steps in the pipeline
+- src/pipelines: for all the different pipeline definition code and configuration files
+- src/pipelines/<branch name>/main.py: main pipeline and its configuration (endpoint URLs etc.) for a CI/CD pipeline related to a branch
+- src/helpers: all support code
+- models/: saved models (and model "checkpoints") or configuration that points to where the models reside (like URL referring to MLflow/minio in the platform)
+- tests/: unit tests for your code, also code for running inference tests against deployed models
+- docs/: documentation for the project
+- README.md: Overview of the repo, including setup instructions and crucial configuration file locations, where to put code for pipeline steps and pipeline definition, and examples.
+- requirements.txt or environment.yml: List of dependencies required for the project.
+- .gitignore: specifies which files and directories to ignore in the repository.
+- LICENSE: license for the Project (put in place but left empty and with instructions to fill it out with some options to consider)
 
 3) CI/CD pipelines (GitHub actions)
 - for each branch: own CI/CD pipeline and configuration files in repo - credentials as secrets and not in repo
