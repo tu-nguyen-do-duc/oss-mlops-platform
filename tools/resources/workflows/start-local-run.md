@@ -1,5 +1,9 @@
 # Running a Notebook in GitHub to local cluster
 
+## SECURITY NOTICE
+
+**The self-hosted GitHub actions runner runs on YOUR machine. If you create automations that for example auto-merge pull requests, someone could inject malicious code to the repository and run it on YOUR machine. It would be advisable to keep the repository private but GitHub requires forked repositories to be public.**
+
 ## Requirements
 
 1. Install and run the self-hosted GitHub actions runner
