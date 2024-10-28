@@ -38,13 +38,13 @@ As this is connecting to the remote cluster it should be in the staging or the p
 ## GitHub Actions .yml file
 
 ```
-name: Run Jupyter Notebook connected to remote server
+name: Start a run from Jupyter Notebook on remote server
 
 on:
   push:
 
 jobs:
-  run-notebook:
+  start-remote-run:
     runs-on: ubuntu-latest
     
     steps:
