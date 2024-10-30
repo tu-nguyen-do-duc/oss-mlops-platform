@@ -10,7 +10,11 @@
 - Repository Settings > Actions > Runners > New self-hosted runner
   - Tested on Windows 10 installing the Linux x64 version of the runner to the WSL environment with default values (just press enter on promt) of the installer and already inplace SSH key pair with GitHub.
   - Useful tutorial YouTube video: https://www.youtube.com/watch?v=aLHyPZO0Fy0
-  - `./run.cmd` command starts the runner
+  - Start the runner:
+```
+/run.cmd
+```
+
 2. You need to have the local cluster of the MLOPS-platform running on your machine.
  - You can check the pods:
 ```
@@ -18,7 +22,7 @@ kubectl get pods --all-namespaces
 ```
  - Forward the ports:
 ```
-kubect-n mlflow port-forward svc/mlflow 5000:5000
+kubectl -n mlflow port-forward svc/mlflow 5000:5000
 ```
 
 ```
