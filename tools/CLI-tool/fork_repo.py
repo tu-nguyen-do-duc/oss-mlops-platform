@@ -2,7 +2,7 @@ import os
 import subprocess
 import json
 
-repo_name = "ConfigRepoCLI2"
+repo_name = "ConfigRepoCLI"
 
 def get_repo_owner():
 
@@ -19,7 +19,9 @@ def get_repo_owner():
     
     try:
         print(result.stdout)
-        repo_info = json.loads(result.stdout)
+        repo_info_list = [json.loads(line) for line in result.stdout.strip().split('\n')]
+        repo_info = repo_info_list[0]
+        print(repo_info)
         owner_name = repo_info['owner']
         print(owner_name)
         return owner_name
@@ -29,8 +31,7 @@ def get_repo_owner():
 
 def fork_repo(owner):
     # Run the gh command to fork the repo
-    subprocess.run(f'gh repo fork {owner}/{repo_name} --clone --fork-name "working-repo"', shell=True)
-    print("Repository forked successfully") 
+    subprocess.run(f'gh repo fork {owner}/{repo_name} --clone --fork-name "working-repo2" --org {owner}', shell=True)
 
 
 def main():

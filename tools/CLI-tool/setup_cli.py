@@ -7,6 +7,7 @@ import yaml
 
 def check_gh_installed():
     """Check if GitHub CLI is installed."""
+    print(sys.platform)
     try:
         result = subprocess.run(["gh", "--version"], capture_output=True, text=True)
         if result.returncode != 0:
@@ -35,7 +36,7 @@ def check_gh_installed():
 
 def check_repo():
     """Check if repository already exists."""
-    result = subprocess.run("gh repo view Softala-MLOPS/configRepoCLI2", shell=True, capture_output=True)
+    result = subprocess.run("gh repo view Softala-MLOPS/ConfigRepoCLI", shell=True, capture_output=True)
     if result.returncode == 0:
         return True
 
@@ -43,15 +44,18 @@ def create_repo():
     result = subprocess.run("gh auth status", shell=True, capture_output=True, text=True)
     if "Logged in to github.com account" not in result.stdout:
         subprocess.run("gh auth login", shell=True)
-    subprocess.run('gh repo create Softala-MLOPS/configRepoCLI2 --public --description "Upstream repository" --clone', shell=True)
-    os.chdir("configRepoCLI2")
+    subprocess.run('gh repo create Softala-MLOPS/ConfigRepoCLI --public --description "Upstream repository" --clone', shell=True)
+    os.chdir("ConfigRepoCLI")
 
 def create_repo_structure():
     current_dir = os.getcwd()
-    if not os.path.exists("configRepoCLI2"):
-        os.chdir("configRepoCLI2")
+    if not os.path.exists("ConfigRepoCLI"):
+        os.chdir("ConfigRepoCLI")
 
     """Create the repository structure."""
+    subprocess.run(f"mkdir -p .github", shell=True, capture_output=True)
+    subprocess.run(f"mkdir -p .github/workflow", shell=True, capture_output=True)
+    subprocess.run(f"cp ../oss-mlops-platform/tools/CLI-tool/resources/workflows/* .github/workflows", shell=True, capture_output=True)
     subprocess.run(f"mkdir -p data", shell=True, capture_output=True)
     os.chdir("data")
     subprocess.run(f'echo "data" > Readme.md', shell=True, capture_output=True)
