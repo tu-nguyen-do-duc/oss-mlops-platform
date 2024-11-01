@@ -176,7 +176,7 @@ def main():
     print("Creating the repository structure...")
     create_repo_structure()
     
-    #set_config()
+    set_config()
 
     print("Pushing the repository to GitHub...")
     push_repo()
