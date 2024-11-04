@@ -2,7 +2,8 @@ import os
 import subprocess
 import json
 
-repo_name = "ConfigRepoCLI"
+print("Specify unique name for your working repo")
+repo_name = input()
 
 def get_repo_owner():
 
