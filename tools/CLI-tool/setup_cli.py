@@ -44,18 +44,28 @@ def create_repo():
     result = subprocess.run("gh auth status", shell=True, capture_output=True, text=True)
     if "Logged in to github.com account" not in result.stdout:
         subprocess.run("gh auth login", shell=True)
-    subprocess.run('gh repo create Softala-MLOPS/ConfigRepoCLI --public --description "Upstream repository" --clone', shell=True)
-    os.chdir("ConfigRepoCLI")
+    if not check_repo():
+        subprocess.run('gh repo create Softala-MLOPS/ConfigRepoCLI --public --description "Upstream repository" --clone', shell=True)
+        os.chdir("ConfigRepoCLI")
+    else:
+        typer.echo("Repository already exists.")
 
 def create_repo_structure():
     current_dir = os.getcwd()
-    if not os.path.exists("ConfigRepoCLI"):
-        os.chdir("ConfigRepoCLI")
+    if "ConfigRepoCLI" not in current_dir:
+        result = subprocess.run(["ls", "ConfigRepoCLI"], capture_output=True, text=True)
+        if result.returncode != 0:
+            subprocess.run(["git", "clone", "git@github.com:Softala-MLOPS/ConfigRepoCLI.git"], check=True)
+        try:
+            os.chdir("ConfigRepoCLI")
+        except FileNotFoundError:
+            typer.echo("Repository not found. Exiting...")
+
+
 
     """Create the repository structure."""
     subprocess.run(f"mkdir -p .github", shell=True, capture_output=True)
-    subprocess.run(f"mkdir -p .github/workflow", shell=True, capture_output=True)
-    subprocess.run(f"cp ../oss-mlops-platform/tools/CLI-tool/resources/workflows/* .github/workflows", shell=True, capture_output=True)
+    subprocess.run(f"mkdir -p .github/workflows", shell=True, capture_output=True)
     subprocess.run(f"mkdir -p data", shell=True, capture_output=True)
     os.chdir("data")
     subprocess.run(f'echo "data" > Readme.md', shell=True, capture_output=True)
@@ -68,13 +78,10 @@ def create_repo_structure():
     os.chdir("models") 
     subprocess.run(f'echo "models" > Readme.md', shell=True, capture_output=True)
     os.chdir("../")
-    subprocess.run(f"mkdir -p notebook", shell=True, capture_output=True)
-    os.chdir("notebook")
-    subprocess.run(f'echo "notebook" > Readme.md', shell=True, capture_output=True)
-
-    # Download demo pipeline notebook to be changed in the future
-    subprocess.run(f'curl -O https://raw.githubusercontent.com/OSS-MLOPS-PLATFORM/oss-mlops-platform/main/tutorials/demo_notebooks/demo_pipeline/demo-pipeline.ipynb', shell=True, capture_output=True) 
-
+    subprocess.run(f"mkdir -p notebooks", shell=True, capture_output=True)
+    subprocess.run(f"mkdir -p notebooks/components", shell=True, capture_output=True)
+    os.chdir("notebooks")
+    subprocess.run(f'echo "notebooks" > Readme.md', shell=True, capture_output=True)
     os.chdir("../")
     subprocess.run(f"mkdir -p src", shell=True, capture_output=True)
     os.chdir("src")
@@ -158,24 +165,38 @@ def create_branches():
     print("List of current branches:")
     subprocess.run(f'git branch -a', shell=True, capture_output=True)
 
+def copy_files():
+    """Copy branch specific files"""
+    subprocess.run(f'git checkout development', shell=True)
+    subprocess.run(f"cp ../oss-mlops-platform/tools/resources/workflows/start-local-run.yml .github/workflows", shell=True, capture_output=True)
+    subprocess.run(f"cp ../oss-mlops-platform/tools/CLI-tool/Components/Dev/* notebooks/components", shell=True, capture_output=True)
+    subprocess.run(f"cp ../oss-mlops-platform/tools/CLI-tool/Notebooks/Dev/demo-pipeline.ipynb notebooks", shell=True, capture_output=True)
+    subprocess.run([f"git", 'add', '.'])
+    subprocess.run([f"git", 'commit', '-m', '"Add branch specific files"'])
+    subprocess.run(f'git push origin development', shell=True)
+
+    subprocess.run(f'git checkout production', shell=True)
+    subprocess.run(f"cp ../oss-mlops-platform/tools/resources/workflows/start-local-run.yml .github/workflows", shell=True, capture_output=True)
+    subprocess.run(f"cp ../oss-mlops-platform/tools/CLI-tool/Components/Prod/* notebooks/components", shell=True, capture_output=True)
+    subprocess.run(f"cp ../oss-mlops-platform/tools/CLI-tool/Notebooks/Prod/demo-pipeline.ipynb notebooks", shell=True, capture_output=True)
+    subprocess.run([f"git", 'add', '.'])
+    subprocess.run([f"git", 'commit', '-m', '"Add branch specific files"'])
+    subprocess.run(f'git push origin production', shell=True)
+
+
 def main():
 
     print("Checking if GitHub CLI is installed...")
     check_gh_installed()
 
-    #Check if repo is already created
-    if check_repo():
-        typer.echo("Repository already exists. Exiting...")
-        sys.exit(0)
-    else: 
-        print("Creating a new repository...")
-        create_repo()
 
- 
+    print("Creating a new repository...")
+    create_repo()
 
     print("Creating the repository structure...")
     create_repo_structure()
     
+    print("Setting up the configuration...")
     set_config()
 
     print("Pushing the repository to GitHub...")
@@ -185,7 +206,8 @@ def main():
     create_branches()
 
 
-
+    print("Add branch specific files")
+    copy_files()
 
     
 if __name__ == "__main__":
