@@ -2,8 +2,7 @@ import os
 import subprocess
 import json
 
-print("Specify unique name for your working repo")
-repo_name = input()
+repo_name = "ConfigRepoCLI"
 
 def get_repo_owner():
 
@@ -32,7 +31,7 @@ def get_repo_owner():
 
 def fork_repo(owner):
     # Run the gh command to fork the repo
-    subprocess.run(f'gh repo fork {owner}/{repo_name} --clone --fork-name "working-repo111" --org {owner}', shell=True)
+    subprocess.run(f'gh repo fork {owner}/{repo_name} --clone --fork-name "working-repo" --org {owner}', shell=True)
 
 
 def main():
