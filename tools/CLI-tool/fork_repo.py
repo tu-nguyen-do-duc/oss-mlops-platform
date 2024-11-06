@@ -31,6 +31,8 @@ def get_repo_owner():
 
 def fork_repo(owner):
     # Run the gh command to fork the repo
+    print("Enter unique name for your working repository")
+    working_repo_name = input()
     subprocess.run(f'gh repo fork {owner}/{repo_name} --clone --fork-name "working-repo" --org {owner}', shell=True)
 
 
