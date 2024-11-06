@@ -1,6 +1,7 @@
 import os
 import subprocess
 import json
+import sys
 
 repo_name = "ConfigRepoCLI"
 
@@ -33,7 +34,11 @@ def fork_repo(owner):
     # Run the gh command to fork the repo
     print("Enter unique name for your working repository")
     working_repo_name = input()
-    subprocess.run(f'gh repo fork {owner}/{repo_name} --clone --fork-name "{working_repo_name}" --org {owner}', shell=True)
+
+    if sys.platform == "darwin":
+        subprocess.run(f'gh repo fork {owner}/{repo_name} --clone --fork-name "{working_repo_name}" --org {owner}', shell=True)
+    elif sys.platform == "linux":
+        subprocess.run(f'gh repo fork {owner}/{repo_name} --clone --remote-name {working_repo_name} --org {owner}', shell=True)
 
 
 def main():
