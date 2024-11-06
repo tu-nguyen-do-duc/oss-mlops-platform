@@ -33,7 +33,7 @@ def fork_repo(owner):
     # Run the gh command to fork the repo
     print("Enter unique name for your working repository")
     working_repo_name = input()
-    subprocess.run(f'gh repo fork {owner}/{repo_name} --clone --fork-name "working-repo" --org {owner}', shell=True)
+    subprocess.run(f'gh repo fork {owner}/{repo_name} --clone --fork-name "{working_repo_name}" --org {owner}', shell=True)
 
 
 def main():
