@@ -64,8 +64,8 @@ def create_repo_structure():
 
 
     """Create the repository structure."""
-    subprocess.run(f"mkdir -p .github", shell=True, capture_output=True)
     subprocess.run(f"mkdir -p .github/workflows", shell=True, capture_output=True)
+    subprocess.run(f"touch .github/workflows/.gitkeep", shell=True, capture_output=True)
     subprocess.run(f"mkdir -p data", shell=True, capture_output=True)
     os.chdir("data")
     subprocess.run(f'echo "data" > Readme.md', shell=True, capture_output=True)
@@ -176,7 +176,7 @@ def copy_files():
     subprocess.run(f'git push origin development', shell=True)
 
     subprocess.run(f'git checkout production', shell=True)
-    subprocess.run(f"cp ../oss-mlops-platform/tools/resources/workflows/start-local-run.yml .github/workflows", shell=True, capture_output=True)
+    subprocess.run(f"cp ../oss-mlops-platform/tools/resources/workflows/start-remote-run.yml .github/workflows", shell=True, capture_output=True)
     subprocess.run(f"cp ../oss-mlops-platform/tools/CLI-tool/Components/Prod/* notebooks/components", shell=True, capture_output=True)
     subprocess.run(f"cp ../oss-mlops-platform/tools/CLI-tool/Notebooks/Prod/demo-pipeline.ipynb notebooks", shell=True, capture_output=True)
     subprocess.run([f"git", 'add', '.'])
