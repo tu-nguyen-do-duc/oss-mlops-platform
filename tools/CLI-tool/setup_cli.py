@@ -51,7 +51,7 @@ def create_repo():
         typer.echo("Repository already exists.")
 
 def create_repo_structure():
-    """ current_dir = os.getcwd()
+    current_dir = os.getcwd()
     if "ConfigRepoCLI" not in current_dir:
         result = subprocess.run(["ls", "ConfigRepoCLI"], capture_output=True, text=True)
         if result.returncode != 0:
@@ -59,7 +59,7 @@ def create_repo_structure():
         try:
             os.chdir("ConfigRepoCLI")
         except FileNotFoundError:
-            typer.echo("Repository not found. Exiting...") """
+            typer.echo("Repository not found. Exiting...")
 
 
 
@@ -196,8 +196,8 @@ def main():
     print("Creating a new repository...")
     create_repo()
     
-    print("Creating the repository structure...")
-    create_repo_structure()
+    """ print("Creating the repository structure...")
+    create_repo_structure() """
     
     print("Setting up the configuration...")
     set_config()
