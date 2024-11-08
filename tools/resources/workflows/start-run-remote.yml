@@ -2,6 +2,9 @@ name: Start a run from Jupyter Notebook on remote server
 
 on:
   push:
+    branches:
+      - production
+      - staging
 
 jobs:
   start-remote-run:

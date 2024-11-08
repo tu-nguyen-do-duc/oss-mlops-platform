@@ -2,6 +2,8 @@ name: Start a run from Jupyter Notebook on local server via self-hosted Github A
 
 on:
   push:
+    branches:
+      - development
 
 jobs:
   start-local-run:
