@@ -51,7 +51,7 @@ def create_repo():
         typer.echo("Repository already exists.")
 
 def create_repo_structure():
-    current_dir = os.getcwd()
+    """ current_dir = os.getcwd()
     if "ConfigRepoCLI" not in current_dir:
         result = subprocess.run(["ls", "ConfigRepoCLI"], capture_output=True, text=True)
         if result.returncode != 0:
@@ -59,7 +59,7 @@ def create_repo_structure():
         try:
             os.chdir("ConfigRepoCLI")
         except FileNotFoundError:
-            typer.echo("Repository not found. Exiting...")
+            typer.echo("Repository not found. Exiting...") """
 
 
 
@@ -92,6 +92,9 @@ def create_repo_structure():
     subprocess.run(f'echo "tests" > Readme.md', shell=True, capture_output=True)
     os.chdir("../")
     subprocess.run(f'touch .gitignore', shell=True, capture_output=True)
+    f = open(".gitignore", "a")
+    f.write("config.yaml")
+    f.close()
     subprocess.run(f'touch LICENSE', shell=True, capture_output=True)
     subprocess.run(f'touch README.md', shell=True, capture_output=True)
     subprocess.run(f'touch requirements.txt', shell=True, capture_output=True)
@@ -192,23 +195,22 @@ def main():
 
     print("Creating a new repository...")
     create_repo()
-
+    
     print("Creating the repository structure...")
     create_repo_structure()
     
     print("Setting up the configuration...")
     set_config()
-
+    
     print("Pushing the repository to GitHub...")
     push_repo()
 
     print("Creating branches...")
     create_branches()
 
-
     print("Add branch specific files")
     copy_files()
-
+    
     
 if __name__ == "__main__":
     typer.run(main)
