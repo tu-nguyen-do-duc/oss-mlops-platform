@@ -62,9 +62,10 @@ The default email address is `user@example.com` and the default password is `123
 ## Step 3 Creating the working repositories
 
 Run the CLI tool located in https://github.com/Softala-MLOPS/oss-mlops-platform/tree/main/tools/CLI-tool
+cd ../ out of the oss-mlops-project folder then run
 
 ```
-python setup_cli.py
+oss-mlops-platform/tools/CLI-tool/setupCLITool.sh
 ```
 **TODO: Add more in detail steps**
 
