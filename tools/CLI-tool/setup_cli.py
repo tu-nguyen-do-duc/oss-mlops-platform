@@ -1,13 +1,41 @@
-import os
 import typer
 import subprocess
 import sys
-import shutil
+import os
 import yaml
+
+# Define the Typer app
+app = typer.Typer()
+
+# Use Typer to define repo_name as an argument
+@app.command()
+def main(repo_name: str):
+    """
+    Main function to create a GitHub repository, set up structure, and configure secrets.
+    """
+    print(f"Working with repository: {repo_name}")
+
+    print("Checking if GitHub CLI is installed...")
+    check_gh_installed()
+
+    print("Creating a new repository...")
+    create_repo(repo_name)
+
+    print("Pushing the repository to GitHub...")
+    push_repo()
+
+    print("Creating branches...")
+    create_branches()
+
+    print("Adding branch specific files...")
+    copy_files()
+
+    print("Setting up the configuration...")
+    set_config()
+
 
 def check_gh_installed():
     """Check if GitHub CLI is installed."""
-    print(sys.platform)
     try:
         result = subprocess.run(["gh", "--version"], capture_output=True, text=True)
         if result.returncode != 0:
@@ -16,115 +44,125 @@ def check_gh_installed():
             choice = input().strip().lower()
             if choice == 'y':
                 if sys.platform == "darwin":
-                    typer.echo("Installing GitHub CLI on macOS using Homebrew...")
                     subprocess.run(["brew", "install", "gh"], check=True)
                 elif sys.platform == "linux":
-                    typer.echo("Installing GitHub CLI on Linux using apt...")
-                    subprocess.run(["sudo", "apt", "update"], check=True)
-                    subprocess.run(["sudo", "apt", "install", "-y", "gh"], check=True)
+                    subprocess.run(["sudo", "apt", "install", "gh"], check=True)
                 else:
                     typer.echo("Unsupported OS. Please install GitHub CLI manually.")
                     sys.exit(1)
             else:
                 typer.echo("GitHub CLI (gh) is required. Exiting...")
                 sys.exit(1)
-
-            sys.exit(1)
     except FileNotFoundError:
         typer.echo("GitHub CLI (gh) is not installed.")
         sys.exit(1)
 
-def check_repo():
-    """Check if repository already exists."""
-    result = subprocess.run("gh repo view Softala-MLOPS/ConfigRepoCLI", shell=True, capture_output=True)
-    if result.returncode == 0:
-        return True
 
-def create_repo():
+def check_repo(repo_name):
+    """Check if repository already exists."""
+    result = subprocess.run(f"gh repo view Softala-MLOPS/{repo_name}", shell=True, capture_output=True)
+    return result.returncode == 0
+
+
+def create_repo(repo_name):
+    """Create a new GitHub repository."""
     result = subprocess.run("gh auth status", shell=True, capture_output=True, text=True)
-    if "Logged in to github.com account" not in result.stdout:
+    if "Logged in to github.com" not in result.stdout:
         subprocess.run("gh auth login", shell=True)
-    if not check_repo():
-        subprocess.run('gh repo create Softala-MLOPS/ConfigRepoCLI --public --description "Upstream repository" --clone', shell=True)
-        os.chdir("ConfigRepoCLI")
+
+    if not check_repo(repo_name):
+        subprocess.run(f'gh repo create Softala-MLOPS/{repo_name} --public --description "Upstream repository" --clone', shell=True)
+        os.chdir(repo_name)
     else:
         typer.echo("Repository already exists.")
 
-def create_repo_structure():
-    current_dir = os.getcwd()
-    if "ConfigRepoCLI" not in current_dir:
-        result = subprocess.run(["ls", "ConfigRepoCLI"], capture_output=True, text=True)
-        if result.returncode != 0:
-            subprocess.run(["git", "clone", "git@github.com:Softala-MLOPS/ConfigRepoCLI.git"], check=True)
-        try:
-            os.chdir("ConfigRepoCLI")
-        except FileNotFoundError:
-            typer.echo("Repository not found. Exiting...")
+def push_repo():
+    """Push the repository to GitHub."""
+    # Check the current branch
+    result = subprocess.run(["git", "branch"], capture_output=True, text=True, check=True)
+    current_branch = None
+    
+    # Parse the branch list to get the current branch (the one with an asterisk)
+    for line in result.stdout.splitlines():
+        if line.startswith("*"):
+            current_branch = line[2:].strip()  # Extract branch name
+
+    if current_branch:
+        print(f"Current branch is: {current_branch}")
+    else:
+        print("Error: Could not determine the current branch.")
+        return
+
+    # If the current branch is 'main', try to push it
+    if current_branch == 'main':
+        subprocess.run(["git", 'add', '.'], check=True)
+        subprocess.run(["git", 'commit', '-m', '"Initial commit"'], check=True)
+        subprocess.run(["git", 'push', 'origin', 'main'], check=True)
+    elif current_branch == 'master':
+        # If on master, push to 'master' instead of 'main'
+        subprocess.run(["git", 'add', '.'], check=True)
+        subprocess.run(["git", 'commit', '-m', '"Initial commit"'], check=True)
+        subprocess.run(["git", 'push', 'origin', 'master'], check=True)
+    else:
+        print(f"Error: Branch '{current_branch}' is not 'main' or 'master'. Cannot push.")
+
+def create_branches():
+    """Create branches if they don't already exist."""
+    result = subprocess.run("git branch -a", shell=True, capture_output=True, text=True)
+    existing_branches = result.stdout.splitlines()
+
+    branches_to_create = ["development", "staging", "production"]
+    for branch in branches_to_create:
+        if branch not in existing_branches:
+            subprocess.run(f'git checkout -b {branch}', shell=True)
+            subprocess.run(f'git push --set-upstream origin {branch}', shell=True)
+            print(f"Branch '{branch}' created successfully.")
 
 
+def copy_files():
+    """Copy branch-specific files."""
+    subprocess.run("git checkout development", shell=True)
+    subprocess.run("cp -r ../oss-mlops-platform/tools/files/developement/* .", shell=True)
+    subprocess.run("cp ../oss-mlops-platform/tools/resources/workflows/start-local-run.yml .github/workflows", shell=True)
+    subprocess.run("git add .", shell=True)
+    subprocess.run("git commit -m 'Add branch specific files'", shell=True)
+    subprocess.run("git push origin development", shell=True)
 
-    """Create the repository structure."""
-    subprocess.run(f"mkdir -p .github/workflows", shell=True, capture_output=True)
-    subprocess.run(f"touch .github/workflows/.gitkeep", shell=True, capture_output=True)
-    subprocess.run(f"mkdir -p data", shell=True, capture_output=True)
-    os.chdir("data")
-    subprocess.run(f'echo "data" > Readme.md', shell=True, capture_output=True)
-    os.chdir("../")
-    subprocess.run(f"mkdir -p docs", shell=True, capture_output=True)
-    os.chdir("docs")
-    subprocess.run(f'echo "docs" > Readme.md', shell=True, capture_output=True)
-    os.chdir("../")
-    subprocess.run(f"mkdir -p models", shell=True, capture_output=True)
-    os.chdir("models") 
-    subprocess.run(f'echo "models" > Readme.md', shell=True, capture_output=True)
-    os.chdir("../")
-    subprocess.run(f"mkdir -p notebooks", shell=True, capture_output=True)
-    subprocess.run(f"mkdir -p notebooks/components", shell=True, capture_output=True)
-    os.chdir("notebooks")
-    subprocess.run(f'echo "notebooks" > Readme.md', shell=True, capture_output=True)
-    os.chdir("../")
-    subprocess.run(f"mkdir -p src", shell=True, capture_output=True)
-    os.chdir("src")
-    subprocess.run(f'echo "src" > Readme.md', shell=True, capture_output=True)
-    os.chdir("../")
-    subprocess.run(f"mkdir -p tests", shell=True, capture_output=True)
-    os.chdir("tests")
-    subprocess.run(f'echo "tests" > Readme.md', shell=True, capture_output=True)
-    os.chdir("../")
-    subprocess.run(f'touch .gitignore', shell=True, capture_output=True)
-    f = open(".gitignore", "a")
-    f.write("config.yaml")
-    f.close()
-    subprocess.run(f'touch LICENSE', shell=True, capture_output=True)
-    subprocess.run(f'touch README.md', shell=True, capture_output=True)
-    subprocess.run(f'touch requirements.txt', shell=True, capture_output=True)
+    subprocess.run("git checkout production", shell=True)
+    subprocess.run("cp -r ../oss-mlops-platform/tools/files/production/* .", shell=True)
+    subprocess.run("cp ../oss-mlops-platform/tools/resources/workflows/start-remote-run.yml .github/workflows", shell=True)
+    subprocess.run("git add .", shell=True)
+    subprocess.run("git commit -m 'Add production files'", shell=True)
+    subprocess.run("git push origin production", shell=True)
 
 def set_config():
-    """Create a config file for github secrets"""
+    """Create a config file for GitHub secrets"""
+    print("1. Create config file\n2. Already a config.yaml file in directory")
+    choice = int(input())
 
-    print("1 Create config file\n2 Already a config.yaml file in directory")
-    choise = int(input())
-
-    if choise == 1:
-        """No config file"""
-        print("Specify Kubeflow endpoint (if empty uses http://localhost:8080 by default)")
+    if choice == 1:
+        print("Specify Kubeflow endpoint (default: http://localhost:8080):")
         kep = input().strip()
-        if kep == "":
+        if not kep:
             kep = "http://localhost:8080"
-        print("Specify Kubeflow username (if empty uses user@example.com by default)")
+
+        print("Specify Kubeflow username (default: user@example.com):")
         kun = input().strip()
-        if kun == "":
+        if not kun:
             kun = "user@example.com"
-        print("Specify Kubeflow password (if empty uses 12341234 by default)")
+
+        print("Specify Kubeflow password (default: 12341234):")
         kpw = input().strip()
-        if kpw == "":
+        if not kpw:
             kpw = "12341234"
-        print("Add remote cluster private key")
+
+        print("Add remote cluster private key:")
         remote_key = input().strip()
-        print("Specify remote cluster IP")
+        print("Specify remote cluster IP:")
         remote_ip = input().strip()
-        print("Add remote cluster username")
+        print("Add remote cluster username:")
         remote_username = input().strip()
+
         config = {
             'KUBEFLOW_ENDPOINT': kep,
             'KUBEFLOW_USERNAME': kun,
@@ -133,84 +171,19 @@ def set_config():
             'REMOTE_CSC_CLUSTER_SSH_IP': remote_ip,
             'REMOTE_CSC_CLUSTER_SSH_USERNAME': remote_username
         }
-        with open("config.yaml", 'w',) as f :
+
+        with open("config.yaml", 'w') as f:
             yaml.dump(config, f, sort_keys=False)
-            
+
+    # Read and set GitHub secrets from the config file
     with open("config.yaml", "r") as yamlfile:
-            data = yaml.load(yamlfile, Loader=yaml.FullLoader)
-            print("Read successful")
-    print(data)
+        data = yaml.load(yamlfile, Loader=yaml.FullLoader)
+        print("Config file read successfully.")
+        print(data)
 
     for key, value in data.items():
         subprocess.run(f'gh secret set {key} --body {value} --org Softala-MLOPS', shell=True)
 
 
-def push_repo():
-    """Push the repository to GitHub."""
-    subprocess.run([f"git", 'add', '.'])
-    subprocess.run([f"git", 'commit', '-m', '"Initial commit"'])
-    subprocess.run([f"git", 'push', 'origin', 'main'])
-
-def create_branches():
-    """Check if branches already exist."""
-    result = subprocess.run(f'git branch -a', shell=True, capture_output=True, text=True)
-    existing_branches = result.stdout.splitlines()
-
-    branches_to_create = ["development", "staging", "production"]
-    for branch in branches_to_create:
-        if any(branch in line for line in existing_branches):
-            print(f"Branch '{branch}' already exists.")
-        else:
-            subprocess.run(f'git checkout -b {branch}', shell=True)
-            subprocess.run(f'git push --set-upstream origin {branch}', shell=True)
-            print(f"Branch '{branch}' created successfully.")
-            
-    print("List of current branches:")
-    subprocess.run(f'git branch -a', shell=True, capture_output=True)
-
-def copy_files():
-    """Copy branch specific files"""
-    subprocess.run(f'git checkout development', shell=True)
-    subprocess.run(f"cp ../oss-mlops-platform/tools/resources/workflows/start-local-run.yml .github/workflows", shell=True, capture_output=True)
-    subprocess.run(f"cp ../oss-mlops-platform/tools/CLI-tool/Components/Dev/* notebooks/components", shell=True, capture_output=True)
-    subprocess.run(f"cp ../oss-mlops-platform/tools/CLI-tool/Notebooks/Dev/demo-pipeline.ipynb notebooks", shell=True, capture_output=True)
-    subprocess.run([f"git", 'add', '.'])
-    subprocess.run([f"git", 'commit', '-m', '"Add branch specific files"'])
-    subprocess.run(f'git push origin development', shell=True)
-
-    subprocess.run(f'git checkout production', shell=True)
-    subprocess.run(f"cp ../oss-mlops-platform/tools/resources/workflows/start-remote-run.yml .github/workflows", shell=True, capture_output=True)
-    subprocess.run(f"cp ../oss-mlops-platform/tools/CLI-tool/Components/Prod/* notebooks/components", shell=True, capture_output=True)
-    subprocess.run(f"cp ../oss-mlops-platform/tools/CLI-tool/Notebooks/Prod/demo-pipeline.ipynb notebooks", shell=True, capture_output=True)
-    subprocess.run([f"git", 'add', '.'])
-    subprocess.run([f"git", 'commit', '-m', '"Add branch specific files"'])
-    subprocess.run(f'git push origin production', shell=True)
-
-
-def main():
-
-    print("Checking if GitHub CLI is installed...")
-    check_gh_installed()
-
-
-    print("Creating a new repository...")
-    create_repo()
-    
-    """ print("Creating the repository structure...")
-    create_repo_structure() """
-    
-    print("Setting up the configuration...")
-    set_config()
-    
-    print("Pushing the repository to GitHub...")
-    push_repo()
-
-    print("Creating branches...")
-    create_branches()
-
-    print("Add branch specific files")
-    copy_files()
-    
-    
 if __name__ == "__main__":
-    typer.run(main)
+    app()
