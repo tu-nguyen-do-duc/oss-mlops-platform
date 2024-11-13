@@ -122,15 +122,15 @@ def create_branches():
 def copy_files():
     """Copy branch-specific files."""
     subprocess.run("git checkout development", shell=True)
-    subprocess.run("cp -r ../oss-mlops-platform/tools/files/developement/* .", shell=True)
-    subprocess.run("cp ../oss-mlops-platform/tools/resources/workflows/start-local-run.yml .github/workflows", shell=True)
+    subprocess.run("cp -r ../oss-mlops-platform/tools/files/development/* .", shell=True)
+    subprocess.run("cp ../oss-mlops-platform/tools/resources/workflows/run-in-development-environment.yml .github/workflows", shell=True)
     subprocess.run("git add .", shell=True)
     subprocess.run("git commit -m 'Add branch specific files'", shell=True)
     subprocess.run("git push origin development", shell=True)
 
     subprocess.run("git checkout production", shell=True)
     subprocess.run("cp -r ../oss-mlops-platform/tools/files/production/* .", shell=True)
-    subprocess.run("cp ../oss-mlops-platform/tools/resources/workflows/start-remote-run.yml .github/workflows", shell=True)
+    subprocess.run("cp ../oss-mlops-platform/tools/resources/workflows/run-in-production-environment.yml .github/workflows", shell=True)
     subprocess.run("git add .", shell=True)
     subprocess.run("git commit -m 'Add production files'", shell=True)
     subprocess.run("git push origin production", shell=True)
