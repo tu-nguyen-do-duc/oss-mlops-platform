@@ -4,10 +4,9 @@ on:
   push:
     branches:
       - production
-      - staging
 
 jobs:
-  start-remote-run:
+  run-in-production-environment:
     runs-on: ubuntu-latest
     
     steps:
