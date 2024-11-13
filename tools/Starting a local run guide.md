@@ -89,6 +89,10 @@ You can restart the runner after the next computer restart by navigating to the 
 ./run.sh
 ```
 
+**NOTE**
+
+If you need to change the repository runners is connected to, you need to delete the `.runner` file in the `actions-runner/` folder and redo the step with the new token. Also do note the runner version, don't be like me and try to use the Windows version on Linux.
+
 ## Step 5 Starting the run on local ML-OPS platform
 
 If everything is in order then by pushing to your working repository GitHub should order the runner on your computer to start the run on your computer's Kubeflow setup.
