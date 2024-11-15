@@ -42,9 +42,11 @@ name: Start a run from Jupyter Notebook on remote server
 
 on:
   push:
+    branches:
+      - production
 
 jobs:
-  start-remote-run:
+  run-in-production-environment:
     runs-on: ubuntu-latest
     
     steps:
@@ -81,5 +83,6 @@ jobs:
        
         # Execute the Jupyter Notebook and overwrite the existing file with the results
         jupyter nbconvert --execute --to notebook --inplace notebooks/demo-pipeline.ipynb
+
         
 ```

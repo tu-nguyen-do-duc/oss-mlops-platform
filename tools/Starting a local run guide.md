@@ -72,7 +72,7 @@ oss-mlops-platform/tools/CLI-tool/setupCLITool.sh
 
 ## Step 4 Installing GitHub Actions runner
 
-You also need a local-hosted GitHub Actions runner which is provided by GitHub.
+You also need a local-hosted GitHub Actions runner which is provided by GitHub. The runner is bound to a single GitHub organization or a single repository. It can be changed later, see note at the end of this step.
 
 1. Navigate to your working repo's `Settings` in GitHub web page.
 2. Open the `Actions` dropdown menu from the left side of the page under Code and automation.
@@ -89,9 +89,9 @@ You can restart the runner after the next computer restart by navigating to the 
 ./run.sh
 ```
 
-**NOTE**
+**Note about reconfiguring the runner**
 
-If you need to change the repository runners is connected to, you need to delete the `.runner` file in the `actions-runner/` folder and redo the step with the new token. Also do note the runner version, don't be like me and try to use the Windows version on Linux.
+If you need to change the repository runners is connected to, you need to delete the *hidden* `.runner` file in the `actions-runner/` folder and redo the step with the new token. *Also do note the runner OS version, don't be like me and try to use the Windows version on Linux.*
 
 ## Step 5 Starting the run on local ML-OPS platform
 

@@ -1,4 +1,4 @@
-# Running a Notebook in GitHub to local cluster
+# Starting a run in a local cluster
 
 ## SECURITY NOTICE
 
@@ -42,9 +42,11 @@ name: Start a run from Jupyter Notebook on local server via self-hosted Github A
 
 on:
   push:
+    branches:
+      - development
 
 jobs:
-  start-local-run:
+  run-in-development-environment:
     runs-on: self-hosted
     
     steps:
