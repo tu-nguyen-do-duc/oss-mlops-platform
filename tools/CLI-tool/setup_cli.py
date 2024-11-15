@@ -67,8 +67,16 @@ def check_repo(repo_name):
 def create_repo(repo_name):
     """Create a new GitHub repository."""
     result = subprocess.run("gh auth status", shell=True, capture_output=True, text=True)
-    if "Logged in to github.com" not in result.stdout:
-        subprocess.run("gh auth login", shell=True)
+
+    if sys.platform == "darwin":
+            if "Logged in to github.com" not in result.stdout:
+                subprocess.run("gh auth login", shell=True)
+
+    elif sys.platform == "linux":
+        if "Logged in to github.com" not in result.stderr:
+            subprocess.run("gh auth login", shell=True)
+
+
 
     if not check_repo(repo_name):
         subprocess.run(f'gh repo create Softala-MLOPS/{repo_name} --public --description "Upstream repository" --clone', shell=True)
@@ -86,46 +94,29 @@ def create_repo(repo_name):
 def push_repo():
     """Push the repository to GitHub."""
     # Check the current branch
-    # result = subprocess.run(["git", "branch"], capture_output=True, text=True, check=True)
-    # current_branch = None
-    
-    # # Parse the branch list to get the current branch (the one with an asterisk)
-    # for line in result.stdout.splitlines():
-    #     if line.startswith("*"):
-    #         current_branch = line[2:].strip()  # Extract branch name
+    current_branch = subprocess.run(["git branch --show-current"], capture_output=True, text=True, check=True)
 
-    # if current_branch:
-    #     print(f"Current branch is: {current_branch}")
-    # else:
-    #     print("Error: Could not determine the current branch.")
-    #     return
+    print("Current branch:", current_branch.stdout.strip())
+    input("Press Enter to continue...")
+    subprocess.run(["git", 'add', '.'], check=True)
+    subprocess.run(["git", 'commit', '-m', '"Initial commit"'], check=True)
+    subprocess.run(["git", 'push', 'origin', 'main'], check=True)
 
-    # # If the current branch is 'main', try to push it
-    # if current_branch == 'main':
-    #     subprocess.run(["git", 'add', '.'], check=True)
-    #     subprocess.run(["git", 'commit', '-m', '"Initial commit"'], check=True)
-    #     subprocess.run(["git", 'push', 'origin', 'main'], check=True)
-    # elif current_branch == 'master':
-    #     # If on master, push to 'master' instead of 'main'
-    #     subprocess.run(["git", 'add', '.'], check=True)
-    #     subprocess.run(["git", 'commit', '-m', '"Initial commit"'], check=True)
-    #     subprocess.run(["git", 'push', 'origin', 'master'], check=True)
-    # else:
-    #     print(f"Error: Branch '{current_branch}' is not 'main' or 'master'. Cannot push.")
 
 def create_branches():
-     """Create branches if they don't already exist."""
-    # result = subprocess.run("git branch -a", shell=True, capture_output=True, text=True)
-    # existing_branches = result.stdout.splitlines()
+    """Create branches if they don't already exist."""
+    
+    results = subprocess.run("git branch -a", shell=True, capture_output=True, text=True)
+    existing_branches = results.stdout.splitlines()
 
-    # branches_to_create = ["development", "staging", "production"]
-    # for branch in branches_to_create:
-    #     if branch not in existing_branches:
-    #         subprocess.run(f'git checkout -b {branch}', shell=True)
-    #         subprocess.run(f'git push --set-upstream origin {branch}', shell=True)
-    #         print(f"Branch '{branch}' created successfully.")
-    # subprocess.run("git branch", shell=True)
-    # input("Press Enter to continue...")
+    branches_to_create = ["development", "staging", "production"]
+    for branch in branches_to_create:
+        if branch not in existing_branches:
+            subprocess.run(f'git checkout -b {branch}', shell=True)
+            subprocess.run(f'git push --set-upstream origin {branch}', shell=True)
+            print(f"Branch '{branch}' created successfully.")
+    subprocess.run("git branch", shell=True)
+    input("Press Enter to continue...")
 
 
 def copy_files():
@@ -135,7 +126,7 @@ def copy_files():
         result = subprocess.run("git checkout development", capture_output=True, shell=True)
         if "did not match any file(s) known to git" in result.stderr.decode():
             subprocess.run("git checkout -b development", shell=True)
-
+                    # copy the files from the development directory to the current directory 
         subprocess.run("cp -r ../oss-mlops-platform/tools/files/development/.[!.]* ../oss-mlops-platform/tools/files/development/* .", shell=True)
         subprocess.run("git add .", shell=True)
         subprocess.run("git commit -m 'Add branch specific files'", shell=True)
@@ -147,6 +138,7 @@ def copy_files():
     try:
         result = subprocess.run("git checkout production", capture_output=True, shell=True)
         if "did not match any file(s) known to git" in result.stderr.decode():
+            subprocess.run("git checkout  main", shell=True)
             subprocess.run("git checkout -b production", shell=True)
 
         subprocess.run("cp -r ../oss-mlops-platform/tools/files/production/.[!.]* ../oss-mlops-platform/tools/files/production/* .", shell=True)
