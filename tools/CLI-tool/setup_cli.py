@@ -6,6 +6,7 @@ import yaml
 
 # Define the Typer app
 app = typer.Typer()
+main_branch = ""
 
 # Use Typer to define repo_name as an argument
 @app.command()
@@ -29,6 +30,9 @@ def main(repo_name: str):
 
     print("Adding branch specific files...")
     copy_files()
+
+    print("Setting up the default branch...")
+    set_default_branch()
 
     print("Setting up the configuration...")
     set_config()
@@ -71,7 +75,6 @@ def create_repo(repo_name):
     if sys.platform == "darwin":
             if "Logged in to github.com" not in result.stdout:
                 subprocess.run("gh auth login", shell=True)
-
     elif sys.platform == "linux":
         if "Logged in to github.com" not in result.stderr:
             subprocess.run("gh auth login", shell=True)
@@ -94,13 +97,13 @@ def create_repo(repo_name):
 def push_repo():
     """Push the repository to GitHub."""
     # Check the current branch
-    current_branch = subprocess.run(["git branch --show-current"], capture_output=True, text=True, check=True)
-
-    print("Current branch:", current_branch.stdout.strip())
-    input("Press Enter to continue...")
+    main_branch = subprocess.run(["git", "branch", "--show-current"], capture_output=True, text=True, check=True)
+    main_branch = main_branch.stdout.strip()
+    print("Current branch:", main_branch)
+    subprocess.run(f'echo Readme > README.md', shell=True)
     subprocess.run(["git", 'add', '.'], check=True)
     subprocess.run(["git", 'commit', '-m', '"Initial commit"'], check=True)
-    subprocess.run(["git", 'push', 'origin', 'main'], check=True)
+    subprocess.run(["git", 'push', 'origin', main_branch], check=True)
 
 
 def create_branches():
@@ -113,10 +116,11 @@ def create_branches():
     for branch in branches_to_create:
         if branch not in existing_branches:
             subprocess.run(f'git checkout -b {branch}', shell=True)
+            current_branch = subprocess.run(["git", "branch", "--show-current"], capture_output=True, text=True, check=True)
+
+            print("Current branch:", current_branch.stdout)
             subprocess.run(f'git push --set-upstream origin {branch}', shell=True)
             print(f"Branch '{branch}' created successfully.")
-    subprocess.run("git branch", shell=True)
-    input("Press Enter to continue...")
 
 
 def copy_files():
@@ -149,6 +153,13 @@ def copy_files():
     except FileNotFoundError:
         typer.echo("Failed to create branch 'production'. Exiting...")
         sys.exit(1)
+
+def set_default_branch():
+    """Set the default branch to main."""
+    try:
+        subprocess.run("gh api -X PATCH repos/Softala-MLOPS/{repo_name} -f default_branch=development", shell=True)
+    except FileNotFoundError:
+        typer.echo("Failed to set default branch to 'development'.")
 
 def set_config():
     """Create a config file for GitHub secrets"""
