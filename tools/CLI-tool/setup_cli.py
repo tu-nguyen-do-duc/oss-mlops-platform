@@ -1,6 +1,7 @@
 import typer
 import subprocess
 import sys
+import shutil
 import os
 import yaml
 
@@ -32,7 +33,7 @@ def main(repo_name: str):
     copy_files()
 
     print("Setting up the default branch...")
-    set_default_branch()
+    set_default_branch(repo_name)
 
     print("Setting up the configuration...")
     set_config()
@@ -131,7 +132,8 @@ def copy_files():
         if "did not match any file(s) known to git" in result.stderr.decode():
             subprocess.run("git checkout -b development", shell=True)
                     # copy the files from the development directory to the current directory 
-        subprocess.run("cp -r ../oss-mlops-platform/tools/files/development/.[!.]* ../oss-mlops-platform/tools/files/development/* .", shell=True)
+        subprocess.run("cp -r ../oss-mlops-platform/tools/CLI-tool/files/development/.[!.]* ../oss-mlops-platform/tools/CLI-tool/files/development/* .", shell=True)
+        subprocess.run("cp -r ../oss-mlops-platform/tools/CLI-tool/files/common/.[!.]* ../oss-mlops-platform/tools/CLI-tool/files/common/* .", shell=True)
         subprocess.run("git add .", shell=True)
         subprocess.run("git commit -m 'Add branch specific files'", shell=True)
         subprocess.run("git push --set-upstream origin development", shell=True)
@@ -145,7 +147,8 @@ def copy_files():
             subprocess.run("git checkout  main", shell=True)
             subprocess.run("git checkout -b production", shell=True)
 
-        subprocess.run("cp -r ../oss-mlops-platform/tools/files/production/.[!.]* ../oss-mlops-platform/tools/files/production/* .", shell=True)
+        subprocess.run("cp -r ../oss-mlops-platform/tools/CLI-tool/files/production/.[!.]* ../oss-mlops-platform/tools/CLI-tool/files/production/* .", shell=True)
+        subprocess.run("cp -r ../oss-mlops-platform/tools/CLI-tool/files/common/.[!.]* ../oss-mlops-platform/tools/CLI-tool/files/common/* .", shell=True)
         subprocess.run("git add .", shell=True)
         subprocess.run("git commit -m 'Add production files'", shell=True)
         subprocess.run("git push --set-upstream origin production", shell=True)
@@ -154,17 +157,43 @@ def copy_files():
         typer.echo("Failed to create branch 'production'. Exiting...")
         sys.exit(1)
 
-def set_default_branch():
-    """Set the default branch to main."""
     try:
-        subprocess.run("gh api -X PATCH repos/Softala-MLOPS/{repo_name} -f default_branch=development", shell=True)
+        result = subprocess.run("git checkout staging", capture_output=True, shell=True)
+        if "did not match any file(s) known to git" in result.stderr.decode():
+            subprocess.run("git checkout  main", shell=True)
+            subprocess.run("git checkout -b staging", shell=True)
+
+        subprocess.run("cp -r ../oss-mlops-platform/tools/CLI-tool/files/staging/.[!.]* ../oss-mlops-platform/tools/CLI-tool/files/staging/* .", shell=True)
+        subprocess.run("cp -r ../oss-mlops-platform/tools/CLI-tool/files/common/.[!.]* ../oss-mlops-platform/tools/CLI-tool/files/common/* .", shell=True)
+        subprocess.run("git add .", shell=True)
+        subprocess.run("git commit -m 'Add staging files'", shell=True)
+        subprocess.run("git push --set-upstream origin staging", shell=True)
+
+    except FileNotFoundError:
+        typer.echo("Failed to create branch 'staging'. Exiting...")
+        sys.exit(1)
+
+def set_default_branch(repo_name):
+    """Set the default branch to development."""
+    try:
+        subprocess.run(f"gh api -X PATCH repos/Softala-MLOPS/{repo_name} -f default_branch=development", shell=True, capture_output=True)
+    except subprocess.CalledProcessError as e:
+        typer.echo(f"Error setting default branch: {e.stderr}")
     except FileNotFoundError:
         typer.echo("Failed to set default branch to 'development'.")
 
 def set_config():
     """Create a config file for GitHub secrets"""
-    print("1. Create config file\n2. Already a config.yaml file in directory")
-    choice = int(input())
+
+    while True:
+        try:
+            choice = int(input("Choose an option (1: Configure, 2: Copy config from path): "))
+            if choice in [1, 2]:
+                break
+            else:
+                print("Invalid choice. Please select 1 or 2.")
+        except ValueError:
+            print("Invalid input. Please enter a number (1 or 2).")
 
     if choice == 1:
         print("Specify Kubeflow endpoint (default: http://localhost:8080):")
@@ -201,6 +230,22 @@ def set_config():
         with open("config.yaml", 'w') as f:
             yaml.dump(config, f, sort_keys=False)
 
+        print("Configuration saved to 'config.yaml'.")
+
+    elif choice == 2:
+        print("Specify the path to the configuration file:")
+        source_path = input().strip()
+        destination_path = "config.yaml"
+
+        if not os.path.exists(source_path):
+            print("Error: The specified file does not exist.")
+        else:
+            try:
+                shutil.copy(source_path, destination_path)
+                print(f"Configuration file copied to '{destination_path}'.")
+            except Exception as e:
+                print(f"Error copying file: {e}")
+
     # Read and set GitHub secrets from the config file
     with open("config.yaml", "r") as yamlfile:
         data = yaml.load(yamlfile, Loader=yaml.FullLoader)
@@ -208,7 +253,7 @@ def set_config():
         print(data)
 
     for key, value in data.items():
-        subprocess.run(f'gh secret set {key} --body {value} --org Softala-MLOPS', shell=True)
+        subprocess.run(f'gh secret set {key} --body {value} --org Softala-MLOPS --visibility all', shell=True)
 
 
 if __name__ == "__main__":

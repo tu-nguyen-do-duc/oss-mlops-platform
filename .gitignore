@@ -64,4 +64,4 @@ old/
 istio*
 temp/
 .platform/
-.env
+env/
