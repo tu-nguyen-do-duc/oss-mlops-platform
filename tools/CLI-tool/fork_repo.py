@@ -54,11 +54,13 @@ def main(repo_name: str):
 def fork_repo(repo_name: str, owner: str):
     """Fork the repository using GitHub CLI."""
     working_repo_name = typer.prompt("Enter unique name for your working repository", type=str)
+    
+    subprocess.run(f'gh repo fork {owner}/{repo_name} --clone --fork-name "{working_repo_name}" --org {owner}', shell=True)
 
-    if sys.platform == "darwin":
-        subprocess.run(f'gh repo fork {owner}/{repo_name} --clone --fork-name "{working_repo_name}" --org {owner}', shell=True)
-    elif sys.platform == "linux":
-        subprocess.run(f'gh repo fork {owner}/{repo_name} --clone --remote-name {working_repo_name} --org {owner}', shell=True)
+    # if sys.platform == "darwin":
+    #     subprocess.run(f'gh repo fork {owner}/{repo_name} --clone --fork-name "{working_repo_name}" --org {owner}', shell=True)
+    # elif sys.platform == "linux":
+    #     subprocess.run(f'gh repo fork {owner}/{repo_name} --clone --remote-name {working_repo_name} --org {owner}', shell=True)
 
     try:
         os.chdir(working_repo_name)
