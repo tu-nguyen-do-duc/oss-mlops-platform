@@ -15,7 +15,13 @@ You also need Docker working on your machine.
 
 https://www.docker.com/products/docker-desktop/
 
-You need to have SSH key added to GitHub for multiple steps. USE ONE WITHOUT THE PASSPHRASE.
+Your WSL setup might need GitHub authentication credentials setup. (Instructions for Mac users are included there aswell.)
+
+https://docs.github.com/en/get-started/getting-started-with-git/caching-your-github-credentials-in-git?platform=linux
+
+*Note: This next step might be unneccessary.* 
+
+You need to have SSH key added to GitHub for multiple steps. USE ONE WITHOUT THE PASSPHRASE. 
 
 https://docs.github.com/en/authentication/connecting-to-github-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent
 
