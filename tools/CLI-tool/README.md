@@ -27,6 +27,8 @@ Install using:
 Python 3.8 or higher.
 
 ## Usage
+Create a virtual env and acitavate it
+
 cd ../ out of the oss-mlops-project folder then run
 
 ```
