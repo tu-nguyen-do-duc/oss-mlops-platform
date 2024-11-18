@@ -60,5 +60,8 @@ def fork_repo(repo_name: str, owner: str):
     elif sys.platform == "linux":
         subprocess.run(f'gh repo fork {owner}/{repo_name} --clone --remote-name {working_repo_name} --org {owner}', shell=True)
 
+    os.chdir(working_repo_name)
+    subprocess.run(f'gh workflow enable',shell=True) # Enable GitHub Actions
+
 if __name__ == "__main__":
     app()
