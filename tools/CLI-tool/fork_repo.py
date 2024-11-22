@@ -9,17 +9,15 @@ import typer
 
 # Define the Typer app
 app = typer.Typer()
-owner = "Softala-MLOPS"
 
 # Use Typer to define repo_name as an argument
 @app.command()
-def main(repo_name: str):
+def main(repo_name: str, org_name: str):
     """
     Main function to fetch repo details and fork it.
     """
     print(f"Fetching repository information for {repo_name}...")
-    repo_owner = owner #get_repo_owner(repo_name)
-    fork_repo(repo_name, repo_owner)
+    fork_repo(repo_name, org_name)
 
 #     if repo_owner:
 #         print("Forking the repository...")
@@ -51,23 +49,17 @@ def main(repo_name: str):
 #         print("Error decoding repository information")
 #         return None
 
-def fork_repo(repo_name: str, owner: str):
+def fork_repo(repo_name: str, org_name):
     """Fork the repository using GitHub CLI."""
     working_repo_name = typer.prompt("Enter unique name for your working repository", type=str)
     
-    subprocess.run(f'gh repo fork {owner}/{repo_name} --clone --fork-name "{working_repo_name}" --org {owner}', shell=True)
-
+    subprocess.run(f'gh repo fork {org_name}/{repo_name} --clone --fork-name "{working_repo_name}" --org {org_name}', shell=True)
+    
     # if sys.platform == "darwin":
     #     subprocess.run(f'gh repo fork {owner}/{repo_name} --clone --fork-name "{working_repo_name}" --org {owner}', shell=True)
     # elif sys.platform == "linux":
     #     subprocess.run(f'gh repo fork {owner}/{repo_name} --clone --remote-name {working_repo_name} --org {owner}', shell=True)
 
-    try:
-        os.chdir(working_repo_name)
-        subprocess.run(f'gh workflow enable',shell=True, capture_output=True) # Enable GitHub Actions
-        print("Repository forked successfully.")
-    except FileNotFoundError:
-        print("Error enabling workflow for:", working_repo_name)
 
 if __name__ == "__main__":
     app()

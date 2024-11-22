@@ -11,7 +11,7 @@ main_branch = ""
 
 # Use Typer to define repo_name as an argument
 @app.command()
-def main(repo_name: str):
+def main(repo_name: str, org_name: str):
     """
     Main function to create a GitHub repository, set up structure, and configure secrets.
     """
@@ -21,7 +21,7 @@ def main(repo_name: str):
     check_gh_installed()
 
     print("Creating a new repository...")
-    create_repo(repo_name)
+    create_repo(repo_name, org_name)
 
     print("Pushing the repository to GitHub...")
     push_repo()
@@ -33,10 +33,10 @@ def main(repo_name: str):
     copy_files()
 
     print("Setting up the default branch...")
-    set_default_branch(repo_name)
+    set_default_branch(repo_name, org_name)
 
     print("Setting up the configuration...")
-    set_config()
+    set_config(org_name)
 
 
 def check_gh_installed():
@@ -63,13 +63,13 @@ def check_gh_installed():
         sys.exit(1)
 
 
-def check_repo(repo_name):
+def check_repo(repo_name, org_name):
     """Check if repository already exists."""
-    result = subprocess.run(f"gh repo view Softala-MLOPS/{repo_name}", shell=True, capture_output=True)
+    result = subprocess.run(f"gh repo view {org_name}/{repo_name}", shell=True, capture_output=True)
     return result.returncode == 0
 
 
-def create_repo(repo_name):
+def create_repo(repo_name, org_name):
     """Create a new GitHub repository."""
     result = subprocess.run("gh auth status", shell=True, capture_output=True, text=True)
 
@@ -82,15 +82,15 @@ def create_repo(repo_name):
 
 
 
-    if not check_repo(repo_name):
-        subprocess.run(f'gh repo create Softala-MLOPS/{repo_name} --public --description "Upstream repository" --clone', shell=True)
+    if not check_repo(repo_name, org_name):
+        subprocess.run(f'gh repo create {org_name}/{repo_name} --public --description "Upstream repository" --clone', shell=True)
         os.chdir(repo_name)
     else:
         typer.echo("Repository already exists.")
 
         repos = subprocess.run('ls -a', shell=True, capture_output=True, text=True).stdout.split()
         if repo_name not in repos:
-            subprocess.run(f'git clone https://github.com/Softala-MLOPS/{repo_name}.git', shell=True)
+            subprocess.run(f'git clone https://github.com/{org_name}/{repo_name}.git', shell=True)
             os.chdir(repo_name)
         else:
             os.chdir(repo_name)
@@ -173,16 +173,16 @@ def copy_files():
         typer.echo("Failed to create branch 'staging'. Exiting...")
         sys.exit(1)
 
-def set_default_branch(repo_name):
+def set_default_branch(repo_name, org_name):
     """Set the default branch to development."""
     try:
-        subprocess.run(f"gh api -X PATCH repos/Softala-MLOPS/{repo_name} -f default_branch=development", shell=True, capture_output=True)
+        subprocess.run(f"gh api -X PATCH repos/{org_name}/{repo_name} -f default_branch=development", shell=True, capture_output=True)
     except subprocess.CalledProcessError as e:
         typer.echo(f"Error setting default branch: {e.stderr}")
     except FileNotFoundError:
         typer.echo("Failed to set default branch to 'development'.")
 
-def set_config():
+def set_config(org_name):
     """Create a config file for GitHub secrets"""
 
     while True:
@@ -253,7 +253,7 @@ def set_config():
         print(data)
 
     for key, value in data.items():
-        subprocess.run(f'gh secret set {key} --body {value} --org Softala-MLOPS --visibility all', shell=True)
+        subprocess.run(f'gh secret set {key} --body {value} --org {org_name} --visibility all', shell=True)
 
 
 if __name__ == "__main__":
