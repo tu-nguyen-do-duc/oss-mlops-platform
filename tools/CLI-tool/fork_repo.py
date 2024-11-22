@@ -16,7 +16,6 @@ def main(repo_name: str, org_name: str):
     """
     Main function to fetch repo details and fork it.
     """
-    print(f"Fetching repository information for {repo_name}...")
     fork_repo(repo_name, org_name)
 
 #     if repo_owner:
@@ -53,7 +52,13 @@ def fork_repo(repo_name: str, org_name):
     """Fork the repository using GitHub CLI."""
     working_repo_name = typer.prompt("Enter unique name for your working repository", type=str)
     
-    subprocess.run(f'gh repo fork {org_name}/{repo_name} --clone --fork-name "{working_repo_name}" --org {org_name}', shell=True)
+    version = subprocess.run(["gh", "--version"], capture_output=True, text=True)
+
+    if "2.4.0" in version.stdout:
+        subprocess.run(f'gh repo fork {org_name}/{repo_name} --clone --remote-name {working_repo_name} --org {org_name}', shell=True)
+    else:
+
+        subprocess.run(f'gh repo fork {org_name}/{repo_name} --clone --fork-name "{working_repo_name}" --org {org_name}', shell=True)
     
     # if sys.platform == "darwin":
     #     subprocess.run(f'gh repo fork {owner}/{repo_name} --clone --fork-name "{working_repo_name}" --org {owner}', shell=True)
