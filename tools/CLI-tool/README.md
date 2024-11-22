@@ -67,4 +67,4 @@ REMOTE_CSC_CLUSTER_SSH_USERNAME: "user"
 After the repositories are made you may need to enable the GitHub Actions for the working repository.
 This can be done from the GitHub site by navigating to the working repository and it's Actions tab and clicking the big green button.
 
-Secondly you want to add the self-hosted GitHub Actions runner to the repository (it can also be added to whole organization) from Settings > Actions > Runner > New self-hosted runner. (More details can be found in 'starting a local run.md')
+Secondly you want to add the self-hosted GitHub Actions runner to the repository (it can also be added to whole organization) from Settings > Actions > Runner > New self-hosted runner. (More details can be found in 'starting a local run.md' step 4)
