@@ -73,12 +73,9 @@ def create_repo(repo_name, org_name):
     """Create a new GitHub repository."""
     result = subprocess.run("gh auth status", shell=True, capture_output=True, text=True)
 
-    if sys.platform == "darwin":
-            if "Logged in to github.com" not in result.stdout:
-                subprocess.run("gh auth login", shell=True)
-    elif sys.platform == "linux":
-        if "Logged in to github.com" not in result.stderr:
-            subprocess.run("gh auth login", shell=True)
+    if "Logged in to github.com" not in result.stdout:
+        subprocess.run("gh auth login", shell=True)
+
 
 
 
