@@ -34,19 +34,27 @@ Run the setup script in the main repository's folder:
 ```
 For local installation you want the stand alone kfp and kserve and tell the installer no to the docker registry and Ray questions. The installation will take time and some of the pods can get stuck. You can delete them and they are spun up again in a working manner hopefully.
 
-Checking the pods:
+### Some problem solving with the local cluster:
+
+Checking the status of the pods:
 
 ```
 kubectl get pods --all-namespaces
 ```
 
-Deleting a pod:
+Deleting a pod incase of it getting stuck or :
 ```
 kubectl delete pod -n kubeflow <pod_name>
 ```
 Once you get all the pods running they should start up correctly each time you start the cluster again.
 
 The guides for this are scattered in here https://github.com/Softala-MLOPS/oss-mlops-platform/tree/main/tutorials/local_deployment but they predate the installer which is prefered to be used.
+
+The run might fail at deploy-model step due to wine-quality inference service being already running. This can be solved by deleting the service:
+
+```
+kubectl delete inferenceservice wine-quality -n kserve-inference
+```
 
 ## Step 2 Portforwarding the Kubeflow ports
 
