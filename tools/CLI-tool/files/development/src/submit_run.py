@@ -2,9 +2,9 @@
 import kfp
 import sys
 
-sys.path.append('../../src')
-from localrun.pipelines.pipeline_definitions.pipeline_definition import pipeline
-from localrun.pipelines.pipeline_arg.pipeline_arg import arguments
+sys.path.append('../src')
+from pipelines.pipeline_definitions.pipeline_definition import pipeline
+from pipelines.pipeline_arg.pipeline_arg import arguments
 
 def submit_pipeline():
 

@@ -1,13 +1,13 @@
 # pipeline_definitions.py
 import sys
 
-sys.path.append('../../../tools')
-from localrun.components_py.pull_data_component.pull_data_component import pull_data
-from localrun.components_py.preprocess_component.preprocess_component import preprocess
-from localrun.components_py.train_component.train_component import train
-from localrun.components_py.deploy_model_component.deploy_model_component import deploy_model
-from localrun.components_py.inference_component.inference_component import inference
-from localrun.components_py.evaluate_component.evaluate_component import evaluate
+sys.path.append('../../src')
+from components_py.pull_data_component.pull_data_component import pull_data
+from components_py.preprocess_component.preprocess_component import preprocess
+from components_py.train_component.train_component import train
+from components_py.deploy_model_component.deploy_model_component import deploy_model
+from components_py.inference_component.inference_component import inference
+from components_py.evaluate_component.evaluate_component import evaluate
 
 from kfp.aws import use_aws_secret
 
