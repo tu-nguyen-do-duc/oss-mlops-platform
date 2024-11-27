@@ -4,7 +4,7 @@ This CLI tool automates the creation, configuration, and management of GitHub co
 1. **Repository Setup Module:** Automates repository creation, branch setup, and configuration.
 2. **Repository Forking Module:** Fetches repository details and forks them under a specified organization.
 
-## Current limitation
+## Current limitation with environmental secrets in GitHub
 
 Environmental secrets are set up currently as GitHub organization level secrets. This means that you may need separate GitHub organizations for difference ML setups.
 
