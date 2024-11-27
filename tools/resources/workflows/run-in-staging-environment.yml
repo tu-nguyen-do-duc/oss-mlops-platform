@@ -4,6 +4,8 @@ on:
   push:
     branches:
       - staging
+    path:
+      - 'notebooks/**'
 
 jobs:
   run-in-staging-environment:

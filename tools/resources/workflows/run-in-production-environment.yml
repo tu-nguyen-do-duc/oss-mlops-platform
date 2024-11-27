@@ -4,6 +4,8 @@ on:
   push:
     branches:
       - production
+    path:
+      - 'notebooks/**'
 
 jobs:
   run-in-production-environment:
