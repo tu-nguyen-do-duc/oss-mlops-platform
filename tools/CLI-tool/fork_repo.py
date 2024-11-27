@@ -57,9 +57,13 @@ def fork_repo(repo_name: str, org_name):
     if "2.4.0" in version.stdout:
         subprocess.run(f'gh repo fork {org_name}/{repo_name} --clone --remote-name {working_repo_name} --org {org_name}', shell=True)
     else:
-
         subprocess.run(f'gh repo fork {org_name}/{repo_name} --clone --fork-name "{working_repo_name}" --org {org_name}', shell=True)
-    
+        os.chdir(working_repo_name)
+        subprocess.run(["git", "checkout", "-b", "staging", "origin/staging"])
+        subprocess.run(["git", "checkout", "-b", "production", "origin/production"])
+        subprocess.run(["git", "checkout", "development"])
+        os.chdir("../")
+
     # if sys.platform == "darwin":
     #     subprocess.run(f'gh repo fork {owner}/{repo_name} --clone --fork-name "{working_repo_name}" --org {owner}', shell=True)
     # elif sys.platform == "linux":
