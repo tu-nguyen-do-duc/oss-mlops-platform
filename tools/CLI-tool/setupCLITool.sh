@@ -10,9 +10,9 @@ read -p "Enter the organization name: " org_name
 read -p "Enter the name of the config repo: " repo_name
 
 echo "Which script(s) would you like to run?"
-echo "1) setup_cli.py"
-echo "2) fork_repo.py"
-echo "3) Both"
+echo "1) Create configuration repo for one or more ML project working repos (setup_cli.py)"
+echo "2) Create one ML project working repo based on a configuration repo (fork_repo.py)"
+echo "3) Both (step 2 is based on config repo created in step 1)"
 read -p "Enter your choice (1/2/3): " choice
 
 # Execute the selected script(s)
