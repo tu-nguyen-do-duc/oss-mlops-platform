@@ -25,7 +25,7 @@ Environmental secrets are set up currently as GitHub organization level secrets.
 
 ## Prerequisites
 
-### 1. GitHub CLI (gh):
+### 1. GitHub CLI (gh version tested with 2.62.0):
 
 Ensure that GitHub CLI is installed and authenticated.
 Install using:
