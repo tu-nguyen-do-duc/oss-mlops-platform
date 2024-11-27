@@ -34,6 +34,7 @@ Install using:
   brew install gh
  ```
 - Linux:
+	- source: https://github.com/cli/cli/blob/trunk/docs/install_linux.md 	
 ```
   (type -p wget >/dev/null || (sudo apt update && sudo apt-get install wget -y)) \
 	&& sudo mkdir -p -m 755 /etc/apt/keyrings \
