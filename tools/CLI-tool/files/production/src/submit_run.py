@@ -13,7 +13,7 @@ def submit_pipeline():
 
     # Define your experiment and run name
     experiment_name = "demo-experiment"
-    run_name = "demo-run"
+    run_name = "demo-run-through-github-actions-on-OSS-MLOps-platform-in-production-environment"
 
     # Submit the pipeline run
     client.create_run_from_pipeline_func(
