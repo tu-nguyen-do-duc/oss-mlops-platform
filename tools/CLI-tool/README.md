@@ -1,12 +1,23 @@
 # CLI Tool for GitHub Repository Management
-This CLI tool automates the creation, configuration, and management of GitHub configurator and working repositories for mlops usage. It includes two modules:
+This CLI tool automates the creation, configuration and management of GitHub configurator and working repositories for MLOPS usage. It includes two modules:
 
 1. **Repository Setup Module:** Automates repository creation, branch setup, and configuration.
 2. **Repository Forking Module:** Fetches repository details and forks them under a specified organization.
 
-## Current limitation with environmental secrets in GitHub
+## Current limitation with the tool
 
-Environmental secrets are set up currently as GitHub organization level secrets. This means that you may need separate GitHub organizations for difference ML setups.
+- Tooling works in Unix commandline environments meaning MacOS or Linux (WSL for Windows)
+- GitHub authentication via Token and the HTTPS option instead of SSH for the `gh`
+	- https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens#creating-a-personal-access-token-classic
+	- https://docs.github.com/en/get-started/getting-started-with-git/caching-your-github-credentials-in-git?platform=linux
+- For the tool to be able to fork and rename the working repo correctly a sufficently new `gh` version needed (see Prequisities below)
+- Environmental secrets are set up currently as GitHub organization level secrets. This means that you may need separate GitHub organizations for difference ML setups.
+- Python virtual environments may interfere with GitHub actions runner. (No defined solution for this at the moment)
+- Multiple steps required interacting with GitHub site:
+    - Setting up the organizations
+    - Turning on the GitHub actions for the working repo (Actions tab > Big green button after reading the warnings)
+    - Setting up the self-hosted runner
+    - Setting up the SSH secret for remote cluster access may ultimately need it to be set up in GitHub's site as a organization level secret due to the SSH key's newline character handling (WIP)
 
 ## Features
 
@@ -25,7 +36,7 @@ Environmental secrets are set up currently as GitHub organization level secrets.
 
 ## Prerequisites
 
-### 1. GitHub CLI (gh version tested with 2.62.0):
+### 1. GitHub CLI (tested with version 2.62.0):
 
 Ensure that GitHub CLI is installed and authenticated.
 Install using:
@@ -73,9 +84,9 @@ Example config.yaml:
 KUBEFLOW_ENDPOINT: "http://localhost:8080"
 KUBEFLOW_USERNAME: "user@example.com"
 KUBEFLOW_PASSWORD: "12341234"
-REMOTE_CSC_CLUSTER_SSH_PRIVATE_KEY: "Your_Key"
-REMOTE_CSC_CLUSTER_SSH_IP: "192.168.1.1"
-REMOTE_CSC_CLUSTER_SSH_USERNAME: "user"
+REMOTE_CLUSTER_SSH_PRIVATE_KEY: "Your_Key"
+REMOTE_CLUSTER_SSH_IP: "192.168.1.1"
+REMOTE_CLUSTER_SSH_USERNAME: "user"
 ```
 
 ### Post setup script set up on GitHub's site

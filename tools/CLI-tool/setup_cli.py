@@ -219,9 +219,9 @@ def set_config(org_name):
             'KUBEFLOW_ENDPOINT': kep,
             'KUBEFLOW_USERNAME': kun,
             'KUBEFLOW_PASSWORD': kpw,
-            'REMOTE_CSC_CLUSTER_SSH_PRIVATE_KEY': remote_key,
-            'REMOTE_CSC_CLUSTER_SSH_IP': remote_ip,
-            'REMOTE_CSC_CLUSTER_SSH_USERNAME': remote_username
+            'REMOTE_CLUSTER_SSH_PRIVATE_KEY': remote_key,
+            'REMOTE_CLUSTER_SSH_IP': remote_ip,
+            'REMOTE_CLUSTER_SSH_USERNAME': remote_username
         }
 
         with open("config.yaml", 'w') as f:
