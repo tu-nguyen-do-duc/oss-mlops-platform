@@ -65,3 +65,4 @@ istio*
 temp/
 .platform/
 env/
+config.yaml

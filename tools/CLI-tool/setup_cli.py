@@ -1,8 +1,8 @@
 import typer
 import subprocess
 import sys
-import shutil
 import os
+import shutil
 import yaml
 
 # Define the Typer app
@@ -184,7 +184,7 @@ def set_config(org_name):
 
     while True:
         try:
-            choice = int(input("Choose an option (1: Configure, 2: Copy config from path): "))
+            choice = int(input("Choose an option (1: Interactively create config, 2: Specify file path to an already existing yaml file eg. 'tools/config.yaml'): "))
             if choice in [1, 2]:
                 break
             else:
@@ -231,6 +231,7 @@ def set_config(org_name):
 
     elif choice == 2:
         print("Specify the path to the configuration file:")
+        open("config.yaml", 'w')
         source_path = input().strip()
         destination_path = "config.yaml"
 
@@ -239,7 +240,7 @@ def set_config(org_name):
         else:
             try:
                 shutil.copy(source_path, destination_path)
-                print(f"Configuration file copied to '{destination_path}'.")
+                print(f"Configuration file copied succesfully")
             except Exception as e:
                 print(f"Error copying file: {e}")
 
@@ -250,7 +251,7 @@ def set_config(org_name):
         print(data)
 
     for key, value in data.items():
-        subprocess.run(f'gh secret set {key} --body {value} --org {org_name} --visibility all', shell=True)
+        subprocess.run(f'gh secret set {key} --body {value.strip()} --org {org_name} --visibility all', shell=True)
 
 
 if __name__ == "__main__":
