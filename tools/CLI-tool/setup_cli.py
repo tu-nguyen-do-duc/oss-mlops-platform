@@ -36,7 +36,7 @@ def main(repo_name: str, org_name: str):
     set_default_branch(repo_name, org_name)
 
     print("Setting up the configuration...")
-    set_config(org_name)
+    set_config(repo_name,org_name)
 
 
 def check_gh_installed():
