@@ -252,7 +252,7 @@ def set_config(repo_name, org_name):
                 print(f"Error copying file: {e}")
 
     # Read and set GitHub secrets from the config file
-    with open(f"{repo_name}/config.yaml", "r") as yamlfile:
+    with open("config.yaml", "r") as yamlfile:
         data = yaml.load(yamlfile, Loader=yaml.FullLoader)
         print("Config file read successfully.")
         print(data)
