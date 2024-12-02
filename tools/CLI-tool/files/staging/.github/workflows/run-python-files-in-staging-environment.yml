@@ -8,7 +8,7 @@ on:
       - 'src/**'
 
 jobs:
-  run-in-production-environment:
+  run-files-in-staging-environment:
     runs-on: ubuntu-latest
     
     steps:

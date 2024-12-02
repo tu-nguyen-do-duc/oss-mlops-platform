@@ -8,7 +8,7 @@ on:
       - 'notebooks/**'
 
 jobs:
-  run-in-production-environment:
+  run-notebook-in-staging-environment:
     runs-on: ubuntu-latest
     
     steps:
