@@ -224,7 +224,7 @@ def set_config(repo_name, org_name):
             'REMOTE_CLUSTER_SSH_USERNAME': remote_username
         }
 
-        with open("config.yaml", 'w') as f:
+        with open(f"{repo_name}/config.yaml", 'w') as f:
             yaml.dump(config, f, sort_keys=False)
 
         print("Configuration saved to 'config.yaml'.")
@@ -245,7 +245,7 @@ def set_config(repo_name, org_name):
                 print(f"Error copying file: {e}")
 
     # Read and set GitHub secrets from the config file
-    with open("config.yaml", "r") as yamlfile:
+    with open(f"{repo_name}/config.yaml", "r") as yamlfile:
         data = yaml.load(yamlfile, Loader=yaml.FullLoader)
         print("Config file read successfully.")
         print(data)
