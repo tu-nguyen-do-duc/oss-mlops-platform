@@ -224,22 +224,27 @@ def set_config(repo_name, org_name):
             'REMOTE_CLUSTER_SSH_USERNAME': remote_username
         }
 
-        with open(f"{repo_name}/config.yaml", 'w') as f:
+        with open("config.yaml", 'w') as f:
             yaml.dump(config, f, sort_keys=False)
 
         print("Configuration saved to 'config.yaml'.")
 
     elif choice == 2:
         print("Specify the path to the configuration file:")
-        open(f"{repo_name}/config.yaml", 'w')
+        print("Current working directory:", os.getcwd())
+        open("config.yaml", 'w')
         source_path = input().strip()
-        destination_path = f"{repo_name}/config.yaml"
+        destination_path = "config.yaml"
 
         if not os.path.exists(source_path):
             print("Error: The specified file does not exist.")
         else:
             try:
-                shutil.copy(source_path, destination_path)
+                with open(source_path) as f:
+                    with open(destination_path, "w") as f1:
+                        for line in f:
+                            if "ROW" in line:
+                                f1.write(line) 
                 print(f"Configuration file copied succesfully")
             except Exception as e:
                 print(f"Error copying file: {e}")
