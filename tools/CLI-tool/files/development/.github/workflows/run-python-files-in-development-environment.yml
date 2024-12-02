@@ -25,6 +25,6 @@ jobs:
         pip install kfp
         pip install scikit-learn
         
-    - name: Connect to local server and run the Notebook
+    - name: Connect to local server and run the Python files
       run: |       
         python src/submit_run.py

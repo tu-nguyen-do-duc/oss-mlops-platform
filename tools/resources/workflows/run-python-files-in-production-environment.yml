@@ -8,7 +8,7 @@ on:
       - 'src/**'
 
 jobs:
-  run-in-production-environment:
+  run-files-in-production-environment:
     runs-on: ubuntu-latest
     
     steps:
@@ -25,7 +25,7 @@ jobs:
         pip install kfp
         pip install scikit-learn
         
-    - name: Connect to remote server and run the Notebook
+    - name: Connect to remote server and run the Python files
       env:
         REMOTE_CLUSTER_SSH_PRIVATE_KEY: ${{ secrets.REMOTE_CLUSTER_SSH_PRIVATE_KEY }}
         REMOTE_CLUSTER_SSH_IP: ${{ secrets.REMOTE_CLUSTER_SSH_IP }}
