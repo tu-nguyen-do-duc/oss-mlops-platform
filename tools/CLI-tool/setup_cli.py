@@ -231,6 +231,8 @@ def set_config(repo_name, org_name):
 
     elif choice == 2:
         print("Specify the path to the configuration file:")
+        current_user = os.getlogin()
+        print(f"The current user is: {current_user}")
         print("Current working directory:", os.getcwd())
         open("config.yaml", 'w')
         source_path = input().strip()
