@@ -8,7 +8,7 @@ on:
       - 'src/**'
     
 jobs:
-  run-in-development-environment:
+  run-files-in-development-environment:
     runs-on: self-hosted
     
     steps:
