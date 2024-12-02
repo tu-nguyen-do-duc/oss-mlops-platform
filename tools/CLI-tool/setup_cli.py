@@ -231,7 +231,7 @@ def set_config(repo_name, org_name):
 
     elif choice == 2:
         print("Specify the path to the configuration file:")
-        open("config.yaml", 'w')
+        open(f"{repo_name}/config.yaml", 'w')
         source_path = input().strip()
         destination_path = f"{repo_name}/config.yaml"
 
