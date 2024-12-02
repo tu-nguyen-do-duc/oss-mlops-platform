@@ -22,9 +22,11 @@ case $choice in
         python3 oss-mlops-platform/tools/CLI-tool/configure_gh.py
         ;;
     2)
+        python3 oss-mlops-platform/tools/CLI-tool/configure_gh.py
         python3 oss-mlops-platform/tools/CLI-tool/setup_cli.py "$repo_name" "$org_name"
         ;;
     3)
+        python3 oss-mlops-platform/tools/CLI-tool/configure_gh.py
         python3 oss-mlops-platform/tools/CLI-tool/fork_repo.py "$repo_name" "$org_name"
         ;;
     4)
