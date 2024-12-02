@@ -231,9 +231,9 @@ def set_config(repo_name, org_name):
 
     elif choice == 2:
         print("Specify the path to the configuration file:")
-        open(f"{repo_name}/config.yaml", 'w')
+        open("config.yaml", 'w')
         source_path = input().strip()
-        destination_path = "config.yaml"
+        destination_path = f"{repo_name}/config.yaml"
 
         if not os.path.exists(source_path):
             print("Error: The specified file does not exist.")
