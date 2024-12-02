@@ -77,7 +77,7 @@ oss-mlops-platform/tools/CLI-tool/setupCLITool.sh
 The setup script asks you about configuring GitHub secrets using a config.yaml file. You can choose from options:
 
 1. Create a new configuration file interactively.
-2. Copy an existing configuration file from a specified path eg. 'tools/config.yaml'.
+2. Copy an existing configuration file from a specified path (either full path or path from folder where oss-mlops-platform resides eg. 'tools/config.yaml').
 
 Example config.yaml:
 ```
