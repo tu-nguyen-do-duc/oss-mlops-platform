@@ -184,7 +184,7 @@ def set_config(repo_name, org_name):
 
     while True:
         try:
-            choice = int(input("Choose an option (1: Interactively create config, 2: Specify file path to an already existing yaml file eg. 'tools/config.yaml'): "))
+            choice = int(input("Choose an option (1: Interactively create config, 2: Copy existing config.yaml from 'oss-mlops-platform/tools/CLI-tool/config.yaml': "))
             if choice in [1, 2]:
                 break
             else:
@@ -230,28 +230,21 @@ def set_config(repo_name, org_name):
         print("Configuration saved to 'config.yaml'.")
 
     elif choice == 2:
-        print("Specify the path to the configuration file:")
-        current_user = os.getlogin()
-        print(f"The current user is: {current_user}")
-        print("Current working directory:", os.getcwd())
-        open("config.yaml", 'w')
-        source_path = input().strip()
-        destination_path = "config.yaml"
+        script_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), "../../../"))
+        source_path = os.path.join(script_dir, "oss-mlops-platform/tools/CLI-tool/config.yaml")
 
-        if not os.path.exists(source_path):
-            print("Error: The specified file does not exist.")
-        else:
-            try:
-                with open(source_path) as f:
-                    with open(destination_path, "w") as f1:
-                        for line in f:
-                            if "ROW" in line:
-                                f1.write(line) 
-                print(f"Configuration file copied succesfully")
-            except Exception as e:
-                print(f"Error copying file: {e}")
+        print("Resolved source_path:", source_path)
 
-    # Read and set GitHub secrets from the config file
+        # Open the file using the resolved path
+        try:
+            with open(source_path, "r") as yamlfile:
+                data = yaml.safe_load(yamlfile)
+                with open("config.yaml", 'w') as f:
+                    yaml.dump(data, f, sort_keys=False)
+        except FileNotFoundError:
+            print(f"Error: The specified file does not exist at path: {source_path}")
+            exit(1)
+
     with open("config.yaml", "r") as yamlfile:
         data = yaml.load(yamlfile, Loader=yaml.FullLoader)
         print("Config file read successfully.")
