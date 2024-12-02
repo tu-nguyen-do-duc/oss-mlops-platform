@@ -8,7 +8,7 @@ on:
       - 'src/**'
     
 jobs:
-  start-local-run:
+  run-in-development-environment:
     runs-on: self-hosted
     
     steps:
