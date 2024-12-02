@@ -179,7 +179,7 @@ def set_default_branch(repo_name, org_name):
     except FileNotFoundError:
         typer.echo("Failed to set default branch to 'development'.")
 
-def set_config(org_name):
+def set_config(org_name, repo_name):
     """Create a config file for GitHub secrets"""
 
     while True:
