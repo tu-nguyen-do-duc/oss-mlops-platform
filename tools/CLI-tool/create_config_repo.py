@@ -252,12 +252,12 @@ def set_config(repo_name, org_name):
 
     for key, value in data.items():
     # Special handling for SSH private key
-    if key == "REMOTE_CLUSTER_SSH_PRIVATE_KEY":
-        # Ensure the SSH key is passed correctly (with newlines intact)
-        value = value.replace("\n", "\\n")  # Replace newlines with literal \n for the command
-        subprocess.run(f'gh secret set {key} --body "{value}" --org {org_name} --visibility all', shell=True)
-    else:
-        subprocess.run(f'gh secret set {key} --body "{value}" --org {org_name} --visibility all', shell=True)
+        if key == "REMOTE_CLUSTER_SSH_PRIVATE_KEY":
+            # Ensure the SSH key is passed correctly (with newlines intact)
+            value = value.replace("\n", "\\n")  # Replace newlines with literal \n for the command
+            subprocess.run(f'gh secret set {key} --body "{value}" --org {org_name} --visibility all', shell=True)
+        else:
+            subprocess.run(f'gh secret set {key} --body "{value}" --org {org_name} --visibility all', shell=True)
 
 
 if __name__ == "__main__":
