@@ -89,6 +89,8 @@ REMOTE_CLUSTER_SSH_IP: "192.168.1.1"
 REMOTE_CLUSTER_SSH_USERNAME: "user"
 ```
 
+The scripts sets the secrets on the org level. You can set repo level secrets that take precident over org level ones if needed.
+
 ### Post setup script set up on GitHub's site
 
 After the repositories are made you may need to enable the GitHub Actions for the working repository.
