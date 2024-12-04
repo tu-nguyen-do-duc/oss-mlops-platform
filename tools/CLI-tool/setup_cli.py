@@ -251,7 +251,7 @@ def set_config(repo_name, org_name):
         print(data)
 
     for key, value in data.items():
-        subprocess.run(f'gh secret set {key} --body {value.strip()} --org {org_name} --visibility all', shell=True)
+        subprocess.run(f'gh secret set {key} --body "{value}" --org {org_name} --visibility all', shell=True)
 
 
 if __name__ == "__main__":
