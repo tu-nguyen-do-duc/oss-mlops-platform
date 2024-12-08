@@ -1,4 +1,4 @@
-name: Start a run from Jupyter Notebook on remote server
+name: Start a run from Python file on remote server
 
 on:
   push:
