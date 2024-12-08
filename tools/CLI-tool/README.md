@@ -69,7 +69,7 @@ Note: You may want to create a Python virtual environment and activate it.
 After cloning the repository, step out of the `oss-mlops-project` folder with cd `../` and then run:
 
 ```
-oss-mlops-platform/tools/CLI-tool/setupCLITool.sh
+oss-mlops-platform/tools/CLI-tool/create_gitrepo_devops_for_ml_work.sh
 ```
 
 ### Configuration File
