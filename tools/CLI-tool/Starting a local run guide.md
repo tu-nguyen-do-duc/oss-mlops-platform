@@ -80,7 +80,7 @@ Run the CLI tool located in https://github.com/Softala-MLOPS/oss-mlops-platform/
 cd ../ out of the oss-mlops-project folder then run
 
 ```
-oss-mlops-platform/tools/CLI-tool/setupCLITool.sh
+oss-mlops-platform/tools/CLI-tool/create_gitrepo_devops_for_ml_work.sh
 ```
 **TODO: Add more in detail steps**
 
