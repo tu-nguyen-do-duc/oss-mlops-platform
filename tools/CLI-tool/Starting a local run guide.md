@@ -42,7 +42,7 @@ Checking the status of the pods:
 kubectl get pods --all-namespaces
 ```
 
-Deleting a pod incase of it getting stuck or :
+Deleting a pod incase of it getting stuck in a crash loop or an errors:
 ```
 kubectl delete pod -n kubeflow <pod_name>
 ```
