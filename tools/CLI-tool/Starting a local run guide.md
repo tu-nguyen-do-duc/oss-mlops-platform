@@ -32,7 +32,9 @@ Run the setup script in the main repository's folder:
 ```
 ./setup.sh
 ```
-For local installation you want the **stand alone kfp and kserve** and tell the installer **no to the docker registry and Ray questions**. The installation will take time and some of the pods can get stuck. You can delete them and they are spun up again in a working manner hopefully.
+For local installation you want the **stand alone kfp and kserve** and tell the installer **no to the docker registry and Ray questions** also use the recommended Kubernetes version. 
+
+**The installation will take time and some of the pods can get stuck.** You can delete them and they are spun up again in a working manner hopefully.
 
 ### Some problem solving with the local cluster:
 
