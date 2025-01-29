@@ -75,7 +75,7 @@ After this step you should be able to connect to the Kubeflow interface from htt
 
 The default email address is `user@example.com` and the default password is `12341234`.
 
-At this point you can test the cluster with the pipeline in a notebook for the stand alone kfp installation. Separate installation of Jupyter Notebook environment and VSCode plugins should work for running the notebook.
+At this point you can test the cluster with the pipeline in a notebook for the stand alone kfp installation. Separate installation of Jupyter Notebook environment work for running the notebook. Jupyter Notebook installation guide: https://jupyter.org/install
 
 Notebook location (Softala version):
 https://github.com/Softala-MLOPS/oss-mlops-platform/blob/main/tutorials/demo_notebooks/demo_pipeline_standalone_kfp/demo-pipeline.ipynb
