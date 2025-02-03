@@ -7,7 +7,7 @@ Clone the main repository to your local folder:
 ```
 git clone https://github.com/Softala-MLOPS/oss-mlops-platform.git
 ```
-For Windows machines you need a WSL environtment and it's linux commandline.
+For Windows machines you need a WSL environment with (default Ubuntu) and it's unix commandline.
 
 https://learn.microsoft.com/en-us/windows/wsl/install
 
@@ -19,11 +19,16 @@ Your WSL setup might need GitHub authentication credentials setup. (Instructions
 
 https://docs.github.com/en/get-started/getting-started-with-git/caching-your-github-credentials-in-git?platform=linux
 
-*Note: This next step might be unneccessary.* 
+Macs need the `Homebrew` installed for the platform installer.
+
+https://brew.sh/
+
+*Note: This following SSH step might be unneccessary.* 
 
 You need to have SSH key added to GitHub for multiple steps. USE ONE WITHOUT THE PASSPHRASE. 
 
 https://docs.github.com/en/authentication/connecting-to-github-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent
+
 
 ## Step 1: Installing local ML-OPS platform
 
