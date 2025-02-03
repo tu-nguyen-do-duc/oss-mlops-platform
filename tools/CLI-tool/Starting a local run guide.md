@@ -51,7 +51,7 @@ kubectl get pods --all-namespaces
 
 Deleting a pod incase of it getting stuck in a crash loop or an error:
 ```
-kubectl delete pod -n kubeflow <pod_name>
+kubectl delete pod -n <namespace> <pod_name>
 ```
 Once you get all the pods running they should start up correctly each time you start the cluster again.
 
