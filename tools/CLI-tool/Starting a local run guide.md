@@ -80,16 +80,79 @@ At this point you can test the cluster with the pipeline in a notebook for the s
 Notebook location (Softala version):
 https://github.com/Softala-MLOPS/oss-mlops-platform/blob/main/tutorials/demo_notebooks/demo_pipeline_standalone_kfp/demo-pipeline.ipynb
 
-## Step 3 Creating the working repositories
+## Step 3 Creating the repositories and setting up the CI/CD pipeline with the tool
 
-Run the CLI tool located in https://github.com/Softala-MLOPS/oss-mlops-platform/tree/main/tools/CLI-tool
+### Base requirements for the tool
 
-cd ../ out of the oss-mlops-project folder then run
+- WSL (if using Windows, MacOS can skip)
+    - MacOS already has a Unix compliant terminal
+- Linux (default Ubuntu) on the WSL
+- (Setup python env)
+    - Not required but good practise and skips warnings
+- Clone a version of oss-mlops-platform repo 
+    - Try not to clone it into the root folder but some project folder instead
+    - In Windows you want to do this on the Unix
+
+```
+git clone https://github.com/Softala-MLOPS/oss-mlops-platform.git
+```
+**N.B.! LINK IS TO THE TOOL PROJECT REPO !**
+
+### Steps for using the tooling
+
+1. Install `gh` (version 2.45 and up on the Unix terminal)
+
+```
+sudo apt update
+```
+
+```
+sudo apt install gh
+```
+
+2. Install `pip` on to the Unix terminal
+    - https://linuxconfig.org/install-pip-on-linux
+
+```
+sudo apt install python3-pip
+```
+
+3. Create GitHub token (classic, all premissions)
+    - https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens#creating-a-personal-access-token-classic
+4. Authenticate to GitHub with the GitHub Token
+    - Choose options: GitHub.com -> HTTPS -> yes -> Token
+
+```
+gh auth login
+```
+
+5. Set Git user globals (if not set already)
+    - "Your Name" NOT Your Name, use the quotation marks
+
+```
+git config --global --list
+```
+
+```
+git config --global user.name "Your Name"
+```
+
+```
+git config --global user.email "your.email@example.com"
+```
+
+6. Run the tool on the Unix terminal
+    - Navigate to the same level where the oss-mlops-project folder is on
+        - You need to be outside of git controlled folder because the tool creates local folder structures into the folder where the tool is run
+    - By default choose the option 4 for both config and working repos
+    - Please use a naming convetion for config repo and working repos
+        - It's for YOUR convenience and for others'
+        - f.ex. `confJames` and `workJames`
+    - N.B.! Currently the tool will require quite a few empty inputs with ENTER presses
 
 ```
 oss-mlops-platform/tools/CLI-tool/create_gitrepo_devops_for_ml_work.sh
-```
-**TODO: Add more in detail steps**
+``` 
 
 ## Step 4 Installing GitHub Actions runner
 
@@ -112,7 +175,7 @@ You can restart the runner after the next computer restart by navigating to the 
 
 **Note about reconfiguring the runner**
 
-If you need to change the repository runners is connected to, you need to delete the *hidden* `.runner` file in the `actions-runner/` folder and redo the step with the new token. *Also do note the runner OS version, don't be like me and try to use the Windows version on Linux.*
+If you need to change the repository runners is connected to, you need to either locate to he repository/organization the runner is connected to in GitHub site and remove it (GitHub will give you the script for it) OR delete the *hidden* `.runner` file in the `actions-runner/` folder and redo the step with the new token. *Also do note the runner OS version, don't be like me and try to use the Windows version on Linux.*
 
 ## Step 5 Starting the run on local ML-OPS platform
 
