@@ -418,7 +418,7 @@ https://github.com/Softala-MLOPS/oss-mlops-platform/blob/main/tutorials/demo_not
 
 ### Start the Jupiter Notebook: 
 
-For MacOs:
+For MacOs and Windows (WSL):
 ```
 jupyter notebook
 ```
