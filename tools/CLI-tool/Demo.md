@@ -2,7 +2,12 @@
 
 ## Step 0: Checking all necessary pre-installments:
 
+
 <details>
+<summary>For Windows </summary>
+  
+</details>
+  
 <summary>For MacOs </summary>
   
 - macOS 10.13 or higher
