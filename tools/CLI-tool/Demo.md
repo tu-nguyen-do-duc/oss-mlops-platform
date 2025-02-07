@@ -7,7 +7,8 @@
 <summary>For Windows </summary>
   
 </details>
-  
+
+<details>
 <summary>For MacOs </summary>
   
 - macOS 10.13 or higher
