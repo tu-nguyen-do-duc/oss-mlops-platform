@@ -181,32 +181,23 @@
       sudo apt update
       sudo apt install git -y
       ```
-- **Install Additional Tools**
-  
-- Run all of the following commands in your WSL (Ubuntu) terminal
+- **Install Additional Tools - Run all of the following commands in your WSL (Ubuntu) terminal**
+
+  - **Ensure curl is installed**
     
-  - **GitHub CLI (gh):**
-
-    Install prerequisites and then the GitHub CLI:
-
       ```bash
-      # Ensure curl is installed
       sudo apt update
-      sudo apt install curl -y
-
-      # Add GitHub CLI GPG key and repository
-      curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | sudo dd of=/usr/share/keyrings/githubcli-archive-keyring.gpg
-      sudo chmod go+r /usr/share/keyrings/githubcli-archive-keyring.gpg
-      echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | sudo tee /etc/apt/sources.list.d/github-cli.list > /dev/null
-
-      # Install GitHub CLI
+      sudo apt install curl apt-transport-https -y
+      ```
+    
+  - **Install GitHub CLI (gh):**
+ 
+      ```bash
       sudo apt update
       sudo apt install gh -y
       ```
 
-  - **Python (3.6 or later) & pip:**
-
-      Install Python and pip:
+  - **Install Python (3.6 or later) & pip:**
 
       ```bash
       sudo apt update
@@ -220,31 +211,36 @@
       pip3 --version
       ```
 
-  - **Kubernetes CLI (kubectl):**
-
-      Install `kubectl` by running:
+  - **Install Kubernetes CLI (kubectl):**
 
       ```bash
-      sudo apt update
-      sudo apt install -y apt-transport-https ca-certificates curl
-      sudo curl -fsSL https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add -
-      echo "deb https://apt.kubernetes.io/ kubernetes-xenial main" | sudo tee /etc/apt/sources.list.d/kubernetes.list
-      sudo apt update
-      sudo apt install -y kubectl
+      # Download the latest Kubectl
+      curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
+      
+      # Make it executable
+      chmod +x ./kubectl
+      
+      # Move it to your user's executable PATH
+      sudo mv ./kubectl /usr/local/bin/
       ```
 
-  - **Minikube:**
-
-      Download and install Minikube:
+  - **Download and install Minikube:**
 
       ```bash
-      curl -LO https://storage.googleapis.com/minikube/releases/latest/minikube_latest_amd64.deb
-      sudo dpkg -i minikube_latest_amd64.deb
+      # Download the latest Minikube
+      curl -Lo minikube https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
+      
+      # Make it executable
+      chmod +x ./minikube
+      
+      # Move it to your user's executable PATH
+      sudo mv ./minikube /usr/local/bin/
+      
+      # Set the driver version to Docker
+      minikube config set driver docker
       ```
 
-  - **Jupyter Notebook:**
-
-      Install Jupyter Notebook using pip:
+  - **Install Jupyter Notebook using pip:**
 
       ```bash
       pip3 install notebook
