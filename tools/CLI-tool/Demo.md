@@ -144,6 +144,14 @@
 ```
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 ```
+- Git 
+```
+brew install git
+```
+- GitHub CLI (gh) 
+```
+brew install gh
+```
 - Python (3.6 or later)
 ```
 brew install python
@@ -152,20 +160,6 @@ Verify installation:
 ```
 python3 --version
 pip3 --version
-```
-
-- Git 
-```
-brew install git
-```
-#### Set your credentials: 
-```
-git config --global user.name "Your Name"
-git config --global user.email "your.email@example.com"
-```
-- GitHub CLI (gh) 
-```
-brew install gh
 ```
 
 - Kubernetes CLI
@@ -184,20 +178,6 @@ brew install minikube
 2. Go to settings 
 3. Go to resources 
 4. Increade the disk usage to 20GB
-
-
-#### Authenticate with GitHub:
-```
-gh auth login
-```
-#### Choose: 
-1. GitHub.com
-2. HTTPS
-3. Yes 
-4. Login with a web browser 
-5. Copy the code from the terminal and paste it to the Github 
-
-
 
 
 - Jupiter Notebook
@@ -220,13 +200,6 @@ git clone https://github.com/Softala-MLOPS/oss-mlops-platform.git
 
 
 ### Create SSH key:
-1. Open Terminal.
-
-2. Paste the text below, replacing the email used in the example with your GitHub email address.
-```
-ssh-keygen -t ed25519 -C "your_email@example.com"
-```
-3. 
 
 https://docs.github.com/en/authentication/connecting-to-github-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent
 
@@ -237,6 +210,23 @@ Settings -> SSH and GPG keys -> New SSH key:
 1. Create a title for the key 
 2. Pick Authentication key 
 3. Paste your SSH key 
+
+#### Set your GitHub credentials: 
+```
+git config --global user.name "Your Name"
+git config --global user.email "your.email@example.com"
+```
+
+#### Authenticate with GitHub:
+```
+gh auth login
+```
+#### Choose: 
+1. GitHub.com
+2. HTTPS
+3. Yes 
+4. Login with a web browser 
+5. Copy the code from the terminal and paste it to the Github 
 
 
 ## Step 1: Installing local ML-OPS platform
@@ -314,77 +304,27 @@ jupyter notebook
 
 ## Step 3 Creating the repositories and setting up the CI/CD pipeline with the tool
 
-### Base requirements for the tool
 
-- WSL (if using Windows, MacOS can skip)
-    - MacOS already has a Unix compliant terminal
-- Linux (default Ubuntu) on the WSL
-- (Setup python env)
-    - Not required but good practise and skips warnings
-- Clone a version of oss-mlops-platform repo 
-    - Try not to clone it into the root folder but some project folder instead
-    - In Windows you want to do this on the Unix
-
-```
-git clone https://github.com/Softala-MLOPS/oss-mlops-platform.git
-```
-**N.B.! LINK IS TO THE TOOL PROJECT REPO !**
-
-### Steps for using the tooling
-
-1. Install `gh` (version 2.45 and up on the Unix terminal)
-
-```
-sudo apt update
-```
-
-```
-sudo apt install gh
-```
-
-2. Install `pip` on to the Unix terminal
-    - https://linuxconfig.org/install-pip-on-linux
-
-```
-sudo apt install python3-pip
-```
-
-3. Create GitHub token (classic, all premissions)
-    - https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens#creating-a-personal-access-token-classic
-4. Authenticate to GitHub with the GitHub Token
-    - Choose options: GitHub.com -> HTTPS -> yes -> Token
-
-```
-gh auth login
-```
-
-5. Set Git user globals (if not set already)
-    - "Your Name" NOT Your Name, use the quotation marks
-
-```
-git config --global --list
-```
-
-```
-git config --global user.name "Your Name"
-```
-
-```
-git config --global user.email "your.email@example.com"
-```
-
-6. Run the tool on the Unix terminal
-    - Navigate to the same level where the oss-mlops-project folder is on
-        - You need to be outside of git controlled folder because the tool creates local folder structures into the folder where the tool is run
-    - By default choose the option 4 for both config and working repos
-    - Please use a naming convetion for config repo and working repos
-        - It's for YOUR convenience and for others'
-        - f.ex. `confJames` and `workJames`
-    - N.B.! Currently the tool will require quite a few empty inputs with ENTER presses
-
+#### Run the tool on the terminal
+-  Navigate to the same level where the oss-mlops-project folder (but have to be outside of a repo folder) is on and run:
+    
 ```
 oss-mlops-platform/tools/CLI-tool/create_gitrepo_devops_for_ml_work.sh
 ``` 
+
+1. Enter the organisation name 
+2. Enter the name for configuration repository 
+- Please use a naming convetion for config repo and working repos  (f.ex. `confJames` and `workJames`) 
+3. Create both configuration and working repositories (option 4) 
+4. Interactively create config (option 1)
+5. Use default Kubeflow endpoin
+6. Use default Kubeflow username
+7. Use deafult Kubeflow password
+8. Do not add emote private key 
+9. Do not specify remote cluster IP
+10. Do not add remote cluster name 
+11. Do not paste the secret 
+12. Enter the name for working repository
 
 ## Step 4 Installing GitHub Actions runner
 
