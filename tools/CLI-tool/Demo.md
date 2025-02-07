@@ -6,8 +6,8 @@
   <summary>For Windows</summary>
 
   - Windows 10 or higher
-- At least 20GB of free disk space
-- Enable WSL & Install Ubuntu
+  - At least 20GB of free disk space
+  - Enable WSL & Install Ubuntu
 
   <aside>
   
@@ -18,7 +18,7 @@
   
   </aside>
 
-  - Check if WSL is enabled
+  - **Check if WSL is enabled**
 
     Open Command Prompt or PowerShell
 
@@ -40,7 +40,7 @@
 
       Start button - type PowerShell - right-click Windows PowerShell - Run as administrator
 
-      - Run following commands
+      - Run the following commands
 
         ```bash
         dism.exe /online /enable-feature /featurename:Microsoft-Windows-Subsystem-Linux /all /norestart
@@ -49,7 +49,7 @@
 
       - Restart computer
 
-  - Check if Ubuntu is installed
+  - **Check if Ubuntu is installed**
 
     Open Command Prompt or PowerShell
 
@@ -73,66 +73,188 @@
       3. Launch the distribution from the Start Menu
       4. Complete the initial setup by creating a UNIX username and password
 
-- Install Docker Desktop
+  - **Install Docker Desktop**
 
-  - Check if Docker Desktop is installed
+    - **Check if Docker Desktop is installed**
 
-    Look for the Docker icon in the system tray
+      Look for the Docker icon in the system tray
+      
+      ***or***
+      
+      Open Command Prompt / PowerShell
+
+      ```bash
+      docker --version
+      ```
+
+      - If Docker version is displayed
+        
+        Docker is installed - skip installation (skip the next step)
+        
+      - If Docker version is not displayed
+        
+        Docker is not installed - proceed to installation (proceed to the next step)
+
+    - ***Install Docker for Windows***
+
+      Open the following link in your browser: [https://www.docker.com/products/docker-desktop/](https://www.docker.com/products/docker-desktop/)
+      
+      - During installation ***select the WSL 2 based engine***
+
+  - **Configure Docker for WSL**
+
+    Open Docker Desktop
     
-    ***or***
+    Proceed to **Settings - General Tab**
     
-    Open Command Prompt / PowerShell
+    - Ensure that the option "Use the WSL 2 based engine" is selected
+    
+    Proceed to **Settings - Resources - WSL Integration**
+    
+    - Configure which WSL 2 distros you want to access Docker from - ***select both options***
+      - Enable integration with my default WSL distro
+      - Ubuntu
+    
+    Proceed to **Settings - Resources - Advanced** 
+    
+    <aside>
+    
+    Since Docker Desktop with the WSL 2 backend is used, ***resource limits*** (such as memory, CPU, and swap size) are ***managed by Windows via a configuration file instead of Docker Desktop’s built-in settings***
+    
+    </aside>
+    
+    - The `.wslconfig` file is located in the Windows user’s home directory.
+      
+      This file is read by WSL 2 on startup to apply resource limits and other configurations globally, ***regardless of where Docker Desktop itself is installed***
+    
+    - **Check if `.wslconfig` file exists**
 
+      ```bash
+      dir C:\Users\<YourUsername>\.wslconfig
+      ```
+      
+  - **If `.wslconfig` file exists:**
+    1. Open the `.wslconfig` file located in `C:\Users\<YourUsername>\.wslconfig`.
+    2. Add or update the resource allocations by including the following lines:
+
+       ```bash
+       [wsl2]
+       memory=4GB
+       # Limits the WSL 2 VM to 4 GB of RAM *** (adjust as needed) ***
+
+       processors=2
+       # Allocates 2 virtual processors
+       
+       swap=2GB
+       # Sets a 2 GB swap file (optional)
+       # allocate more RAM as needed…
+       ```
+
+  - **If `.wslconfig` file does not exist:**
+    1. Create a `.wslconfig` file in your Windows home directory (`C:\Users\<YourUsername>\`).
+    2. Open the newly created `.wslconfig` file and add the following configuration:
+
+       ```bash
+       [wsl2]
+       memory=4GB
+       # Limits the WSL 2 VM to 4 GB of RAM *** (adjust as needed) ***
+
+       processors=2
+       # Allocates 2 virtual processors
+
+       swap=2GB
+       # Sets a 2 GB swap file (optional)
+       # allocate more RAM as needed…
+       ```
+
+  - **Check if Git is installed:**
+
+    - Open your WSL shell or Ubuntu terminal.
+    
     ```bash
-    docker --version
+    git --version
     ```
+    - If a version is displayed, Git is installed – proceed to the next step.
+    - If not, install Git by running:
 
-    - If Docker version is displayed
-      
-      Docker is installed - skip installation (skip the next step)
-      
-    - If Docker version is not displayed
-      
-      Docker is not installed - proceed to installation (proceed to the next step)
-
-  - ***Install Docker for Windows***
-
-    Open following link in browser: https://www.docker.com/products/docker-desktop/
+      ```bash
+      sudo apt update
+      sudo apt install git -y
+      ```
+- **Install Additional Tools**
+  
+- Run all of the following commands in your WSL (Ubuntu) terminal
     
-    - During installation ***select the WSL 2 based engine***
+  - **GitHub CLI (gh):**
 
-- Configure Docker for WSL
+    Install prerequisites and then the GitHub CLI:
 
-  Open Docker Desktop
-  
-  Proceed to Settings - General Tab
-  
-  - Ensure that option "Use the WSL 2 based engine" is selected
-  
-  Proceed to Settings - Resources - WSL Integration
-  
-  - Configure which WSL 2 distros you want to access Docker from - ***select both options***
-    - Enable integration with my default WSL distro
-    - Ubuntu
-  
-  Proceed to Settings - Resources - Advanced 
-  
-  <aside>
-  
-  Since Docker Desktop with the WSL 2 backend is used, ***resource limits*** (such as memory, CPU, and swap size) are ***managed by Windows via a configuration file instead of Docker Desktop’s built-in settings***
-  
-  </aside>
-  
-  - .wslconfig file is located in Windows user’s home directory
-    
-    File is read by WSL 2 on startup to apply resource limits and other configurations globally, ***regardless of where Docker Desktop itself is installed***
-    
-  
-  Check if .wslconfig file exists
+      ```bash
+      # Ensure curl is installed
+      sudo apt update
+      sudo apt install curl -y
 
-  ```bash
-  dir C:\Users\<YourUsername>\.wslconfig
-  
+      # Add GitHub CLI GPG key and repository
+      curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | sudo dd of=/usr/share/keyrings/githubcli-archive-keyring.gpg
+      sudo chmod go+r /usr/share/keyrings/githubcli-archive-keyring.gpg
+      echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | sudo tee /etc/apt/sources.list.d/github-cli.list > /dev/null
+
+      # Install GitHub CLI
+      sudo apt update
+      sudo apt install gh -y
+      ```
+
+  - **Python (3.6 or later) & pip:**
+
+      Install Python and pip:
+
+      ```bash
+      sudo apt update
+      sudo apt install python3 python3-pip -y
+      ```
+
+      Verify the installations:
+
+      ```bash
+      python3 --version
+      pip3 --version
+      ```
+
+  - **Kubernetes CLI (kubectl):**
+
+      Install `kubectl` by running:
+
+      ```bash
+      sudo apt update
+      sudo apt install -y apt-transport-https ca-certificates curl
+      sudo curl -fsSL https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add -
+      echo "deb https://apt.kubernetes.io/ kubernetes-xenial main" | sudo tee /etc/apt/sources.list.d/kubernetes.list
+      sudo apt update
+      sudo apt install -y kubectl
+      ```
+
+  - **Minikube:**
+
+      Download and install Minikube:
+
+      ```bash
+      curl -LO https://storage.googleapis.com/minikube/releases/latest/minikube_latest_amd64.deb
+      sudo dpkg -i minikube_latest_amd64.deb
+      ```
+
+  - **Jupyter Notebook:**
+
+      Install Jupyter Notebook using pip:
+
+      ```bash
+      pip3 install notebook
+      ```
+
+      Verify the installation:
+
+      ```bash
+      jupyter notebook --version
+      ```
 </details>
 
 <details>
