@@ -2,9 +2,138 @@
 
 ## Step 0: Checking all necessary pre-installments:
 
-
 <details>
-<summary>For Windows </summary>
+  <summary>For Windows</summary>
+
+  - Windows 10 or higher
+- At least 20GB of free disk space
+- Enable WSL & Install Ubuntu
+
+  <aside>
+  💡
+  
+  ***Ubuntu runs on top of WSL***
+  
+  If WSL isn't enabled, installing Ubuntu won't work as intended - 
+  verify that WSL is enabled and properly configured ***before*** installing Ubuntu
+  
+  </aside>
+
+  - Check if WSL is enabled
+
+    Open Command Prompt or PowerShell
+
+    ```bash
+    wsl -l -v
+    ```
+
+    - If a list of Linux distributions with their version number is displayed (e.g., Ubuntu 2)
+      
+      ***If version is 2*** - WSL is enabled and you have a distribution installed
+      
+      ***If version is 1*** - upgrade version to 2, because WSL 2 is required for Docker Desktop
+      
+      ```bash
+      wsl --set-version <DistributionName> 2
+      ```
+
+    - If a list of Linux distributions with their version number is ***not*** displayed
+
+      Start button - type PowerShell - right-click Windows PowerShell - Run as administrator
+
+      - Run following commands
+
+        ```bash
+        dism.exe /online /enable-feature /featurename:Microsoft-Windows-Subsystem-Linux /all /norestart
+        dism.exe /online /enable-feature /featurename:VirtualMachinePlatform /all /norestart
+        ```
+
+      - Restart computer
+
+  - Check if Ubuntu is installed
+
+    Open Command Prompt or PowerShell
+
+    ```bash
+    wsl -l -v
+    ```
+
+    - If Ubuntu appears in the list, Ubuntu is installed correctly
+      
+      ***If version is 2*** - Ubuntu install & version is correct - proceed to next step
+      
+      ***If version is 1*** - upgrade version to 2, because WSL 2 is required for Docker Desktop
+      
+      ```bash
+      wsl --set-version Ubuntu 2
+      ```
+
+    - If Ubuntu does not appear in the list
+      1. Open Microsoft Store
+      2. Search for Ubuntu - Install
+      3. Launch the distribution from the Start Menu
+      4. Complete the initial setup by creating a UNIX username and password
+
+- Install Docker Desktop
+
+  - Check if Docker Desktop is installed
+
+    Look for the Docker icon in the system tray
+    
+    ***or***
+    
+    Open Command Prompt / PowerShell
+
+    ```bash
+    docker --version
+    ```
+
+    - If Docker version is displayed
+      
+      Docker is installed - skip installation (skip the next step)
+      
+    - If Docker version is not displayed
+      
+      Docker is not installed - proceed to installation (proceed to the next step)
+
+  - ***Install Docker for Windows***
+
+    Open following link in browser: https://www.docker.com/products/docker-desktop/
+    
+    - During installation ***select the WSL 2 based engine***
+
+- Configure Docker for WSL
+
+  Open Docker Desktop
+  
+  Proceed to Settings - General Tab
+  
+  - Ensure that option "Use the WSL 2 based engine" is selected
+  
+  Proceed to Settings - Resources - WSL Integration
+  
+  - Configure which WSL 2 distros you want to access Docker from - ***select both options***
+    - Enable integration with my default WSL distro
+    - Ubuntu
+  
+  Proceed to Settings - Resources - Advanced 
+  
+  <aside>
+  💡
+  
+  Since Docker Desktop with the WSL 2 backend is used, ***resource limits*** (such as memory, CPU, and swap size) are ***managed by Windows via a configuration file instead of Docker Desktop’s built-in settings***
+  
+  </aside>
+  
+  - .wslconfig file is located in Windows user’s home directory
+    
+    File is read by WSL 2 on startup to apply resource limits and other configurations globally, ***regardless of where Docker Desktop itself is installed***
+    
+  
+  Check if .wslconfig file exists
+
+  ```bash
+  dir C:\Users\<YourUsername>\.wslconfig
   
 </details>
 
