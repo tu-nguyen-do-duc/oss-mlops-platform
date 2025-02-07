@@ -10,7 +10,6 @@
 - Enable WSL & Install Ubuntu
 
   <aside>
-  💡
   
   ***Ubuntu runs on top of WSL***
   
@@ -119,7 +118,6 @@
   Proceed to Settings - Resources - Advanced 
   
   <aside>
-  💡
   
   Since Docker Desktop with the WSL 2 backend is used, ***resource limits*** (such as memory, CPU, and swap size) are ***managed by Windows via a configuration file instead of Docker Desktop’s built-in settings***
   
