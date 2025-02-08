@@ -55,16 +55,17 @@ Again for more information please consult the [CSC user guide](https://docs.csc.
 1. You should install [Window Subsystem for Linux (WSL)](https://learn.microsoft.com/en-us/windows/wsl/install)
 2. Move your key pairs that you have save in your computer from the earlier step into your linux environment under `home/<yourusername>/`
 
-The rest of the setup will then be universal
+The rest of the setup will then be universal!
 
 1. Locate and navigate your key path in your system
 2. Change the permission by using the command: `chmod 400 <your_key_name>.pem` or `chmod 400 <your_key_name>.cer` on mac
-3. ssh into your Virtual machine using the command line by using the command: `sudo ssh -L 8080:localhost:8080 <username>@<your_IP> -i <your_key_name>.pem` or `sudo ssh -L 8080:localhost:8080 <username>@<your_IP> -i <your_key_name>.cer`
+3. ssh into your Virtual machine using the command line by using the command: `sudo ssh -L 8080:localhost:8080 <your_username>@<your_IP> -i <your_key_name>.pem`
 4. Once inside you should do `sudo apt update` and `sudo apt upgrade`
 5. Then you should install docker LTS using the command `sudo apt install docker.io`
 6. Check if you had install docker successfully by using `docker version`
-7. Clone the github project into to the VM
-8. go into the GitHub by using `cd`
+7. Clone the Github repo into to the VM
+8. go into the Github repo by using `cd`
+**!!!<your_username> in this case actually `ubuntu` reason can be found with detail explaination in [CSC user guide](https://docs.csc.fi/cloud/pouta/connecting-to-vm/)**
 
 **\---------This part is for the version of the project where there is error in the setup script\---------**
 
