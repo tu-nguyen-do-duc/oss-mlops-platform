@@ -470,3 +470,11 @@ If you need to change the repository runners is connected to, you need to either
 ## Step 5 Starting the run on local ML-OPS platform
 
 If everything is in order then by pushing to your working repository GitHub should order the runner on your computer to start the run on your computer's Kubeflow setup.
+
+#### Possible problems: 
+If commit fails due to the wrong python version, go to .github/workflows ->  run-notebook-in-development-environment.yml, and delete this part of the code: 
+```
+
+  with:
+        python-version: 3.8
+```
