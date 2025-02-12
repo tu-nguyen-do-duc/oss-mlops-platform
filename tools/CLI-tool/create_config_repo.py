@@ -233,24 +233,37 @@ def set_config(repo_name, org_name):
         print("Configuration saved to 'config.yaml'.")
 
     elif choice == 2:
-        script_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), "../../../"))
-        source_path = os.path.join(script_dir, "oss-mlops-platform/tools/CLI-tool/config.yaml")
+        home_directory = os.path.expanduser("~")
+        #script_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), "../../../"))
+        #source_path = os.path.join(script_dir, "oss-mlops-platform/tools/CLI-tool/config.yaml")
 
-        print("Resolved source_path:", source_path)
+        config_name = str(input("input the name of config .yaml file that you want to use: "))
+        if(".yaml" in config_name):
+            config_name = config_name[:-5]
+
+        yaml_files = glob.glob(f"{home_directory}/**/{config_name}.yaml", recursive=True,include_hidden=True)
+        if not yaml_files:
+            print("no such file exist")
+        else:
+            config_file = yaml_files[0]
+            print(f"{config_file}")
+
+
+        #print("Resolved source_path:", source_path)
 
         # Open the file using the resolved path
         try:
-            with open(source_path, "r") as yamlfile:
+            with open(config_file, "r") as yamlfile:
                 data = yaml.safe_load(yamlfile)
-                with open("config.yaml", 'w') as f:
+                with open(f"{config_name}.yaml", 'w') as f:
                     yaml.dump(data, f, sort_keys=False)
         except FileNotFoundError:
-            print(f"Error: The specified file does not exist at path: {source_path}")
+            print(f"Error: The specified file does not exist at path: {config_file}")
             exit(1)
 
-    with open("config.yaml", "r") as yamlfile:
+    with open(f"{config_name}.yaml", "r") as yamlfile:
         data = yaml.load(yamlfile, Loader=yaml.FullLoader)
-        print("Config file read successfully.")
+        print(f"{config_name} file read successfully.")
         print(data)
 
     for key, value in data.items():
