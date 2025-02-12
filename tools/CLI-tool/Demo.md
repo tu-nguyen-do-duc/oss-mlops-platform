@@ -1,8 +1,6 @@
 # Starting a run on local ML-OPS Platform
 
 **🚀 [Checking all necessary pre-installments](#checking-all-necessary-pre-installments)**   
-*Step 0.1: Checking all necessary pre-installments on Windows WSL - Ubuntu*  
-*Step 0.2: Checking all necessary pre-installments on MacOs*  
 
 **🚧 [Clone the main project repository](#clone-the-main-repository-to-your-local-folder)**
 
@@ -369,7 +367,7 @@ git config --global user.email "your.email@example.com"
 ```
 gh auth login
 ```
-#### Choose: 
+Choose: 
 1. GitHub.com
 2. HTTPS
 3. Yes 
