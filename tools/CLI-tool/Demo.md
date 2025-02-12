@@ -26,7 +26,7 @@
 
 ## Step 0: Checking all necessary pre-installments:
 
-### Checking all necessary pre-installments:
+### Checking all necessary pre-installments
 
 <details>
   <summary>For Windows - before Ubuntu installation</summary>
