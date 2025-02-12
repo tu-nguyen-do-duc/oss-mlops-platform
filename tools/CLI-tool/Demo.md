@@ -3,7 +3,7 @@
 ## Step 0: Checking all necessary pre-installments:
 
 <details>
-  <summary>For Windows</summary>
+  <summary>For Windows - before Ubuntu installation</summary>
 
   - Windows 10 or higher
   - At least 20GB of free disk space
@@ -166,6 +166,10 @@
        # Sets a 2 GB swap file (optional)
        # allocate more RAM as needed…
        ```
+  </details>
+  
+  <details>
+    <summary>For Linux - Ubuntu</summary>
 
   - **Check if Git is installed:**
 
