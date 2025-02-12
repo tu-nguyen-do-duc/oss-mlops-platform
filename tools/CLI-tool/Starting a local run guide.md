@@ -29,7 +29,7 @@ You need to have SSH key added to GitHub for multiple steps. USE ONE WITHOUT THE
 
 https://docs.github.com/en/authentication/connecting-to-github-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent
 
-For Linux, follow the same steps as with WSL. If you have a different package manager to apt, it's presumed you know what you're doing and don't need this guide.
+For Linux, follow the same steps as with WSL. If you have a different package manager to apt, install the packages through your favorite package manager.
 
 ## Step 1: Installing local ML-OPS platform
 
