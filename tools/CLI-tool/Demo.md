@@ -253,22 +253,6 @@
       sudo mv ./kubectl /usr/local/bin/
       ```
 
-  - **Download and install Minikube:**
-
-      ```bash
-      # Download the latest Minikube
-      curl -Lo minikube https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
-      
-      # Make it executable
-      chmod +x ./minikube
-      
-      # Move it to your user's executable PATH
-      sudo mv ./minikube /usr/local/bin/
-      
-      # Set the driver version to Docker
-      minikube config set driver docker
-      ```
-
   - **Install Jupyter Notebook using pip:**
 
       ```bash
@@ -313,11 +297,6 @@ pip3 --version
 ```
 brew install kubectl
 ```
-- Minikube
-```
-brew install minikube
-```
-
 
 - Docker  https://docs.docker.com/desktop/setup/install/mac-install/
 
