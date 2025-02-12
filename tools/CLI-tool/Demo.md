@@ -25,7 +25,7 @@
 
 ## Step 0: Checking all necessary pre-installments:
 
-### Checking all necessary pre-installments
+### Pre-installments for each OS
 
 <details>
   <summary>For Windows - before Ubuntu installation</summary>
@@ -379,7 +379,7 @@ gh auth login
 
 ## Step 1: Installing local ML-OPS platform
 
-Run the setup script in the main repository's folder:
+#### Run the setup script in the main repository's folder:
 
 ```
 ./setup.sh
@@ -421,11 +421,13 @@ kubectl delete inferenceservice wine-quality -n kserve-inference
 
 ******
 
-## Step 2 Portforwarding the Kubeflow ports
+## Step 2: Portforwarding the Kubeflow ports
 
 Every time you start up the cluster you have to portforward the ports from inside the containers so they can be accessed from for example your browser.
 
-Forward the ports: run two commands each in separate terminal window
+#### Forward the ports
+
+run two commands each in separate terminal window:
 ```
 kubectl -n mlflow port-forward svc/mlflow 5000:5000
 ```
@@ -436,7 +438,8 @@ kubectl port-forward svc/ml-pipeline-ui -n kubeflow 8080:80
 
 After this step you should be able to connect to the Kubeflow interface from http://localhost:8080/
 
-> The default email address is `user@example.com` and the default password is `12341234`.
+#### Default credential 
+email address is `user@example.com` and the default password is `12341234`.
 
 At this point you can test the cluster with the pipeline in a notebook for the stand alone kfp installation. Separate installation of Jupyter Notebook environment work for running the notebook. Jupyter Notebook installation guide: https://jupyter.org/install
 
@@ -444,7 +447,7 @@ Notebook location (Softala version):
 https://github.com/Softala-MLOPS/oss-mlops-platform/blob/main/tutorials/demo_notebooks/demo_pipeline_standalone_kfp/demo-pipeline.ipynb
 
 
-### Start the Jupiter Notebook
+#### Start the Jupiter Notebook
 
 For MacOs and Windows (WSL):
 ```
@@ -452,11 +455,11 @@ jupyter notebook
 ```
 ******
 
-## Step 3 Creating the repositories and setting up the CI/CD pipeline with the tool
+## Step 3: Creating the repositories and setting up the CI/CD pipeline with the tool
 
 
 #### Run the tool on the terminal
--  Navigate to the same level where the oss-mlops-project folder (but have to be outside of a repo folder) is on and run:
+-  Navigate to the same level where the oss-mlops-project folder (but have to be outside of a repo folder) is on and run
     
 ```
 oss-mlops-platform/tools/CLI-tool/create_gitrepo_devops_for_ml_work.sh
@@ -478,7 +481,7 @@ oss-mlops-platform/tools/CLI-tool/create_gitrepo_devops_for_ml_work.sh
   
   ******
 
-## Step 4 Installing GitHub Actions runner
+## Step 4: Installing GitHub Actions runner
 
 You also need a local-hosted GitHub Actions runner which is provided by GitHub. The runner is bound to a single GitHub organization or a single repository. It can be changed later, see note at the end of this step.
 
@@ -503,11 +506,11 @@ If you need to change the repository runners is connected to, you need to either
 
 ******
 
-## Step 5 Starting the run on local ML-OPS platform
+## Step 5: Starting the run on local ML-OPS platform
 
 If everything is in order then by pushing to your working repository GitHub should order the runner on your computer to start the run on your computer's Kubeflow setup.
 
-#### Possible problems: 
+#### Possible problems
 If commit fails due to the wrong python version, go to .github/workflows ->  run-notebook-in-development-environment.yml, and delete this part of the code: 
 ```
 
