@@ -1,4 +1,5 @@
 import typer
+import glob
 import subprocess
 import sys
 import os
@@ -255,15 +256,15 @@ def set_config(repo_name, org_name):
         try:
             with open(config_file, "r") as yamlfile:
                 data = yaml.safe_load(yamlfile)
-                with open(f"{config_name}.yaml", 'w') as f:
+                with open(f"config.yaml", 'w') as f:
                     yaml.dump(data, f, sort_keys=False)
         except FileNotFoundError:
             print(f"Error: The specified file does not exist at path: {config_file}")
             exit(1)
 
-    with open(f"{config_name}.yaml", "r") as yamlfile:
+    with open("config.yaml", "r") as yamlfile:
         data = yaml.load(yamlfile, Loader=yaml.FullLoader)
-        print(f"{config_name} file read successfully.")
+        print("Config file read successfully.")
         print(data)
 
     for key, value in data.items():
