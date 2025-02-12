@@ -1,5 +1,29 @@
 # Starting a run on local ML-OPS Platform
 
+**🚀 [Checking all necessary pre-installments](#step-0-checking-all-necessary-pre-installments)**   
+*Step 0.1: Checking all necessary pre-installments on Windows WSL - Ubuntu:*  
+*Step 0.2: Checking all necessary pre-installments on MacOs:*  
+
+**🚧 [Clone the main project repository](#clone-the-main-repository-to-your-local-folder)**
+
+**🔑 [Create SSH key](#create-ssh-key)**
+
+**🔐 [Add SSH key to GitHub](#add-ssh-key-to-the-github)**  
+*Includes:* Set your GitHub Credentials ([link](#set-your-github-credentials)) and Authenticate with GitHub ([link](#authenticate-with-github))
+
+**⚙️ [Step 1: Installing local ML-OPS Platform](#step-1-installing-local-ml-ops-platform)**  
+*Troubleshooting the local cluster:* ([link](#some-problem-solving-with-the-local-cluster))
+
+**🔌 [Step 2: Portforwarding the Kubeflow Ports](#step-2-portforwarding-the-kubeflow-ports)**  
+*And start the Jupyter Notebook:* ([link](#start-the-jupiter-notebook))
+
+**📁 [Step 3: Creating repositories & Setting up the CI/CD Pipeline](#step-3-creating-the-repositories-and-setting-up-the-cicd-pipeline-with-the-tool)**
+
+**🤖 [Step 4: Installing GitHub Actions Runner](#step-4-installing-github-actions-runner)**
+
+**🏁 [Step 5: Starting the run on local ML-OPS Platform](#step-5-starting-the-run-on-local-ml-ops-platform)**  
+*Including Possible Problems:* ([link](#possible-problems))
+
 ## Step 0: Checking all necessary pre-installments:
 
 <details>
@@ -314,7 +338,7 @@ jupyter notebook --version
 </details>
 
 
-Clone the main repository to your local folder:
+### Clone the main repository to your local folder:
 
 ```
 git clone https://github.com/Softala-MLOPS/oss-mlops-platform.git
