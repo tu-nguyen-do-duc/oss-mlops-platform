@@ -7,7 +7,7 @@
 **🔑 [Create SSH key](#create-ssh-key)**
 
 **🔐 [Add SSH key to GitHub](#add-ssh-key-to-the-github)**  
-*Includes:* Set your GitHub Credentials ([link](#set-your-github-credentials)) and Authenticate with GitHub ([link](#authenticate-with-github))
+*Authenticate with GitHub:* ([link](#authenticate-with-github))
 
 **⚙️ [Step 1: Installing local ML-OPS Platform](#step-1-installing-local-ml-ops-platform)**  
 *Troubleshooting the local cluster:* ([link](#some-problem-solving-with-the-local-cluster))
@@ -324,18 +324,6 @@ jupyter notebook --version
 git clone https://github.com/Softala-MLOPS/oss-mlops-platform.git
 ```
 
-
-### Create SSH key
-
-https://docs.github.com/en/authentication/connecting-to-github-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent
-
-
-### Add SSH key to the GitHub
-
-Settings -> SSH and GPG keys -> New SSH key:
-1. Create a title for the key 
-2. Pick Authentication key 
-3. Paste your SSH key 
 
 #### Set your GitHub credentials
 ```
