@@ -1,6 +1,6 @@
 # Starting a run on local ML-OPS Platform
 
-**🚀 [Checking all necessary pre-installments](#step-0-checking-all-necessary-pre-installments)**   
+**🚀 [Checking all necessary pre-installments](#checking-all-necessary-pre-installments)**   
 *Step 0.1: Checking all necessary pre-installments on Windows WSL - Ubuntu*  
 *Step 0.2: Checking all necessary pre-installments on MacOs*  
 
