@@ -379,7 +379,7 @@ gh auth login
 
 ## Step 1: Installing local ML-OPS platform
 
-#### Run the setup script in the main repository's folder:
+### Run the setup script in the main repository's folder:
 
 ```
 ./setup.sh
@@ -425,7 +425,7 @@ kubectl delete inferenceservice wine-quality -n kserve-inference
 
 Every time you start up the cluster you have to portforward the ports from inside the containers so they can be accessed from for example your browser.
 
-#### Forward the ports
+### Forward the ports
 
 run two commands each in separate terminal window:
 ```
@@ -438,7 +438,7 @@ kubectl port-forward svc/ml-pipeline-ui -n kubeflow 8080:80
 
 After this step you should be able to connect to the Kubeflow interface from http://localhost:8080/
 
-#### Default credential 
+### Default credential 
 email address is `user@example.com` and the default password is `12341234`.
 
 At this point you can test the cluster with the pipeline in a notebook for the stand alone kfp installation. Separate installation of Jupyter Notebook environment work for running the notebook. Jupyter Notebook installation guide: https://jupyter.org/install
@@ -447,7 +447,7 @@ Notebook location (Softala version):
 https://github.com/Softala-MLOPS/oss-mlops-platform/blob/main/tutorials/demo_notebooks/demo_pipeline_standalone_kfp/demo-pipeline.ipynb
 
 
-#### Start the Jupiter Notebook
+### Start the Jupiter Notebook
 
 For MacOs and Windows (WSL):
 ```
@@ -458,7 +458,7 @@ jupyter notebook
 ## Step 3: Creating the repositories and setting up the CI/CD pipeline with the tool
 
 
-#### Run the tool on the terminal
+### Run the tool on the terminal
 -  Navigate to the same level where the oss-mlops-project folder (but have to be outside of a repo folder) is on and run
     
 ```
@@ -510,7 +510,7 @@ If you need to change the repository runners is connected to, you need to either
 
 If everything is in order then by pushing to your working repository GitHub should order the runner on your computer to start the run on your computer's Kubeflow setup.
 
-#### Possible problems
+### Possible problems
 If commit fails due to the wrong python version, go to .github/workflows ->  run-notebook-in-development-environment.yml, and delete this part of the code: 
 ```
 
