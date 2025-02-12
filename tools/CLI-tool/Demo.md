@@ -1,6 +1,6 @@
 # Starting a run on local ML-OPS Platform
 
-**🚀 [Checking all necessary pre-installments](#checking-all-necessary-pre-installments)**   
+**🚀 [Checking all necessary pre-installments](#step-0-checking-all-necessary-pre-installments)**   
 
 **🚧 [Clone the main project repository](#clone-the-main-repository-to-your-local-folder)**
 
