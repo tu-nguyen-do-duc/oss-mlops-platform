@@ -325,13 +325,13 @@ git clone https://github.com/Softala-MLOPS/oss-mlops-platform.git
 ```
 
 
-#### Set your GitHub credentials
+### Set your GitHub credentials
 ```
 git config --global user.name "Your Name"
 git config --global user.email "your.email@example.com"
 ```
 
-#### Authenticate with GitHub
+### Authenticate with GitHub
 ```
 gh auth login
 ```
