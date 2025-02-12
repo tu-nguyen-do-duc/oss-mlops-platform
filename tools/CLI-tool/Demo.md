@@ -21,6 +21,7 @@
 
 **🏁 [Step 5: Starting the run on local ML-OPS Platform](#step-5-starting-the-run-on-local-ml-ops-platform)**  
 *Including Possible Problems:* ([link](#possible-problems))
+******
 
 ## Step 0: Checking all necessary pre-installments:
 
@@ -338,42 +339,43 @@ jupyter notebook --version
 </details>
 
 
-### Clone the main repository to your local folder:
+### Clone the main repository to your local folder
 
 ```
 git clone https://github.com/Softala-MLOPS/oss-mlops-platform.git
 ```
 
 
-### Create SSH key:
+### Create SSH key
 
 https://docs.github.com/en/authentication/connecting-to-github-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent
 
 
-### Add SSH key to the GitHub:
+### Add SSH key to the GitHub
 
 Settings -> SSH and GPG keys -> New SSH key:
 1. Create a title for the key 
 2. Pick Authentication key 
 3. Paste your SSH key 
 
-#### Set your GitHub credentials: 
+#### Set your GitHub credentials
 ```
 git config --global user.name "Your Name"
 git config --global user.email "your.email@example.com"
 ```
 
-#### Authenticate with GitHub:
+#### Authenticate with GitHub
 ```
 gh auth login
 ```
-Choose: 
-1. GitHub.com
-2. HTTPS
-3. Yes 
-4. Login with a web browser 
-5. Copy the code from the terminal and paste it to the Github 
+> Choose: 
+> 1. GitHub.com
+> 2. HTTPS
+> 3. Yes 
+> 4. Login with a web browser 
+> 5. Copy the code from the terminal and paste it to the Github 
 
+******
 
 ## Step 1: Installing local ML-OPS platform
 
@@ -382,12 +384,12 @@ Run the setup script in the main repository's folder:
 ```
 ./setup.sh
 ```
-Choose: 
-1. [5] Standalone KFP and Kserve
-2. Install local Docker registry? - no
-3. Install Ray? (It requires ~4 additional CPUs) - no 
-4. Use recommended Kubernetes version
-
+> Choose: 
+>   1. [5] Standalone KFP and Kserve
+>   2. Install local Docker registry? - no
+>   3. Install Ray? (It requires ~4 additional CPUs) - no 
+>   4. Use recommended Kubernetes version
+  
 
 **The installation will take time and some of the pods can get stuck.** 
 
@@ -399,7 +401,7 @@ kubectl get pods --all-namespaces
 
 Ideally all the pods should be running
 
-### Some problem solving with the local cluster:
+### Some problem solving with the local cluster
 
 
 1. Deleting a pod incase of it getting stuck in a crash loop or an error:
@@ -415,7 +417,9 @@ The guides for this are scattered in here https://github.com/Softala-MLOPS/oss-m
 kubectl delete inferenceservice wine-quality -n kserve-inference
 ```
 
-#### Once you get all the pods running they should start up correctly each time you start the cluster again.
+<em><strong>Once you get all the pods running they should start up correctly each time you start the cluster again.</strong></em>
+
+******
 
 ## Step 2 Portforwarding the Kubeflow ports
 
@@ -432,7 +436,7 @@ kubectl port-forward svc/ml-pipeline-ui -n kubeflow 8080:80
 
 After this step you should be able to connect to the Kubeflow interface from http://localhost:8080/
 
-The default email address is `user@example.com` and the default password is `12341234`.
+> The default email address is `user@example.com` and the default password is `12341234`.
 
 At this point you can test the cluster with the pipeline in a notebook for the stand alone kfp installation. Separate installation of Jupyter Notebook environment work for running the notebook. Jupyter Notebook installation guide: https://jupyter.org/install
 
@@ -440,13 +444,13 @@ Notebook location (Softala version):
 https://github.com/Softala-MLOPS/oss-mlops-platform/blob/main/tutorials/demo_notebooks/demo_pipeline_standalone_kfp/demo-pipeline.ipynb
 
 
-### Start the Jupiter Notebook: 
+### Start the Jupiter Notebook
 
 For MacOs and Windows (WSL):
 ```
 jupyter notebook
 ```
-
+******
 
 ## Step 3 Creating the repositories and setting up the CI/CD pipeline with the tool
 
@@ -471,6 +475,8 @@ oss-mlops-platform/tools/CLI-tool/create_gitrepo_devops_for_ml_work.sh
 10. Do not add remote cluster name 
 11. Do not paste the secret 
 12. Enter the name for working repository
+  
+  ******
 
 ## Step 4 Installing GitHub Actions runner
 
@@ -494,6 +500,8 @@ You can restart the runner after the next computer restart by navigating to the 
 **Note about reconfiguring the runner**
 
 If you need to change the repository runners is connected to, you need to either locate to he repository/organization the runner is connected to in GitHub site and remove it (GitHub will give you the script for it) OR delete the *hidden* `.runner` file in the `actions-runner/` folder and redo the step with the new token. *Also do note the runner OS version, don't be like me and try to use the Windows version on Linux.*
+
+******
 
 ## Step 5 Starting the run on local ML-OPS platform
 
