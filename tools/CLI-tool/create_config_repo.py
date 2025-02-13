@@ -185,7 +185,7 @@ def set_config(repo_name, org_name):
 
     while True:
         try:
-            choice = int(input("Choose an option (1: Interactively create config, 2: Copy existing config.yaml from 'oss-mlops-platform/tools/CLI-tool/config.yaml': "))
+            choice = int(input("Choose an option (1: Interactively create config, 2: Copy existing a config.yaml): "))
             if choice in [1, 2]:
                 break
             else:
@@ -241,22 +241,37 @@ def set_config(repo_name, org_name):
         config_name = str(input("input the name of config .yaml file that you want to use: "))
         if(".yaml" in config_name):
             config_name = config_name[:-5]
-
         yaml_files = glob.glob(f"{home_directory}/**/{config_name}.yaml", recursive=True,include_hidden=True)
+
         if not yaml_files:
             print("no such file exist")
+
+        elif len(yaml_files) >1:
+            config_file_path_index = 1
+            for config_path in yaml_files:
+                print(f"[{config_file_path_index}] {config_path}")
+                config_file_path_index = config_file_path_index +1
+            while True:
+                try:
+                    chosen_config_file_path = int(input("you have multiple configs with the same name in different folders please choose which one you want to use: "))
+                    if chosen_config_file_path in range(1,config_file_path_index-1):
+                        config_file = yaml_files[chosen_config_file_path - 1]
+                        break
+                    else:
+                        print(f"invalid input please choose from 1 to {config_file_path_index-1}")
+                except ValueError:
+                    print(f"Invalid input please choose a number from 1 to {config_file_path_index-1}")
         else:
             config_file = yaml_files[0]
             print(f"{config_file}")
 
 
         #print("Resolved source_path:", source_path)
-
         # Open the file using the resolved path
         try:
             with open(config_file, "r") as yamlfile:
                 data = yaml.safe_load(yamlfile)
-                with open(f"config.yaml", 'w') as f:
+                with open("config.yaml", 'w') as f:
                     yaml.dump(data, f, sort_keys=False)
         except FileNotFoundError:
             print(f"Error: The specified file does not exist at path: {config_file}")
