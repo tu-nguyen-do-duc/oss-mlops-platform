@@ -252,11 +252,11 @@ def set_config(repo_name, org_name):
             config_file_path_index = 1
             for config_path in yaml_files:
                 print(f"[{config_file_path_index}] {config_path}")
-                config_file_path_index = config_file_path_index +1
+                config_file_path_index = config_file_path_index + 1
             while True:
                 try:
                     chosen_config_file_path = int(input("you have multiple configs with the same name in different folders please choose which one you want to use: "))
-                    if chosen_config_file_path in range(1,config_file_path_index-1):
+                    if chosen_config_file_path in range(1,config_file_path_index+1):
                         config_file = yaml_files[chosen_config_file_path - 1]
                         break
                     else:
