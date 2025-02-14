@@ -32,7 +32,10 @@
 
   - Windows 10 or higher
   - At least 20GB of free disk space
-  - Enable WSL & Install Ubuntu
+  - **Enable WSL & Install Ubuntu:** Your Ubuntu installation **must be at least version 24 LTS**.  
+    _If your current version is older, please upgrade to meet this minimum requirement._
+
+- **Verify WSL is Enabled:**
 
   <aside>
   
@@ -194,7 +197,10 @@
   </details>
   
   <details>
-    <summary>For Linux - Ubuntu</summary>
+    <summary>For Linux - Ubuntu </summary>
+    
+  - **Important:** Your Ubuntu installation **must be at least version 24 LTS**.  
+    _If your current version is older, please upgrade to meet this minimum requirement._
 
   - **Check if Git is installed:**
 
