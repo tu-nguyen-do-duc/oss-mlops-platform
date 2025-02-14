@@ -26,10 +26,9 @@
   <summary>For Windows - before Ubuntu installation</summary>
 
   - Windows 10 or higher
-  - At least 20GB of free disk space
-  - **Enable WSL & Install Ubuntu:** Your Ubuntu installation **must be at least version 24 LTS**.  
-    _If your current version is older, please upgrade to meet this minimum requirement._
-
+  - At least 20GB of free disk space  
+  - **Enable WSL & Install Ubuntu in order of following steps:**
+    
 - **Verify WSL is Enabled:**
 
   <aside>
@@ -92,9 +91,11 @@
 
     - If Ubuntu does not appear in the list
       1. Open Microsoft Store
-      2. Search for Ubuntu - Install
-      3. Launch the distribution from the Start Menu
-      4. Complete the initial setup by creating a UNIX username and password
+      2. Search for Ubuntu - Install  
+  Your Ubuntu installation **must be at least version 24 LTS**.  
+    _If your current version is older, please upgrade to meet this minimum requirement._  
+      4. Launch the distribution from the Start Menu
+      5. Complete the initial setup by creating a UNIX username and password
 
   - **Install Docker Desktop**
 
