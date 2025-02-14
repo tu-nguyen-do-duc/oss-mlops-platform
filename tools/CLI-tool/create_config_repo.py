@@ -235,14 +235,21 @@ def set_config(repo_name, org_name):
         print("Configuration saved to 'config.yaml'.")
     
     elif choice == 2:
-        home_directory = os.path.expanduser("~")
+        
         #script_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), "../../../"))
         #source_path = os.path.join(script_dir, "oss-mlops-platform/tools/CLI-tool/config.yaml")
 
-        config_name = str(input("input the name of config .yaml file that you want to use: "))
-        if(".yaml" in config_name):
-            config_name = config_name[:-5]
-        yaml_files = glob.glob(f"{home_directory}/**/{config_name}.yaml", recursive=True,include_hidden=True)
+        config_name = input("input the name of config .yaml file that you want to use: ")
+        yaml_files = []
+
+        if os.path.exists(config_name):
+            yaml_files.append(config_name)
+        else:
+            if(".yaml" in config_name):
+                config_name = config_name[:-5]
+
+            home_directory = os.path.expanduser("~")
+            yaml_files = glob.glob(f"{home_directory}/**/{config_name}.yaml", recursive=True,include_hidden=True)
 
         if not yaml_files:
             print("no such file exist")
