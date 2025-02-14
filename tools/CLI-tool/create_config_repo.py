@@ -193,6 +193,8 @@ def set_config(repo_name, org_name):
         except ValueError:
             print("Invalid input. Please enter a number (1 or 2).")
 
+    config = None
+
     if choice == 1:
         print("Specify Kubeflow endpoint (default: http://localhost:8080):")
         kep = input().strip()
@@ -228,10 +230,10 @@ def set_config(repo_name, org_name):
             'REMOTE_CLUSTER_SSH_USERNAME': remote_username
         }
 
-        with open("config.yaml", 'w') as f:
-            yaml.dump(config, f, sort_keys=False)
+        #with open("config.yaml", 'w') as f:
+        #    yaml.dump(config, f, sort_keys=False)
 
-        print("Configuration saved to 'config.yaml'.")
+        #print("Configuration saved to 'config.yaml'.")
 
     elif choice == 2:
         home_directory = os.path.expanduser("~")
@@ -270,19 +272,19 @@ def set_config(repo_name, org_name):
         # Open the file using the resolved path
         try:
             with open(config_file, "r") as yamlfile:
-                data = yaml.safe_load(yamlfile)
-                with open("config.yaml", 'w') as f:
-                    yaml.dump(data, f, sort_keys=False)
+                config = yaml.safe_load(yamlfile)
+                #with open("config.yaml", 'w') as f:
+                #    yaml.dump(data, f, sort_keys=False)
         except FileNotFoundError:
             print(f"Error: The specified file does not exist at path: {config_file}")
             exit(1)
 
-    with open("config.yaml", "r") as yamlfile:
-        data = yaml.load(yamlfile, Loader=yaml.FullLoader)
-        print("Config file read successfully.")
-        print(data)
+    #with open("config.yaml", "r") as yamlfile:
+    #    data = yaml.load(yamlfile, Loader=yaml.FullLoader)
+    #    print("Config file read successfully.")
+    #    print(data)
 
-    for key, value in data.items():
+    for key, value in config.items():
     # Special handling for SSH private key
         if key == "REMOTE_CLUSTER_SSH_PRIVATE_KEY_PATH":
             with open(value) as file:
