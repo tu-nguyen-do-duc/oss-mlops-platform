@@ -4,11 +4,6 @@
 
 **🚧 [Clone the main project repository](#clone-the-main-repository-to-your-local-folder)**
 
-**🔑 [Create SSH key](#create-ssh-key)**
-
-**🔐 [Add SSH key to GitHub](#add-ssh-key-to-the-github)**  
-*Authenticate with GitHub:* ([link](#authenticate-with-github))
-
 **⚙️ [Step 1: Installing local ML-OPS Platform](#step-1-installing-local-ml-ops-platform)**  
 *Troubleshooting the local cluster:* ([link](#some-problem-solving-with-the-local-cluster))
 
