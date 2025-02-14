@@ -216,6 +216,7 @@
       sudo apt update
       sudo apt install git -y
       ```
+      
 - **Install Additional Tools - Run all of the following commands in your WSL (Ubuntu) terminal**
 
   - **Ensure curl is installed**
