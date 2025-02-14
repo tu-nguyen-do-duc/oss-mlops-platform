@@ -277,7 +277,7 @@ def set_config(repo_name, org_name):
     # Check if a key exists in config, if it doesn't config is probably malformed
     # Note: maybe have some schema checker thing?
 
-    if "KUBEFLOW_ENDPOINT" not in config:
+    if not config or ("KUBEFLOW_ENDPOINT" not in config):
         exit("Error: The config seems to be malformed!")
 
     for key, value in config.items():
