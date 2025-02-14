@@ -230,11 +230,10 @@ def set_config(repo_name, org_name):
             'REMOTE_CLUSTER_SSH_USERNAME': remote_username
         }
 
-        #with open("config.yaml", 'w') as f:
-        #    yaml.dump(config, f, sort_keys=False)
-
-        #print("Configuration saved to 'config.yaml'.")
-
+        with open("config.yaml", 'w') as f:
+            yaml.dump(config, f, sort_keys=False)
+        print("Configuration saved to 'config.yaml'.")
+    
     elif choice == 2:
         home_directory = os.path.expanduser("~")
         #script_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), "../../../"))
