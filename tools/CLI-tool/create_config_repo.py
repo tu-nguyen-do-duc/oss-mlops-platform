@@ -267,22 +267,18 @@ def set_config(repo_name, org_name):
             config_file = yaml_files[0]
             print(f"{config_file}")
 
-
-        #print("Resolved source_path:", source_path)
-        # Open the file using the resolved path
         try:
             with open(config_file, "r") as yamlfile:
                 config = yaml.safe_load(yamlfile)
-                #with open("config.yaml", 'w') as f:
-                #    yaml.dump(data, f, sort_keys=False)
         except FileNotFoundError:
             print(f"Error: The specified file does not exist at path: {config_file}")
             exit(1)
 
-    #with open("config.yaml", "r") as yamlfile:
-    #    data = yaml.load(yamlfile, Loader=yaml.FullLoader)
-    #    print("Config file read successfully.")
-    #    print(data)
+    # Check if a key exists in config, if it doesn't config is probably malformed
+    # Note: maybe have some schema checker thing?
+
+    if "KUBEFLOW_ENDPOINT" not in config:
+        exit("Error: The config seems to be malformed!")
 
     for key, value in config.items():
     # Special handling for SSH private key
