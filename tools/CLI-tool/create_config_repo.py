@@ -185,7 +185,7 @@ def set_config(repo_name, org_name):
 
     while True:
         try:
-            choice = int(input("Choose an option (1: Interactively create config, 2: Copy existing a config.yaml): "))
+            choice = int(input("Choose an option (1: Interactively create config, 2: Copy an existing config.yaml): "))
             if choice in [1, 2]:
                 break
             else:
