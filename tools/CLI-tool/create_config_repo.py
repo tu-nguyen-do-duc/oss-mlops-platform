@@ -246,6 +246,7 @@ def set_config(repo_name, org_name):
 
         if not yaml_files:
             print("no such file exist")
+            exit(1)
 
         elif len(yaml_files) >1:
             config_file_path_index = 1
