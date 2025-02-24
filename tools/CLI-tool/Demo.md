@@ -424,7 +424,7 @@ For MacOs and Windows (WSL):
 jupyter notebook
 ```
 
-A bit of notebook troubleshooting. Depending on the environment you are running the notebook from the environment might not recognize bash and you migh want to try to delete the '%%bash' and add '!' infront of pip:
+A bit of notebook troubleshooting. Depending on the environment you are running the notebook from the environment might not recognize bash in the very first cell and you might want to try to delete the '%%bash' and add '!' in front of the 'pip install...':
 
 ```
 !pip install kfp~=1.8.14
