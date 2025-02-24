@@ -423,6 +423,13 @@ For MacOs and Windows (WSL):
 ```
 jupyter notebook
 ```
+
+A bit of notebook troubleshooting. Depending on the environment you are running the notebook from the environment might not recognize bash and you migh want to try to delete the '%%bash' and add '!' infront of pip:
+
+```
+!pip install kfp~=1.8.14
+```
+
 ******
 
 ## Step 3: Creating the repositories and setting up the CI/CD pipeline with the tool
