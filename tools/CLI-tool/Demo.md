@@ -255,6 +255,13 @@
       # Move it to your user's executable PATH
       sudo mv ./kubectl /usr/local/bin/
       ```
+  - **Install Kind (as of Feb 2025 the platform setup fails with this for Linux and a manual install is recommended):**
+ 
+    ```bash
+    curl -Lo ./kind https://kind.sigs.k8s.io/dl/v0.14.0/kind-linux-amd64
+    chmod +x ./kind
+    sudo mv ./kind /usr/local/bin/kind
+    ```
 
   - **Install Jupyter Notebook using pip:**
 
