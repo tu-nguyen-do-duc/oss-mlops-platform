@@ -84,12 +84,13 @@ Example config.yaml:
 KUBEFLOW_ENDPOINT: "http://localhost:8080"
 KUBEFLOW_USERNAME: "user@example.com"
 KUBEFLOW_PASSWORD: "12341234"
-REMOTE_CLUSTER_SSH_PRIVATE_KEY: "Your_Key"
+REMOTE_CLUSTER_SSH_PRIVATE_KEY_PATH: "your/ssh/key/file/path"
 REMOTE_CLUSTER_SSH_IP: "192.168.1.1"
 REMOTE_CLUSTER_SSH_USERNAME: "user"
 ```
 
 The scripts sets the secrets on the org level. You can set repo level secrets that take precident over org level ones if needed.
+If a non-exact path for the SSH key file is passed, the script will search for the file containing the SSH key across the entire user home directory. This can be very slow on a populated drive (e.g. running the install script on bare metal Linux or MacOS).
 
 ### Post setup script set up on GitHub's site
 
