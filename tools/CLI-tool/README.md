@@ -17,7 +17,7 @@ This CLI tool automates the creation, configuration and management of GitHub con
     - Setting up the organizations
     - Turning on the GitHub actions for the working repo (Actions tab > Big green button after reading the warnings)
     - Setting up the self-hosted runner
-    - Setting up the SSH secret for remote cluster access may ultimately need it to be set up in GitHub's site as a organization level secret due to the SSH key's newline character handling (WIP)
+    - Setting up the SSH secret for remote cluster access
 
 ## Features
 
@@ -36,7 +36,7 @@ This CLI tool automates the creation, configuration and management of GitHub con
 
 ## Prerequisites
 
-### 1. GitHub CLI (tested with version 2.62.0):
+### 1. GitHub CLI (tested with versions 2.62.0 and 2.45.0):
 
 Ensure that GitHub CLI is installed and authenticated.
 Install using:
@@ -44,6 +44,8 @@ Install using:
 ```
   brew install gh
  ```
+- **! FOLLOWING STEP IS ONLY NEEDED IF YOU ARE USING AN OLDER VERSION OF LINUX WHERE ONLY OLD VERSIONS OF GH ARE AVAILABLE BY DEFAULT !**
+- Ubuntu 24.xx can install gh 2.45.0 which is new enough
 - Linux:
 	- source: https://github.com/cli/cli/blob/trunk/docs/install_linux.md 	
 ```
@@ -58,13 +60,17 @@ Install using:
 
 ### 2. Python:
 
-Python 3.8 or higher.
+Python 3.10 or higher.
+
+Note: It is recommended to install a newer Linux than try to force install a newer Python version which isn't supported natively on older Linux.
 
 -----
 
 ## Usage
 
-Note: You may want to create a Python virtual environment and activate it.
+Note: You may want to create a Python virtual environment and activate it. This will help with the package installation warnings.
+
+https://python.land/virtual-environments/virtualenv
 
 After cloning the repository, step out of the `oss-mlops-project` folder with cd `../` and then run:
 
