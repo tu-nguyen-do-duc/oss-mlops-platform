@@ -44,10 +44,14 @@ Install using:
 ```
   brew install gh
  ```
-- **! FOLLOWING STEP IS ONLY NEEDED IF YOU ARE USING AN OLDER VERSION OF LINUX WHERE ONLY OLD VERSIONS OF GH ARE AVAILABLE BY DEFAULT !**
-- Ubuntu 24.xx can install gh 2.45.0 which is new enough
 - Linux:
-	- source: https://github.com/cli/cli/blob/trunk/docs/install_linux.md 	
+```
+sudo apt update
+sudo apt install gh
+```
+- **! FOLLOWING STEP IS ONLY NEEDED IF YOU ARE USING AN OLDER VERSION OF LINUX WHERE ONLY OLD VERSIONS OF GH ARE AVAILABLE BY DEFAULT !**
+  - Ubuntu 24.xx can install gh 2.45.0 which is new enough
+  - source: https://github.com/cli/cli/blob/trunk/docs/install_linux.md 	
 ```
   (type -p wget >/dev/null || (sudo apt update && sudo apt-get install wget -y)) \
 	&& sudo mkdir -p -m 755 /etc/apt/keyrings \
