@@ -255,12 +255,18 @@
       # Move it to your user's executable PATH
       sudo mv ./kubectl /usr/local/bin/
       ```
-  - **Install Kind (as of Feb 2025 the platform setup fails with this for Linux and a manual install is recommended):**
+  - **Install Kind and kustomize (as of Feb 2025 the platform setup fails with this for Linux and a manual install is recommended):**
  
     ```bash
     curl -Lo ./kind https://kind.sigs.k8s.io/dl/v0.14.0/kind-linux-amd64
     chmod +x ./kind
     sudo mv ./kind /usr/local/bin/kind
+    ```
+
+    ```bash
+    curl -s "https://raw.githubusercontent.com/kubernetes-sigs/kustomize/master/hack/install_kustomize.sh" | bash -s -- 5.2.1
+    chmod +x ./kustomize
+    sudo mv ./kustomize /usr/local/bin/kustomize
     ```
 
   - **Install Jupyter Notebook using pip:**
