@@ -1,4 +1,4 @@
-# Starting a run on local ML-OPS Platform
+# Installations, setups and usage
 
 **🚀 [Checking all necessary pre-installments](#step-0-checking-all-necessary-pre-installments)**   
 
