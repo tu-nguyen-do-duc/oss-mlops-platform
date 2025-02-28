@@ -18,6 +18,8 @@
 *Including Possible Problems:* ([link](#possible-problems))
 ******
 
+![MLOps platform Setup diagram](https://github.com/Softala-MLOPS/oss-mlops-platform/blob/main/tools/CLI-tool/MLOpsPlatformSetup.png)
+
 ## Step 0: Checking all necessary pre-installments:
 
 ### Pre-installments for each OS
