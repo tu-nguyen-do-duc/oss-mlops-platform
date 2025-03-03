@@ -165,33 +165,26 @@
 
        ```bash
        [wsl2]
-       memory=4GB
-       # Limits the WSL 2 VM to 4 GB of RAM *** (adjust as needed) ***
-
-       processors=2
-       # Allocates 2 virtual processors
-       
-       swap=2GB
-       # Sets a 2 GB swap file (optional)
-       # allocate more RAM as needed…
+       memory=10GB
+       # Limits the WSL 2 VM to 10 GB of RAM *** (adjust as needed) ***
        ```
 
   - **If `.wslconfig` file does not exist:**
-    1. Create a `.wslconfig` file in your Windows home directory (`C:\Users\<YourUsername>\`).
+    1. Create a `.wslconfig` file in your Windows home directory in PowerShell with:
+      ```bash
+        notepad $env:USERPROFILE\.wslconfig
+      ```    
     2. Open the newly created `.wslconfig` file and add the following configuration:
-
        ```bash
        [wsl2]
-       memory=4GB
-       # Limits the WSL 2 VM to 4 GB of RAM *** (adjust as needed) ***
-
-       processors=2
-       # Allocates 2 virtual processors
-
-       swap=2GB
-       # Sets a 2 GB swap file (optional)
-       # allocate more RAM as needed…
+       memory=10GB
+       # Limits the WSL 2 VM to 10 GB of RAM *** (adjust as needed) ***
+       ```      
+    3. You can check the that the config file is working by using the following command on the Linux terminal and reading the `Mem total` cell:
+       ```bash
+       free -h
        ```
+             
   </details>
   
   <details>
