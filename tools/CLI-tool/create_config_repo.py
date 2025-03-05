@@ -239,17 +239,43 @@ def set_config(repo_name, org_name):
         #script_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), "../../../"))
         #source_path = os.path.join(script_dir, "oss-mlops-platform/tools/CLI-tool/config.yaml")
 
-        config_name = input("input the name of config .yaml file that you want to use: ")
-        yaml_files = []
+        while True:
+            try:
+                choice = int(input("Choose an option (1: Give a config file PATH, 2: Give a config file NAME)"))
+                if choice in [1, 2]:
+                    break
+                else:
+                    print("Invalid choice. Please select 1 or 2.")
+            except ValueError:
+                print("Invalid input. Please enter a number (1 or 2).")
 
-        if os.path.exists(config_name):
-            yaml_files.append(config_name)
-        else:
-            if(".yaml" in config_name):
-                config_name = config_name[:-5]
+        if choice == 1:
+            config_dir = str
 
-            home_directory = os.path.expanduser("~")
-            yaml_files = glob.glob(f"{home_directory}/**/{config_name}.yaml", recursive=True,include_hidden=True)
+            while os.path.exists(config_dir) == False:
+                config_dir = input("input the PATH of config .yaml file that you want to use: ")
+                yaml_files = []
+
+                if os.path.exists(config_dir):
+                    list = glob.glob(f"{config_dir}/*.yaml")
+                    yaml_files.append(list)
+                else:
+                    print("No such directory")
+            
+        elif choice == 2:
+
+            config_name = input("input the NAME of config .yaml file that you want to use: ")
+            yaml_files = []
+
+            if os.path.exists(config_name):
+                yaml_files.append(config_name)
+            else:
+                if(".yaml" in config_name):
+                    config_name = config_name[:-5]
+
+                home_directory = os.path.expanduser("~")
+                yaml_files = glob.glob(f"{home_directory}/**/{config_name}.yaml", recursive=True,include_hidden=True)
+        
 
         if not yaml_files:
             print("no such file exist")
