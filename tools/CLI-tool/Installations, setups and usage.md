@@ -472,9 +472,9 @@ oss-mlops-platform/tools/CLI-tool/create_gitrepo_devops_for_ml_work.sh
   
   ******
 
-## Step 4: Installing GitHub Actions runner
+## Step 4: Enabling GitHub Actions and Installing GitHub Actions runner
 
-You also need a local-hosted GitHub Actions runner which is provided by GitHub. The runner is bound to a single GitHub organization or a single repository. It can be changed later, see note at the end of this step.
+After the repositories are made you may need to enable the GitHub Actions for the working repository. This can be done from the GitHub site by navigating to the working repository and it's Actions tab and clicking the big green button. You also need a local-hosted GitHub Actions runner which is provided by GitHub. The runner is bound to a single GitHub organization or a single repository. It can be changed later, see note at the end of this step.
 
 1. Navigate to your working repo's `Settings` in GitHub web page.
 2. Open the `Actions` dropdown menu from the left side of the page under Code and automation.
