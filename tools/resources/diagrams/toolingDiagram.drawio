@@ -1,6 +1,6 @@
 <mxfile host="Electron" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/24.7.8 Chrome/128.0.6613.36 Electron/32.0.1 Safari/537.36" version="24.7.8">
   <diagram name="Page-1" id="9CguY9LWb4uk2jpVBCRa">
-    <mxGraphModel dx="1850" dy="629" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+    <mxGraphModel dx="1450" dy="629" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -50,11 +50,6 @@
         <mxCell id="jbWS3eqqZUePCtWVH1MQ-14" value="Tool&lt;div&gt;(Python&amp;nbsp;&lt;span style=&quot;background-color: initial;&quot;&gt;+ Typer)&lt;/span&gt;&lt;/div&gt;" style="shape=cube;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;darkOpacity=0.05;darkOpacity2=0.1;" parent="1" vertex="1">
           <mxGeometry x="-390" y="170" width="120" height="80" as="geometry" />
         </mxCell>
-        <mxCell id="jbWS3eqqZUePCtWVH1MQ-25" value="" style="swimlane;startSize=0;container=0;strokeWidth=2;" parent="1" vertex="1">
-          <mxGeometry x="-410" y="140" width="857" height="390" as="geometry">
-            <mxRectangle x="-410" y="140" width="50" height="44" as="alternateBounds" />
-          </mxGeometry>
-        </mxCell>
         <mxCell id="jbWS3eqqZUePCtWVH1MQ-20" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0;entryDx=120;entryDy=50;entryPerimeter=0;" parent="1" source="jbWS3eqqZUePCtWVH1MQ-5" target="jbWS3eqqZUePCtWVH1MQ-3" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
@@ -64,8 +59,8 @@
         <mxCell id="jbWS3eqqZUePCtWVH1MQ-24" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;entryPerimeter=0;endArrow=none;endFill=0;" parent="1" source="jbWS3eqqZUePCtWVH1MQ-8" target="jbWS3eqqZUePCtWVH1MQ-22" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="jbWS3eqqZUePCtWVH1MQ-26" value="&lt;font style=&quot;font-size: 16px;&quot;&gt;Tooling project scope&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" parent="1" vertex="1">
-          <mxGeometry x="-84" y="158" width="168" height="31" as="geometry" />
+        <mxCell id="jbWS3eqqZUePCtWVH1MQ-26" value="&lt;font style=&quot;font-size: 16px;&quot;&gt;Repositories and CI/CD pipelines created by the tooling with default configuration files&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" parent="1" vertex="1">
+          <mxGeometry x="-207" y="144" width="625" height="31" as="geometry" />
         </mxCell>
         <mxCell id="jbWS3eqqZUePCtWVH1MQ-2" value="&lt;div&gt;remote&lt;/div&gt;MLOPS cluster" style="shape=cube;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;darkOpacity=0.05;darkOpacity2=0.1;flipH=1;" parent="1" vertex="1">
           <mxGeometry x="478" y="196" width="120" height="80" as="geometry" />
