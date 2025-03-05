@@ -342,7 +342,7 @@ git clone https://github.com/Softala-MLOPS/oss-mlops-platform.git
 ```
 
 
-### Set your GitHub credentials
+### Set your GitHub credentials (leave in the quotation marks they are required)
 ```
 git config --global user.name "Your Name"
 git config --global user.email "your.email@example.com"
@@ -499,7 +499,7 @@ If you need to change the repository runners is connected to, you need to either
 
 ![Tooling diagram](../resources/diagrams/toolingDiagram.png)
 
-The repository and CI/CD pipelines look like this after the default configuration installation. The staging branch is identical to the production branch. The default files can be found and changed in CLI-tool/files/ folder.
+The repository and CI/CD pipelines look like this after the default configuration installation. The staging branch is identical to the production branch. The default files can be found and changed in [CLI-tool/files/](./files/) folder.
 
 ******
 
