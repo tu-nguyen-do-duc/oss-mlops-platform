@@ -10,14 +10,16 @@ This CLI tool automates the creation, configuration and management of GitHub con
 - GitHub authentication via Token and the HTTPS option instead of SSH for the `gh`
 	- https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens#creating-a-personal-access-token-classic
 	- https://docs.github.com/en/get-started/getting-started-with-git/caching-your-github-credentials-in-git?platform=linux
-- For the tool to be able to fork and rename the working repo correctly a sufficently new `gh` version needed (see Prequisities below)
+ 	- Using the copy code from commandline into GitHub's site should work also
+- For the tool to be able to fork and rename the working repo correctly a sufficently new `gh` version needed (tested with 2.45.0)
 - Environmental secrets are set up currently as GitHub organization level secrets. This means that you may need separate GitHub organizations for difference ML setups.
 - Python virtual environments may interfere with GitHub actions runner. (No defined solution for this at the moment)
+	- Usage of Python virtual environments is still recommended
 - Multiple steps required interacting with GitHub site:
-    - Setting up the organizations
-    - Turning on the GitHub actions for the working repo (Actions tab > Big green button after reading the warnings)
-    - Setting up the self-hosted runner
-    - Setting up the SSH secret for remote cluster access
+    	- Setting up the organizations
+    	- Turning on the GitHub actions for the working repo (Actions tab > Big green button after reading the warnings)
+    	- Setting up the self-hosted runner
+    	- Setting up the SSH secret for remote cluster access
 
 ## Features
 
