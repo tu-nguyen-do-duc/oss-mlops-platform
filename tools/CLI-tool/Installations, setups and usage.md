@@ -18,7 +18,7 @@
 *Including Possible Problems:* ([link](#possible-problems))
 ******
 
-![MLOps platform Setup diagram](https://github.com/Softala-MLOPS/oss-mlops-platform/blob/main/tools/CLI-tool/MLOpsPlatformSetup.png)
+![MLOps platform Setup diagram](../resources/diagrams/MLOpsPlatformSetup.png)
 
 ## Step 0: Checking all necessary pre-installments:
 
@@ -300,7 +300,7 @@ brew install git
 ```
 brew install gh
 ```
-- Python (3.6 or later)
+- Python (3.11 or later)
 ```
 brew install python
 ```
@@ -494,6 +494,12 @@ You can restart the runner after the next computer restart by navigating to the 
 **Note about reconfiguring the runner**
 
 If you need to change the repository runners is connected to, you need to either locate to he repository/organization the runner is connected to in GitHub site and remove it (GitHub will give you the script for it) OR delete the *hidden* `.runner` file in the `actions-runner/` folder and redo the step with the new token. *Also do note the runner OS version, don't be like me and try to use the Windows version on Linux.*
+
+**Post setup**
+
+![Tooling diagram](../resources/diagrams/toolingDiagram.png)
+
+The repository and CI/CD pipelines look like this after the default configuration installation. The staging branch is identical to the production branch. The default files can be found and changed in CLI-tool/files/ folder.
 
 ******
 
