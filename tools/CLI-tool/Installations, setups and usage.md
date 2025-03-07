@@ -461,15 +461,35 @@ oss-mlops-platform/tools/CLI-tool/create_gitrepo_devops_for_ml_work.sh
 - Please use a naming convetion for config repo and working repos  (f.ex. `confJames` and `workJames`) 
 3. Create both configuration and working repositories (option 4) 
 4. Interactively create config (option 1)
-5. Use default Kubeflow endpoin
+5. Use default Kubeflow endpoint
 6. Use default Kubeflow username
 7. Use deafult Kubeflow password
-8. Do not add emote private key 
-9. Do not specify remote cluster IP
-10. Do not add remote cluster name 
-11. Do not paste the secret 
+8. You can leave remote private key empty 
+9. You don't have to specify remote cluster IP
+10. You can leave remote cluster username empty 
+11. GitHub asks for pasting secrets, you can skip these with `enter` if you were leaving previous steps empty 
 12. Enter the name for working repository
-  
+
+### Configuration File
+
+The setup script asks you about configuring GitHub secrets using a config.yaml file. You can choose from options:
+
+1. Create a new configuration file interactively. (Steps 4-11 above)
+2. You can use an existing config.yaml inputed by giving a path to it. (For example one interactively and modified by hand)
+
+Example config.yaml:
+```
+KUBEFLOW_ENDPOINT: "http://localhost:8080"
+KUBEFLOW_USERNAME: "user@example.com"
+KUBEFLOW_PASSWORD: "12341234"
+REMOTE_CLUSTER_SSH_PRIVATE_KEY_PATH: "your/ssh/key/file/path"
+REMOTE_CLUSTER_SSH_IP: "192.168.1.1"
+REMOTE_CLUSTER_SSH_USERNAME: "user"
+```
+
+The scripts sets the secrets on the GitHub organizational level. You can set repository level secrets that take precident over organizational level ones if needed.
+If a non-exact path for the SSH key file is passed, the script will search for the file containing the SSH key across the entire user home directory. This can be very slow on a populated drive (e.g. running the install script on bare metal Linux or MacOS).
+
   ******
 
 ## Step 4: Enabling GitHub Actions and Installing GitHub Actions runner
