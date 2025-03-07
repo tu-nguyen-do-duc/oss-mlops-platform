@@ -15,7 +15,7 @@ while true; do
     echo "1) Configure Github (GH) for the tool (configure_gh.py)"
     echo "2) Create configuration repo for one or more ML project working repos (create_config_repo.py)"
     echo "3) Create one ML project working repo based on a configuration repo (create_working_repo.py)"
-    echo "4) Both (step 3 is based on config repo created in step 2)"
+    echo "4) Both (step 3 is based on config repo created in step 2) 🟢 RECOMMENDED 🟢"
     echo "5) Exit"
     read -p "Enter your choice: " choice
 
