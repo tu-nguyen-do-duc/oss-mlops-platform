@@ -241,7 +241,7 @@ def set_config(repo_name, org_name):
 
         while True:
             try:
-                choice = int(input("Choose an option (1: Give a config file PATH, 2: Give a config file NAME)"))
+                choice = int(input("Choose an option (1: Give a config file PATH, 2: Give a config file NAME): "))
                 if choice in [1, 2]:
                     break
                 else:
@@ -249,37 +249,33 @@ def set_config(repo_name, org_name):
             except ValueError:
                 print("Invalid input. Please enter a number (1 or 2).")
 
+        yaml_files = []
         if choice == 1:
-            config_dir = str
+            config_dir = input("input the PATH of config .yaml file that you want to use: ")
 
-            while os.path.exists(config_dir) == False:
+            if os.path.exists(config_dir):
                 config_dir = input("input the PATH of config .yaml file that you want to use: ")
-                yaml_files = []
-
-                if os.path.exists(config_dir):
-                    list = glob.glob(f"{config_dir}/*.yaml")
-                    yaml_files.append(list)
-                else:
-                    print("No such directory")
-            
-        elif choice == 2:
-
-            config_name = input("input the NAME of config .yaml file that you want to use: ")
-            yaml_files = []
-
-            if os.path.exists(config_name):
-                yaml_files.append(config_name)
+                yaml_files.append(config_dir)
             else:
-                if(".yaml" in config_name):
-                    config_name = config_name[:-5]
+                print(f"{config_dir} doesn't exist")
+                sys.exit(1)
 
-                home_directory = os.path.expanduser("~")
-                yaml_files = glob.glob(f"{home_directory}/**/{config_name}.yaml", recursive=True,include_hidden=True)
-        
 
-        if not yaml_files:
-            print("no such file exist")
-            sys.exit(1)
+        elif choice == 2:
+            home_directory = os.path.expanduser("~")
+            config_name = input("input the NAME of config .yaml file that you want to use: ")
+            if(".yaml" in config_name):
+                config_name = config_name[:-5]
+
+            yaml_files = glob.glob(f"{home_directory}/**/{config_name}.yaml", recursive=True,include_hidden=True)
+            if not yaml_files:
+                print(f"{config_name} doesn't exist")
+                sys.exit(1)
+
+        if len(yaml_files) == 1:
+            config_file = yaml_files[0]
+            print(f"{config_file}")
+
 
         elif len(yaml_files) >1:
             config_file_path_index = 1
@@ -296,9 +292,6 @@ def set_config(repo_name, org_name):
                         print(f"invalid input please choose from 1 to {config_file_path_index-1}")
                 except ValueError:
                     print(f"Invalid input please choose a number from 1 to {config_file_path_index-1}")
-        else:
-            config_file = yaml_files[0]
-            print(f"{config_file}")
 
         try:
             with open(config_file, "r") as yamlfile:
