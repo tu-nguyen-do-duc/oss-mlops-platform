@@ -215,7 +215,7 @@ def set_config(repo_name, org_name):
         remote_key_path = input().strip()
         if not remote_key_path:
             remote_key_path = "./ssh_key"
-            pass
+
         print("Specify remote cluster IP:")
         remote_ip = input().strip()
         print("Add remote cluster username:")
@@ -316,6 +316,9 @@ def set_config(repo_name, org_name):
     for key, value in config.items():
     # Special handling for SSH private key
         if key == "REMOTE_CLUSTER_SSH_PRIVATE_KEY_PATH":
+            if not os.path.isfile(value) and not os.path.islink(value):
+                print(f"SSH key path {value} does not point to a valid SSH key! Skipping...")
+                continue
             with open(value) as file:
                 subprocess.run(['gh', 'secret', '--org', org_name, '--visibility', 'all', 'set', 'REMOTE_CLUSTER_SSH_PRIVATE_KEY'], stdin=file)
         else:
