@@ -1,8 +1,10 @@
 # CLI Tool for GitHub Repository Management
 This CLI tool automates the creation, configuration and management of GitHub configurator and working repositories for MLOPS usage. It includes two modules:
 
-1. **Repository Setup Module:** Automates repository creation, branch setup, and configuration.
-2. **Repository Forking Module:** Fetches repository details and forks them under a specified organization.
+1. **Repository Setup Module:** Automates repository creation, branch setup, and configuration
+2. **Repository Forking Module:** Fetches repository details and forks them under a specified organization
+
+![MLOPS tool project diagram](../resources/diagrams/MLOPSDiagram.png)
 
 ## Current limitation with the tool
 
@@ -25,90 +27,28 @@ This CLI tool automates the creation, configuration and management of GitHub con
 
 ### Repository Setup Module
 
-- Create a new GitHub repository in a specified organization.
-- Clone the repository and initialize it with predefined branches: development, staging, and production.
-- Copy branch-specific files for different environments.
-- Set up GitHub secrets using a configuration file (config.yaml).
-- Set the development branch as the default branch.
+- Create a new GitHub repository in a specified organization
+- Clone the repository and initialize it with predefined branches: `development`, `staging`, and `production`
+- Copy branch-specific files for different environments
+- Set up GitHub secrets using a configuration file (`config.yaml`)
+- Set the development branch as the default branch
 
 ### Repository Forking Module
 
-- Fetch repository details.
-- Fork an existing repository under a specified organization with a unique name.
+- Fetch repository details
+- Fork an existing repository under a specified organization with a unique name
 
 ## Prerequisites
 
-### 1. GitHub CLI (tested with versions 2.62.0 and 2.45.0):
-
-Ensure that GitHub CLI is installed and authenticated.
-Install using:
-- macOS:
-```
-  brew install gh
- ```
-- Linux:
-```
-sudo apt update
-sudo apt install gh
-```
-- **! FOLLOWING STEP IS ONLY NEEDED IF YOU ARE USING AN OLDER VERSION OF LINUX WHERE ONLY OLD VERSIONS OF GH ARE AVAILABLE BY DEFAULT !**
-  - Ubuntu 24.xx can install gh 2.45.0 which is new enough
-  - source: https://github.com/cli/cli/blob/trunk/docs/install_linux.md 	
-```
-  (type -p wget >/dev/null || (sudo apt update && sudo apt-get install wget -y)) \
-	&& sudo mkdir -p -m 755 /etc/apt/keyrings \
-	&& wget -qO- https://cli.github.com/packages/githubcli-archive-keyring.gpg | sudo tee /etc/apt/keyrings/githubcli-archive-keyring.gpg > /dev/null \
-	&& sudo chmod go+r /etc/apt/keyrings/githubcli-archive-keyring.gpg \
-	&& echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | sudo tee /etc/apt/sources.list.d/github-cli.list > /dev/null \
-	&& sudo apt update \
-	&& sudo apt install gh -y
-```
-
-### 2. Python:
-
-Python 3.10 or higher.
-
-Note: It is recommended to install a newer Linux than try to force install a newer Python version which isn't supported natively on older Linux.
-
------
+- For the local installation of the MLOPS platform you need a computer with 16GB RAM with 10GB allocated for Docker to use
+	- There is a possibility to use remote virtual machines for the "local installation" of the platform
+ 	- [Generic remote server installation](./Generic%20guide%20to%20start%20a%20remote%20server.md)
+  	- [CSC specific remote server installation](./CSC%20user.md)
+- For Windows machines you also need Linux distro installed via WSL
+	- Linux distro should be quite new for Python 3.11 and GitHub CLI 2.45.0
+ 	- Tested with Ubuntu 24 LTS
 
 ## Usage
 
-Note: You may want to create a Python virtual environment and activate it. This will help with the package installation warnings.
+- You can find more detailed installation and setup guide here: [Installations, setups and usage.md](./Installations,%20setups%20and%20usage.md)
 
-https://python.land/virtual-environments/virtualenv
-
-After cloning the repository, step out of the `oss-mlops-project` folder with cd `../` and then run:
-
-```
-oss-mlops-platform/tools/CLI-tool/create_gitrepo_devops_for_ml_work.sh
-```
-
-### Configuration File
-
-The setup script asks you about configuring GitHub secrets using a config.yaml file. You can choose from options:
-
-1. Create a new configuration file interactively.
-2. Copy existing config.yaml from 'oss-mlops-platform/tools/CLI-tool/config.yaml'
-
-Example config.yaml:
-```
-KUBEFLOW_ENDPOINT: "http://localhost:8080"
-KUBEFLOW_USERNAME: "user@example.com"
-KUBEFLOW_PASSWORD: "12341234"
-REMOTE_CLUSTER_SSH_PRIVATE_KEY_PATH: "your/ssh/key/file/path"
-REMOTE_CLUSTER_SSH_IP: "192.168.1.1"
-REMOTE_CLUSTER_SSH_USERNAME: "user"
-```
-
-The scripts sets the secrets on the org level. You can set repo level secrets that take precident over org level ones if needed.
-If a non-exact path for the SSH key file is passed, the script will search for the file containing the SSH key across the entire user home directory. This can be very slow on a populated drive (e.g. running the install script on bare metal Linux or MacOS).
-
-### Post setup script set up on GitHub's site
-
-After the repositories are made you may need to enable the GitHub Actions for the working repository.
-This can be done from the GitHub site by navigating to the working repository and it's Actions tab and clicking the big green button.
-
-Secondly you want to add the self-hosted GitHub Actions runner to the repository (it can also be added to whole organization) from Settings > Actions > Runner > New self-hosted runner. (More details can be found in 'starting a local run.md' step 4)
-
-![Tooling Project Scope](https://github.com/Softala-MLOPS/oss-mlops-platform/blob/main/tools/CLI-tool/ToolingProjectScope.png)
