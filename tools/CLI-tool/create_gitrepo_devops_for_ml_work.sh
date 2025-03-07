@@ -1,5 +1,5 @@
 #!/bin/bash
-
+set -e
 # Navigate to the directory containing the script
 
 # Install the requirements

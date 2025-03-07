@@ -1,4 +1,5 @@
 import typer
+import glob
 import subprocess
 import sys
 import os
@@ -184,13 +185,15 @@ def set_config(repo_name, org_name):
 
     while True:
         try:
-            choice = int(input("Choose an option (1: Interactively create config, 2: Copy existing config.yaml from 'oss-mlops-platform/tools/CLI-tool/config.yaml': "))
+            choice = int(input("Choose an option (1: Interactively create config, 2: Copy an existing config.yaml): "))
             if choice in [1, 2]:
                 break
             else:
                 print("Invalid choice. Please select 1 or 2.")
         except ValueError:
             print("Invalid input. Please enter a number (1 or 2).")
+
+    config = None
 
     if choice == 1:
         print("Specify Kubeflow endpoint (default: http://localhost:8080):")
@@ -212,7 +215,7 @@ def set_config(repo_name, org_name):
         remote_key_path = input().strip()
         if not remote_key_path:
             remote_key_path = "./ssh_key"
-            pass
+
         print("Specify remote cluster IP:")
         remote_ip = input().strip()
         print("Add remote cluster username:")
@@ -229,36 +232,88 @@ def set_config(repo_name, org_name):
 
         with open("config.yaml", 'w') as f:
             yaml.dump(config, f, sort_keys=False)
-
         print("Configuration saved to 'config.yaml'.")
-
+    
     elif choice == 2:
-        script_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), "../../../"))
-        source_path = os.path.join(script_dir, "oss-mlops-platform/tools/CLI-tool/config.yaml")
+        
+        #script_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), "../../../"))
+        #source_path = os.path.join(script_dir, "oss-mlops-platform/tools/CLI-tool/config.yaml")
 
-        print("Resolved source_path:", source_path)
+        while True:
+            try:
+                choice = int(input("Choose an option (1: Give a config file PATH, 2: Give a config file NAME): "))
+                if choice in [1, 2]:
+                    break
+                else:
+                    print("Invalid choice. Please select 1 or 2.")
+            except ValueError:
+                print("Invalid input. Please enter a number (1 or 2).")
 
-        # Open the file using the resolved path
+        yaml_files = []
+        if choice == 1:
+            config_dir = input("input the PATH of config .yaml file that you want to use: ")
+
+            if os.path.exists(config_dir):
+                config_dir = input("input the PATH of config .yaml file that you want to use: ")
+                yaml_files.append(config_dir)
+            else:
+                print(f"{config_dir} doesn't exist")
+                sys.exit(1)
+
+
+        elif choice == 2:
+            home_directory = os.path.expanduser("~")
+            config_name = input("input the NAME of config .yaml file that you want to use: ")
+            if(".yaml" in config_name):
+                config_name = config_name[:-5]
+
+            yaml_files = glob.glob(f"{home_directory}/**/{config_name}.yaml", recursive=True,include_hidden=True)
+            if not yaml_files:
+                print(f"{config_name} doesn't exist")
+                sys.exit(1)
+
+        if len(yaml_files) == 1:
+            config_file = yaml_files[0]
+            print(f"{config_file}")
+
+
+        elif len(yaml_files) >1:
+            config_file_path_index = 1
+            for config_path in yaml_files:
+                print(f"[{config_file_path_index}] {config_path}")
+                config_file_path_index = config_file_path_index + 1
+            while True:
+                try:
+                    chosen_config_file_path = int(input("you have multiple configs with the same name in different folders please choose which one you want to use: "))
+                    if chosen_config_file_path in range(1,config_file_path_index+1):
+                        config_file = yaml_files[chosen_config_file_path - 1]
+                        break
+                    else:
+                        print(f"invalid input please choose from 1 to {config_file_path_index-1}")
+                except ValueError:
+                    print(f"Invalid input please choose a number from 1 to {config_file_path_index-1}")
+
         try:
-            with open(source_path, "r") as yamlfile:
-                data = yaml.safe_load(yamlfile)
-                with open("config.yaml", 'w') as f:
-                    yaml.dump(data, f, sort_keys=False)
+            with open(config_file, "r") as yamlfile:
+                config = yaml.safe_load(yamlfile)
         except FileNotFoundError:
-            print(f"Error: The specified file does not exist at path: {source_path}")
+            print(f"Error: The specified file does not exist at path: {config_file}")
             exit(1)
 
-    with open("config.yaml", "r") as yamlfile:
-        data = yaml.load(yamlfile, Loader=yaml.FullLoader)
-        print("Config file read successfully.")
-        print(data)
+    # Check if a key exists in config, if it doesn't config is probably malformed
+    # Note: maybe have some schema checker thing?
 
-    for key, value in data.items():
+    if not config or ("KUBEFLOW_ENDPOINT" not in config):
+        exit("Error: The config seems to be malformed!")
+
+    for key, value in config.items():
     # Special handling for SSH private key
         if key == "REMOTE_CLUSTER_SSH_PRIVATE_KEY_PATH":
-            if os.path.exists(value):
-                with open(value) as file:
-                    subprocess.run(['gh', 'secret', '--org', org_name, '--visibility', 'all', 'set', 'REMOTE_CLUSTER_SSH_PRIVATE_KEY'], stdin=file)
+            if not os.path.isfile(value) and not os.path.islink(value):
+                print(f"SSH key path {value} does not point to a valid SSH key! Skipping...")
+                continue
+            with open(value) as file:
+                subprocess.run(['gh', 'secret', '--org', org_name, '--visibility', 'all', 'set', 'REMOTE_CLUSTER_SSH_PRIVATE_KEY'], stdin=file)
         else:
             subprocess.run(f'gh secret set {key} --body "{value}" --org {org_name} --visibility all', shell=True)
 
