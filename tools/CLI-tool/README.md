@@ -1,8 +1,10 @@
 # CLI Tool for GitHub Repository Management
 This CLI tool automates the creation, configuration and management of GitHub configurator and working repositories for MLOPS usage. It includes two modules:
 
-1. **Repository Setup Module:** Automates repository creation, branch setup, and configuration.
-2. **Repository Forking Module:** Fetches repository details and forks them under a specified organization.
+1. **Repository Setup Module:** Automates repository creation, branch setup, and configuration
+2. **Repository Forking Module:** Fetches repository details and forks them under a specified organization
+
+![MLOPS tool project diagram](../resources/diagrams/MLOPSDiagram.png)
 
 ## Current limitation with the tool
 
@@ -10,90 +12,43 @@ This CLI tool automates the creation, configuration and management of GitHub con
 - GitHub authentication via Token and the HTTPS option instead of SSH for the `gh`
 	- https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens#creating-a-personal-access-token-classic
 	- https://docs.github.com/en/get-started/getting-started-with-git/caching-your-github-credentials-in-git?platform=linux
-- For the tool to be able to fork and rename the working repo correctly a sufficently new `gh` version needed (see Prequisities below)
+ 	- Using the copy code from commandline into GitHub's site should work also
+- For the tool to be able to fork and rename the working repo correctly a sufficently new `gh` version needed (tested with 2.45.0)
 - Environmental secrets are set up currently as GitHub organization level secrets. This means that you may need separate GitHub organizations for difference ML setups.
 - Python virtual environments may interfere with GitHub actions runner. (No defined solution for this at the moment)
+	- Usage of Python virtual environments is still recommended
 - Multiple steps required interacting with GitHub site:
-    - Setting up the organizations
-    - Turning on the GitHub actions for the working repo (Actions tab > Big green button after reading the warnings)
-    - Setting up the self-hosted runner
-    - Setting up the SSH secret for remote cluster access may ultimately need it to be set up in GitHub's site as a organization level secret due to the SSH key's newline character handling (WIP)
+    	- Setting up the organizations
+    	- Turning on the GitHub actions for the working repo (Actions tab > Big green button after reading the warnings)
+    	- Setting up the self-hosted runner
+    	- Setting up the SSH secret for remote cluster access
 
 ## Features
 
 ### Repository Setup Module
 
-- Create a new GitHub repository in a specified organization.
-- Clone the repository and initialize it with predefined branches: development, staging, and production.
-- Copy branch-specific files for different environments.
-- Set up GitHub secrets using a configuration file (config.yaml).
-- Set the development branch as the default branch.
+- Create a new GitHub repository in a specified organization
+- Clone the repository and initialize it with predefined branches: `development`, `staging`, and `production`
+- Copy branch-specific files for different environments
+- Set up GitHub secrets using a configuration file (`config.yaml`)
+- Set the development branch as the default branch
 
 ### Repository Forking Module
 
-- Fetch repository details.
-- Fork an existing repository under a specified organization with a unique name.
+- Fetch repository details
+- Fork an existing repository under a specified organization with a unique name
 
 ## Prerequisites
 
-### 1. GitHub CLI (tested with version 2.62.0):
-
-Ensure that GitHub CLI is installed and authenticated.
-Install using:
-- macOS:
-```
-  brew install gh
- ```
-- Linux:
-	- source: https://github.com/cli/cli/blob/trunk/docs/install_linux.md 	
-```
-  (type -p wget >/dev/null || (sudo apt update && sudo apt-get install wget -y)) \
-	&& sudo mkdir -p -m 755 /etc/apt/keyrings \
-	&& wget -qO- https://cli.github.com/packages/githubcli-archive-keyring.gpg | sudo tee /etc/apt/keyrings/githubcli-archive-keyring.gpg > /dev/null \
-	&& sudo chmod go+r /etc/apt/keyrings/githubcli-archive-keyring.gpg \
-	&& echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | sudo tee /etc/apt/sources.list.d/github-cli.list > /dev/null \
-	&& sudo apt update \
-	&& sudo apt install gh -y
-```
-
-### 2. Python:
-
-Python 3.8 or higher.
-
------
+- For the local installation of the MLOPS platform you need a computer with 16GB RAM with 10GB allocated for Docker to use
+	- There is a possibility to use remote virtual machines for the "local installation" of the platform
+ 	- [Generic remote server installation](./Generic%20guide%20to%20start%20a%20remote%20server.md)
+  	- [CSC specific remote server installation](./CSC%20user%20guide.md)
+- For Windows machines you also need Linux distro installed via WSL
+	- Linux distro should be quite new for Python 3.11 and GitHub CLI 2.45.0
+ 	- Tested with Ubuntu 24 LTS
 
 ## Usage
 
-Note: You may want to create a Python virtual environment and activate it.
+- You can find more detailed installation and setup guide here: [Installations, setups and usage.md](./Installations,%20setups%20and%20usage.md)
 
-After cloning the repository, step out of the `oss-mlops-project` folder with cd `../` and then run:
-
-```
-oss-mlops-platform/tools/CLI-tool/create_gitrepo_devops_for_ml_work.sh
-```
-
-### Configuration File
-
-The setup script asks you about configuring GitHub secrets using a config.yaml file. You can choose from options:
-
-1. Create a new configuration file interactively.
-2. Copy existing config.yaml from 'oss-mlops-platform/tools/CLI-tool/config.yaml'
-
-Example config.yaml:
-```
-KUBEFLOW_ENDPOINT: "http://localhost:8080"
-KUBEFLOW_USERNAME: "user@example.com"
-KUBEFLOW_PASSWORD: "12341234"
-REMOTE_CLUSTER_SSH_PRIVATE_KEY: "Your_Key"
-REMOTE_CLUSTER_SSH_IP: "192.168.1.1"
-REMOTE_CLUSTER_SSH_USERNAME: "user"
-```
-
-The scripts sets the secrets on the org level. You can set repo level secrets that take precident over org level ones if needed.
-
-### Post setup script set up on GitHub's site
-
-After the repositories are made you may need to enable the GitHub Actions for the working repository.
-This can be done from the GitHub site by navigating to the working repository and it's Actions tab and clicking the big green button.
-
-Secondly you want to add the self-hosted GitHub Actions runner to the repository (it can also be added to whole organization) from Settings > Actions > Runner > New self-hosted runner. (More details can be found in 'starting a local run.md' step 4)

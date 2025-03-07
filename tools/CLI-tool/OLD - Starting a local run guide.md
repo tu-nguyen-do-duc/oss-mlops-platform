@@ -1,3 +1,5 @@
+# TO BE DELETED SEE NEWER GUIDE AT https://github.com/Softala-MLOPS/oss-mlops-platform/blob/main/tools/CLI-tool/Installations%2C%20setups%20and%20usage.md
+
 # Starting a run on local ML-OPS Platform
 
 ## Step 0: Cloning the main repo, setting up Docker and creating a SSH connection to GitHub
