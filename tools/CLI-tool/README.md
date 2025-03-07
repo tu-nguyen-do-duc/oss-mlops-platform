@@ -43,7 +43,7 @@ This CLI tool automates the creation, configuration and management of GitHub con
 - For the local installation of the MLOPS platform you need a computer with 16GB RAM with 10GB allocated for Docker to use
 	- There is a possibility to use remote virtual machines for the "local installation" of the platform
  	- [Generic remote server installation](./Generic%20guide%20to%20start%20a%20remote%20server.md)
-  	- [CSC specific remote server installation](./CSC%20user.md)
+  	- [CSC specific remote server installation](./CSC%20user%20guide.md)
 - For Windows machines you also need Linux distro installed via WSL
 	- Linux distro should be quite new for Python 3.11 and GitHub CLI 2.45.0
  	- Tested with Ubuntu 24 LTS
