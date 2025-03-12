@@ -3,7 +3,9 @@ set -e
 # Navigate to the directory containing the script
 
 # Install the requirements
-pip install -r oss-mlops-platform/tools/CLI-tool/requirements.txt
+python3 -m venv venv
+source venv/bin/activate
+python3 -m pip install -r oss-mlops-platform/tools/CLI-tool/requirements.txt
 
 read -p "Enter the organization name: " org_name
 
@@ -15,7 +17,7 @@ while true; do
     echo "1) Configure Github (GH) for the tool (configure_gh.py)"
     echo "2) Create configuration repo for one or more ML project working repos (create_config_repo.py)"
     echo "3) Create one ML project working repo based on a configuration repo (create_working_repo.py)"
-    echo "4) Both (step 3 is based on config repo created in step 2)"
+    echo "4) Both (step 3 is based on config repo created in step 2) 🟢 RECOMMENDED 🟢"
     echo "5) Exit"
     read -p "Enter your choice: " choice
 
