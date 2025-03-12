@@ -525,9 +525,6 @@ The repository and CI/CD pipelines look like this after the default configuratio
 
 ## Step 5: Starting runs on the ML-OPS platform instances 
 
-- If the change is made on the development branch, it will trigger a run on the local installation
-- If the change is on the staging or production branch, it will trigger a run on the full installation
-
 To test the notebook-based pipelines: 
 - Make a commit that modifies a file in the notebook folder on the choosen branch
 - The pipeline will start by executing the notebook-based workflow
@@ -536,6 +533,9 @@ To test the source code-based pipelines:
 - Make a commit in a scr folder that modifies Python files on the choosen branch
 - The pipeline will start by executing the source code-based workflow
 
+
+> If the change is made on the development branch, it will trigger a run on the local installation <br>
+> If the change is on the staging or production branch, it will trigger a run on the full installation
 
 If everything is in order then by pushing to your working repository GitHub should order the runner on your computer to start the run on your local computer's Kubeflow setup.
 
