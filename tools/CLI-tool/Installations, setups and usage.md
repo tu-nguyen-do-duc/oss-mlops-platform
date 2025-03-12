@@ -523,7 +523,12 @@ The repository and CI/CD pipelines look like this after the default configuratio
 
 ******
 
-## Step 5: Starting the run on local ML-OPS platform
+## Step 5: Starting runs on the ML-OPS platform instances 
+to test the notebook-based pipelines: 
+
+to test the source code-based pipelines:
+
+instructions on where to test it:
 
 If everything is in order then by pushing to your working repository GitHub should order the runner on your computer to start the run on your computer's Kubeflow setup.
 
