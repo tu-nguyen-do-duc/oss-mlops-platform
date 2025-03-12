@@ -181,9 +181,8 @@ def delete_extra_branch():
         #current head/default branch -> master
         if "HEAD" in branch:
             branch_to_be_delete = branch.split()[2]
-            print(f"{branch_to_be_delete}")
     if branch_to_be_delete:
-        subprocess.run(["git", "push", "origin", "--delete", branch_to_be_delete], capture_output=True, text=True)
+        subprocess.run(["git", "push", "origin", "--delete", branch_to_be_delete], capture_output=True, text=True,shell=True)
         
 
 def set_default_branch(repo_name, org_name):
