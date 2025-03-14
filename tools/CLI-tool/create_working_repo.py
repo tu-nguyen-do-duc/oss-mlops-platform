@@ -20,8 +20,14 @@ def main(repo_name: str, org_name: str):
 
 def fork_repo(repo_name: str, org_name):
     """Fork the repository using GitHub CLI."""
-    working_repo_name = typer.prompt("Enter unique name for your working repository", type=str)
-    
+    default_working_repo_name = "TODO-This-Should-Not-Depend-On-Config-Repo-Name-At-All"
+    # Hack to see if this conforms to our default naming conv! Evil...
+    if repo_name.startswith("Config-"):
+        as_split = repo_name.split("-")
+        as_split[0] = "Working"
+        default_working_repo_name = "-".join(as_split)
+
+    working_repo_name = typer.prompt("Enter unique name for your working repository:", type=str, default=default_working_repo_name)    
     version = subprocess.run(["gh", "--version"], capture_output=True, text=True)
 
     if "2.4.0" in version.stdout:

@@ -9,7 +9,20 @@ python3 -m pip install -r oss-mlops-platform/tools/CLI-tool/requirements.txt
 
 read -p "Enter the organization name: " org_name
 
-read -p "Enter the name of the config repo: " repo_name
+if [[ -z "$org_name" ]]; then
+    echo "Cannot continue without organization name!"
+    exit 1
+fi
+
+read -p "Enter the name of the config repo (default: Config-%username-%Y-%m-%d-%tag): " repo_name
+
+if [[ -z "$repo_name" ]]; then
+    git_username=$(git config --global user.name)
+    repo_tag=$(openssl rand -hex 4)
+    repo_name="Config-${git_username}-$(date +'%Y-%m-%d')-${repo_tag}"
+
+    echo "No repository name specified, using generated repository name $repo_name"
+fi
 
 while true; do
     echo "Select an option:"
