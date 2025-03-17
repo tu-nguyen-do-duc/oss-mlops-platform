@@ -12,9 +12,9 @@
 
 **📁 [Step 3: Creating repositories & Setting up the CI/CD Pipeline](#step-3-creating-the-repositories-and-setting-up-the-cicd-pipeline-with-the-tool)**
 
-**🤖 [Step 4: Installing GitHub Actions Runner](#step-4-installing-github-actions-runner)**
+**🤖 [Step 4: Installing GitHub Actions Runner](#step-4-enabling-github-actions-and-installing-github-actions-runner)**
 
-**🏁 [Step 5: Starting the run on local ML-OPS Platform](#step-5-starting-the-run-on-local-ml-ops-platform)**  
+**🏁 [Step 5: Starting the run on local ML-OPS Platform](#step-5-starting-runs-on-the-ml-ops-platform-instances)**  
 *Including Possible Problems:* ([link](#possible-problems))
 ******
 
