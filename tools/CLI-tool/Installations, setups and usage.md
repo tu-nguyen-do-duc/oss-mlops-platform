@@ -383,6 +383,8 @@ Checking the status of the pods:
 kubectl get pods --all-namespaces
 ```
 
+![Pods running](../resources/screenshots/podsRunning.png)
+
 Ideally all the pods should be running
 
 ### Some problem solving with the local cluster
@@ -547,11 +549,15 @@ If everything is in order then by pushing to your working repository GitHub shou
     - Open the working reposotory and click on Actions tab
     - Find the latest run and check if it has started succesfully
     - If the run failed, open it to check the logs and debug
+  
+![GitHub Actions tab](../resources/screenshots/GitHubAction.png)
 
 2. Checking Kubeflow Pipeline UI:
     - Open the Kubeflow instance on [localhost:8080](http://localhost:8080/)
     - Navigate to the Pipelines tab and find the pipeline run triggered by your latest commit
     - Monitor the execution and logs to confirm it is running as expected
+  
+![Kubeflow Pipeline UI](../resources/screenshots/succesfulRun.png)
 
 3. If the run hasn't started:
     - Verify that the commit was pushed to the correct branch
