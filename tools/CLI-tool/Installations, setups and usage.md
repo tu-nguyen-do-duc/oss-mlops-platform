@@ -411,10 +411,12 @@ Every time you start up the cluster you have to portforward the ports from insid
 
 ### Forward the ports
 
-run two commands each in separate terminal window:
+Run in the same terminal window: 
 ```
 kubectl -n mlflow port-forward svc/mlflow 5000:5000
 ```
+
+Open a new terminal window and run:
 
 ```
 kubectl port-forward svc/ml-pipeline-ui -n kubeflow 8080:80
