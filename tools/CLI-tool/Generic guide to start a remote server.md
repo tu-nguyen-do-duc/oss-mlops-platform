@@ -18,5 +18,5 @@ This is just a generic setup guide or checklist to ensure that you can have the 
 
 8. **SSH Connection**: With all of that setup, now you can connect to your remote computer via SSH tunnel or any software of your choice.
 
-9. **GitHub Project**: Once you are in, you can clone the GitHub project and continue the rest of the installation as shown in the `<guide_name>`.
+9. **GitHub Project**: Once you are in, you can clone the GitHub project and continue the rest of the installation as shown in the [Installation guide](./tools/CLI-tool/Installations%2Csetups%2Cand%20usage)
 
