@@ -539,6 +539,23 @@ To test the source code-based pipelines:
 
 If everything is in order then by pushing to your working repository GitHub should order the runner on your computer to start the run on your local computer's Kubeflow setup.
 
+### Verifying the run and debugging
+                                                            
+1. Checking GitHub Actions UI:
+    - Open the working reposotory and click on Actions tab
+    - Find the latest run and check if it has started succesfully
+    - If the run failed, open it to check the logs and debug
+
+2. Checking Kubeflow Pipeline UI:
+    - Open the Kubeflow instance on [localhost:8080](http://localhost:8080/)
+    - Navigate to the Pipelines tab and find the pipeline run triggered by your latest commit
+    - Monitor the execution and logs to confirm it is running as expected
+
+3. If the run hasn't started:
+    - Verify that the commit was pushed to the correct branch
+    - Ensure the GitHub Actions workflow is configured correctly
+    - Check the logs in GitHub Actions UI and Kubeflow UI for error messages
+
 ### Possible problems
 If commit fails due to the wrong python version, go to .github/workflows ->  run-notebook-in-development-environment.yml, and delete this part of the code: 
 ```
