@@ -550,7 +550,7 @@ If everything is in order then by pushing to your working repository GitHub shou
     - Find the latest run and check if it has started succesfully
     - If the run failed, open it to check the logs and debug
   
-![GitHub Actions tab](../resources/screenshots/GitHubAction.png)
+![GitHub Actions tab](../resources/screenshots/GitHubActionSuccess.png)
 
 2. Checking Kubeflow Pipeline UI:
     - Open the Kubeflow instance on [localhost:8080](http://localhost:8080/)
