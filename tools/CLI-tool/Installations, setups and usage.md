@@ -423,7 +423,7 @@ kubectl -n mlflow port-forward svc/mlflow 5000:5000
 Open a new terminal window and run:
 
 ```
-kubectl port-forward svc/ml-pipeline-ui -n kubeflow 8080:80
+kubectl -n kubeflow port-forward svc/ml-pipeline-ui 8080:80
 ```
 
 After this step you should be able to connect to the Kubeflow interface from http://localhost:8080/
