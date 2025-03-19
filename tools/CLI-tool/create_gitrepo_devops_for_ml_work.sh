@@ -17,7 +17,7 @@ fi
 read -p "Enter the name of the config repo (default: Config-%username-%Y-%m-%d-%tag): " repo_name
 
 if [[ -z "$repo_name" ]]; then
-    git_username=$(git config --global user.name)
+    git_username=$(git config --global user.name | sed 's/ /-/g; s/[\d128-\d255]//g')
     repo_tag=$(openssl rand -hex 4)
     repo_name="Config-${git_username}-$(date +'%Y-%m-%d')-${repo_tag}"
 
