@@ -184,11 +184,13 @@
        ```bash
        free -h
        ```
-             
+
+  Continue with the Linux installation beneath after this.
+  
   </details>
   
   <details>
-    <summary>For Linux - Ubuntu </summary>
+    <summary>For Linux - Ubuntu (and WSL)</summary>
     
   - **Important:** Your Ubuntu installation **must be at least version 24 LTS**.  
     _If your current version is older, please upgrade to meet this minimum requirement._
