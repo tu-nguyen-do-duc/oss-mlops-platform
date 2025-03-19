@@ -554,7 +554,7 @@ If everything is in order then by pushing to your working repository GitHub shou
 
 2. Checking Kubeflow Pipeline UI:
     - Open the Kubeflow instance on [localhost:8080](http://localhost:8080/)
-    - Navigate to the Pipelines tab and find the pipeline run triggered by your latest commit
+    - Navigate to the runs tab and find the pipeline run triggered by your latest commit
     - Monitor the execution and logs to confirm it is running as expected
   
 ![Kubeflow Pipeline UI](../resources/screenshots/succesfulRun.png)
