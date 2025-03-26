@@ -454,6 +454,9 @@ A bit of notebook troubleshooting. Depending on the environment you are running 
 
 ## Step 3: Creating the repositories and setting up the CI/CD pipeline with the tool
 
+### How it works
+
+You need an GitHub organization where you have the permissions to create and modify repositories and adding organizational secrets (Organization owner for example). The tool creates the configuration repository locally first and then pushes the created repository to GitHub. When creating the configuration repository the tool also asks for environmental variables which are setup as organizational level secrets. The working repository is then created from the local configuration repository. This means that if you don't have the configuration created by the tool locally then you need to clone it to local folder where are you trying to run the tool from.
 
 ### Run the tool on the terminal
 -  Navigate to the same level where the oss-mlops-project folder (but have to be outside of a repo folder) is on and run
