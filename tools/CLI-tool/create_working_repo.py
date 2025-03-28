@@ -64,20 +64,26 @@ def fork_repo(repo_name: str, org_name):
     version = subprocess.run(["gh", "--version"], capture_output=True, text=True)
 
     if "2.4.0" in version.stdout:
-        subprocess.run(
-            f"gh repo fork {org_name}/{repo_name} --clone --remote-name {working_repo_name} --org {org_name}",
-            shell=True,
-        )
+        subprocess.run(f'gh repo fork {org_name}/{repo_name} --clone --remote-name {working_repo_name} --org {org_name}', shell=True,check=True)
     else:
-        subprocess.run(
-            f'gh repo fork {org_name}/{repo_name} --clone --fork-name "{working_repo_name}" --org {org_name}',
-            shell=True,
-        )
-        os.chdir(working_repo_name)
-        subprocess.run(["git", "checkout", "-b", "staging", "origin/staging"])
-        subprocess.run(["git", "checkout", "-b", "production", "origin/production"])
-        subprocess.run(["git", "checkout", "development"])
-        os.chdir("../")
+        response = subprocess.run(f'gh repo fork {org_name}/{repo_name} --clone --fork-name "{working_repo_name}" --org {org_name}', shell=True)
+        if (response.returncode == 0):
+            #this is unecessary cause the response should catch this error already but on the off chance it not ;>?
+            try:
+                os.chdir(working_repo_name)
+            except FileNotFoundError :
+                print(f"{working_repo_name} does not exist")
+                exit(1)
+            subprocess.run(["git", "checkout", "-b", "staging", "origin/staging"])
+            subprocess.run(["git", "response =checkout", "-b", "production", "origin/production"])
+            subprocess.run(["git", "checkout", "development"])
+            os.chdir("../")
+        else:
+            print(response)
+            print()
+            print(f"Maybe {repo_name} doesn't exist both in local and remote repo of {org_name}?")
+            exit(1)
+
 
         # This option was for the older versions of GH in order to clone the forked repo
 
