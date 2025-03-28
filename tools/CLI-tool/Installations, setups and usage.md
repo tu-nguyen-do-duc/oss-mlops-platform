@@ -1,13 +1,8 @@
-# Starting a run on local ML-OPS Platform
+# Installations, setups and usage
 
 **🚀 [Checking all necessary pre-installments](#step-0-checking-all-necessary-pre-installments)**   
 
 **🚧 [Clone the main project repository](#clone-the-main-repository-to-your-local-folder)**
-
-**🔑 [Create SSH key](#create-ssh-key)**
-
-**🔐 [Add SSH key to GitHub](#add-ssh-key-to-the-github)**  
-*Authenticate with GitHub:* ([link](#authenticate-with-github))
 
 **⚙️ [Step 1: Installing local ML-OPS Platform](#step-1-installing-local-ml-ops-platform)**  
 *Troubleshooting the local cluster:* ([link](#some-problem-solving-with-the-local-cluster))
@@ -17,11 +12,13 @@
 
 **📁 [Step 3: Creating repositories & Setting up the CI/CD Pipeline](#step-3-creating-the-repositories-and-setting-up-the-cicd-pipeline-with-the-tool)**
 
-**🤖 [Step 4: Installing GitHub Actions Runner](#step-4-installing-github-actions-runner)**
+**🤖 [Step 4: Installing GitHub Actions Runner](#step-4-enabling-github-actions-and-installing-github-actions-runner)**
 
-**🏁 [Step 5: Starting the run on local ML-OPS Platform](#step-5-starting-the-run-on-local-ml-ops-platform)**  
+**🏁 [Step 5: Starting the run on local ML-OPS Platform](#step-5-starting-runs-on-the-ml-ops-platform-instances)**  
 *Including Possible Problems:* ([link](#possible-problems))
 ******
+
+![MLOps platform Setup diagram](../resources/diagrams/MLOpsPlatformSetup.png)
 
 ## Step 0: Checking all necessary pre-installments:
 
@@ -31,8 +28,10 @@
   <summary>For Windows - before Ubuntu installation</summary>
 
   - Windows 10 or higher
-  - At least 20GB of free disk space
-  - Enable WSL & Install Ubuntu
+  - At least 20GB of free disk space  
+  - **Enable WSL & Install Ubuntu in order of following steps:**
+    
+- **Verify WSL is Enabled:**
 
   <aside>
   
@@ -94,9 +93,11 @@
 
     - If Ubuntu does not appear in the list
       1. Open Microsoft Store
-      2. Search for Ubuntu - Install
-      3. Launch the distribution from the Start Menu
-      4. Complete the initial setup by creating a UNIX username and password
+      2. Search for Ubuntu - Install  
+  Your Ubuntu installation **must be at least version 24 LTS**.  
+    _If your current version is older, please upgrade to meet this minimum requirement._  
+      4. Launch the distribution from the Start Menu
+      5. Complete the initial setup by creating a UNIX username and password
 
   - **Install Docker Desktop**
 
@@ -164,37 +165,35 @@
 
        ```bash
        [wsl2]
-       memory=4GB
-       # Limits the WSL 2 VM to 4 GB of RAM *** (adjust as needed) ***
-
-       processors=2
-       # Allocates 2 virtual processors
-       
-       swap=2GB
-       # Sets a 2 GB swap file (optional)
-       # allocate more RAM as needed…
+       memory=10GB
+       # Limits the WSL 2 VM to 10 GB of RAM *** (adjust as needed) ***
        ```
 
   - **If `.wslconfig` file does not exist:**
-    1. Create a `.wslconfig` file in your Windows home directory (`C:\Users\<YourUsername>\`).
+    1. Create a `.wslconfig` file in your Windows home directory in PowerShell with:
+      ```bash
+        notepad $env:USERPROFILE\.wslconfig
+      ```    
     2. Open the newly created `.wslconfig` file and add the following configuration:
-
        ```bash
        [wsl2]
-       memory=4GB
-       # Limits the WSL 2 VM to 4 GB of RAM *** (adjust as needed) ***
-
-       processors=2
-       # Allocates 2 virtual processors
-
-       swap=2GB
-       # Sets a 2 GB swap file (optional)
-       # allocate more RAM as needed…
+       memory=10GB
+       # Limits the WSL 2 VM to 10 GB of RAM *** (adjust as needed) ***
+       ```      
+    3. You can check the that the config file is working by using the following command on the Linux terminal and reading the `Mem total` cell:
+       ```bash
+       free -h
        ```
+
+  Continue with the Linux installation beneath after this.
+  
   </details>
   
   <details>
-    <summary>For Linux - Ubuntu</summary>
+    <summary>For Linux - Ubuntu (and WSL)</summary>
+    
+  - **Important:** Your Ubuntu installation **must be at least version 24 LTS**.  
+    _If your current version is older, please upgrade to meet this minimum requirement._
 
   - **Check if Git is installed:**
 
@@ -210,6 +209,7 @@
       sudo apt update
       sudo apt install git -y
       ```
+      
 - **Install Additional Tools - Run all of the following commands in your WSL (Ubuntu) terminal**
 
   - **Ensure curl is installed**
@@ -226,7 +226,7 @@
       sudo apt install gh -y
       ```
 
-  - **Install Python (3.6 or later) & pip:**
+  - **Install Python (3.11 or later) & pip:**
 
       ```bash
       sudo apt update
@@ -251,6 +251,25 @@
       
       # Move it to your user's executable PATH
       sudo mv ./kubectl /usr/local/bin/
+      ```
+  - **Install Kind and kustomize (as of Feb 2025 the platform setup fails with this for Linux and a manual install is recommended):**
+   
+      ```bash
+      curl -Lo ./kind https://kind.sigs.k8s.io/dl/v0.14.0/kind-linux-amd64
+      chmod +x ./kind
+      sudo mv ./kind /usr/local/bin/kind
+      ```
+
+      ```bash
+      curl -s "https://raw.githubusercontent.com/kubernetes-sigs/kustomize/master/hack/install_kustomize.sh" | bash -s -- 5.2.1
+      chmod +x ./kustomize
+      sudo mv ./kustomize /usr/local/bin/kustomize
+      ```
+      You can verify the installation:
+
+      ```bash
+      kind version
+      kustomize version
       ```
 
   - **Install Jupyter Notebook using pip:**
@@ -283,7 +302,7 @@ brew install git
 ```
 brew install gh
 ```
-- Python (3.6 or later)
+- Python (3.11 or later)
 ```
 brew install python
 ```
@@ -325,7 +344,7 @@ git clone https://github.com/Softala-MLOPS/oss-mlops-platform.git
 ```
 
 
-### Set your GitHub credentials
+### Set your GitHub credentials (leave in the quotation marks they are required)
 ```
 git config --global user.name "Your Name"
 git config --global user.email "your.email@example.com"
@@ -366,6 +385,8 @@ Checking the status of the pods:
 kubectl get pods --all-namespaces
 ```
 
+![Pods running](../resources/screenshots/podsRunning.png)
+
 Ideally all the pods should be running
 
 ### Some problem solving with the local cluster
@@ -394,13 +415,15 @@ Every time you start up the cluster you have to portforward the ports from insid
 
 ### Forward the ports
 
-run two commands each in separate terminal window:
+Run in the same terminal window: 
 ```
 kubectl -n mlflow port-forward svc/mlflow 5000:5000
 ```
 
+Open a new terminal window and run:
+
 ```
-kubectl port-forward svc/ml-pipeline-ui -n kubeflow 8080:80
+kubectl -n kubeflow port-forward svc/ml-pipeline-ui 8080:80
 ```
 
 After this step you should be able to connect to the Kubeflow interface from http://localhost:8080/
@@ -420,10 +443,20 @@ For MacOs and Windows (WSL):
 ```
 jupyter notebook
 ```
+
+A bit of notebook troubleshooting. Depending on the environment you are running the notebook from the environment might not recognize bash in the very first cell and you might want to try to delete the '%%bash' and add '!' in front of the 'pip install...':
+
+```
+!pip install kfp~=1.8.14
+```
+
 ******
 
 ## Step 3: Creating the repositories and setting up the CI/CD pipeline with the tool
 
+### How it works
+
+You need an GitHub organization where you have the permissions to create and modify repositories and adding organizational secrets (Organization owner for example). The tool creates the configuration repository locally first and then pushes the created repository to GitHub. When creating the configuration repository the tool also asks for environmental variables which are setup as organizational level secrets. The working repository is then created from the local configuration repository. This means that if you don't have the configuration created by the tool locally then you need to clone it to local folder where are you trying to run the tool from.
 
 ### Run the tool on the terminal
 -  Navigate to the same level where the oss-mlops-project folder (but have to be outside of a repo folder) is on and run
@@ -437,20 +470,40 @@ oss-mlops-platform/tools/CLI-tool/create_gitrepo_devops_for_ml_work.sh
 - Please use a naming convetion for config repo and working repos  (f.ex. `confJames` and `workJames`) 
 3. Create both configuration and working repositories (option 4) 
 4. Interactively create config (option 1)
-5. Use default Kubeflow endpoin
+5. Use default Kubeflow endpoint
 6. Use default Kubeflow username
 7. Use deafult Kubeflow password
-8. Do not add emote private key 
-9. Do not specify remote cluster IP
-10. Do not add remote cluster name 
-11. Do not paste the secret 
+8. You can leave remote private key empty 
+9. You don't have to specify remote cluster IP
+10. You can leave remote cluster username empty 
+11. GitHub asks for pasting secrets, you can skip these with `enter` if you were leaving previous steps empty 
 12. Enter the name for working repository
-  
+
+### Configuration File
+
+The setup script asks you about configuring GitHub secrets using a config.yaml file. You can choose from options:
+
+1. Create a new configuration file interactively. (Steps 4-11 above)
+2. You can use an existing config.yaml inputed by giving a path to it. (For example one interactively and modified by hand)
+
+Example config.yaml:
+```
+KUBEFLOW_ENDPOINT: "http://localhost:8080"
+KUBEFLOW_USERNAME: "user@example.com"
+KUBEFLOW_PASSWORD: "12341234"
+REMOTE_CLUSTER_SSH_PRIVATE_KEY_PATH: "your/ssh/key/file/path"
+REMOTE_CLUSTER_SSH_IP: "192.168.1.1"
+REMOTE_CLUSTER_SSH_USERNAME: "user"
+```
+
+The scripts sets the secrets on the GitHub organizational level. You can set repository level secrets that take precident over organizational level ones if needed.
+If a non-exact path for the SSH key file is passed, the script will search for the file containing the SSH key across the entire user home directory. This can be very slow on a populated drive (e.g. running the install script on bare metal Linux or MacOS).
+
   ******
 
-## Step 4: Installing GitHub Actions runner
+## Step 4: Enabling GitHub Actions and Installing GitHub Actions runner
 
-You also need a local-hosted GitHub Actions runner which is provided by GitHub. The runner is bound to a single GitHub organization or a single repository. It can be changed later, see note at the end of this step.
+After the repositories are made you may need to enable the GitHub Actions for the working repository. This can be done from the GitHub site by navigating to the working repository and it's Actions tab and clicking the big green button. You also need a local-hosted GitHub Actions runner which is provided by GitHub. The runner is bound to a single GitHub organization or a single repository. It can be changed later, see note at the end of this step.
 
 1. Navigate to your working repo's `Settings` in GitHub web page.
 2. Open the `Actions` dropdown menu from the left side of the page under Code and automation.
@@ -471,11 +524,50 @@ You can restart the runner after the next computer restart by navigating to the 
 
 If you need to change the repository runners is connected to, you need to either locate to he repository/organization the runner is connected to in GitHub site and remove it (GitHub will give you the script for it) OR delete the *hidden* `.runner` file in the `actions-runner/` folder and redo the step with the new token. *Also do note the runner OS version, don't be like me and try to use the Windows version on Linux.*
 
+**Post setup**
+
+![Tooling diagram](../resources/diagrams/toolingDiagram.png)
+
+The repository and CI/CD pipelines look like this after the default configuration installation. The staging branch is identical to the production branch. The default files can be found and changed in [CLI-tool/files/](./files/) folder.
+
 ******
 
-## Step 5: Starting the run on local ML-OPS platform
+## Step 5: Starting runs on the ML-OPS platform instances 
 
-If everything is in order then by pushing to your working repository GitHub should order the runner on your computer to start the run on your computer's Kubeflow setup.
+To test the notebook-based pipelines: 
+- Make a commit that modifies a file in the notebook folder on the choosen branch
+- The pipeline will start by executing the notebook-based workflow
+
+To test the source code-based pipelines:
+- Make a commit in a scr folder that modifies Python files on the choosen branch
+- The pipeline will start by executing the source code-based workflow
+
+
+> If the change is made on the development branch, it will trigger a run on the local installation <br>
+> If the change is on the staging or production branch, it will trigger a run on the full installation
+
+If everything is in order then by pushing to your working repository GitHub should order the runner on your computer to start the run on your local computer's Kubeflow setup.
+
+### Verifying the run and debugging
+                                                            
+1. Checking GitHub Actions UI:
+    - Open the working reposotory and click on Actions tab
+    - Find the latest run and check if it has started succesfully
+    - If the run failed, open it to check the logs and debug
+  
+![GitHub Actions tab](../resources/screenshots/GitHubActionSuccess.png)
+
+2. Checking Kubeflow Pipeline UI:
+    - Open the Kubeflow instance on [localhost:8080](http://localhost:8080/)
+    - Navigate to the runs tab and find the pipeline run triggered by your latest commit
+    - Monitor the execution and logs to confirm it is running as expected
+  
+![Kubeflow Pipeline UI](../resources/screenshots/succesfulRun.png)
+
+3. If the run hasn't started:
+    - Verify that the commit was pushed to the correct branch
+    - Ensure the GitHub Actions workflow is configured correctly
+    - Check the logs in GitHub Actions UI and Kubeflow UI for error messages
 
 ### Possible problems
 If commit fails due to the wrong python version, go to .github/workflows ->  run-notebook-in-development-environment.yml, and delete this part of the code: 
