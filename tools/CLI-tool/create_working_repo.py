@@ -33,9 +33,34 @@ def get_working_repo_name(config_repo_name: str):
     return typer.prompt("Enter unique name for your working repository:", type=str)
 
 
+def check_working_repo_name_unique(org_name: str, working_repo_name: str):
+    try:
+        # Check if the repo ain't found
+        return (
+            json.loads(
+                subprocess.run(
+                    ["gh", "api", f"repos/{org_name}/{working_repo_name}"],
+                    capture_output=True,
+                    text=True,
+                ).stdout
+            )["status"]
+            == "404"
+        )
+    except:
+        # Yeah we're probably OK?
+        return True
+
+
 def fork_repo(repo_name: str, org_name):
     """Fork the repository using GitHub CLI."""
     working_repo_name = get_working_repo_name(repo_name)
+
+    while not check_working_repo_name_unique(org_name, working_repo_name):
+        typer.echo(
+            f"The repository name {working_repo_name} is already present in the organization! Please provide a different one."
+        )
+        working_repo_name = get_working_repo_name(repo_name)
+
     version = subprocess.run(["gh", "--version"], capture_output=True, text=True)
 
     if "2.4.0" in version.stdout:
