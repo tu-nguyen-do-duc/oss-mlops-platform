@@ -12,9 +12,9 @@
 
 **📁 [Step 3: Creating repositories & Setting up the CI/CD Pipeline](#step-3-creating-the-repositories-and-setting-up-the-cicd-pipeline-with-the-tool)**
 
-**🤖 [Step 4: Installing GitHub Actions Runner](#step-4-installing-github-actions-runner)**
+**🤖 [Step 4: Installing GitHub Actions Runner](#step-4-enabling-github-actions-and-installing-github-actions-runner)**
 
-**🏁 [Step 5: Starting the run on local ML-OPS Platform](#step-5-starting-the-run-on-local-ml-ops-platform)**  
+**🏁 [Step 5: Starting the run on local ML-OPS Platform](#step-5-starting-runs-on-the-ml-ops-platform-instances)**  
 *Including Possible Problems:* ([link](#possible-problems))
 ******
 
@@ -184,11 +184,13 @@
        ```bash
        free -h
        ```
-             
+
+  Continue with the Linux installation beneath after this.
+  
   </details>
   
   <details>
-    <summary>For Linux - Ubuntu </summary>
+    <summary>For Linux - Ubuntu (and WSL)</summary>
     
   - **Important:** Your Ubuntu installation **must be at least version 24 LTS**.  
     _If your current version is older, please upgrade to meet this minimum requirement._
@@ -383,6 +385,8 @@ Checking the status of the pods:
 kubectl get pods --all-namespaces
 ```
 
+![Pods running](../resources/screenshots/podsRunning.png)
+
 Ideally all the pods should be running
 
 ### Some problem solving with the local cluster
@@ -411,13 +415,15 @@ Every time you start up the cluster you have to portforward the ports from insid
 
 ### Forward the ports
 
-run two commands each in separate terminal window:
+Run in the same terminal window: 
 ```
 kubectl -n mlflow port-forward svc/mlflow 5000:5000
 ```
 
+Open a new terminal window and run:
+
 ```
-kubectl port-forward svc/ml-pipeline-ui -n kubeflow 8080:80
+kubectl -n kubeflow port-forward svc/ml-pipeline-ui 8080:80
 ```
 
 After this step you should be able to connect to the Kubeflow interface from http://localhost:8080/
@@ -448,6 +454,9 @@ A bit of notebook troubleshooting. Depending on the environment you are running 
 
 ## Step 3: Creating the repositories and setting up the CI/CD pipeline with the tool
 
+### How it works
+
+You need an GitHub organization where you have the permissions to create and modify repositories and adding organizational secrets (Organization owner for example). The tool creates the configuration repository locally first and then pushes the created repository to GitHub. When creating the configuration repository the tool also asks for environmental variables which are setup as organizational level secrets. The working repository is then created from the local configuration repository. This means that if you don't have the configuration created by the tool locally then you need to clone it to local folder where are you trying to run the tool from.
 
 ### Run the tool on the terminal
 -  Navigate to the same level where the oss-mlops-project folder (but have to be outside of a repo folder) is on and run
@@ -538,6 +547,27 @@ To test the source code-based pipelines:
 > If the change is on the staging or production branch, it will trigger a run on the full installation
 
 If everything is in order then by pushing to your working repository GitHub should order the runner on your computer to start the run on your local computer's Kubeflow setup.
+
+### Verifying the run and debugging
+                                                            
+1. Checking GitHub Actions UI:
+    - Open the working reposotory and click on Actions tab
+    - Find the latest run and check if it has started succesfully
+    - If the run failed, open it to check the logs and debug
+  
+![GitHub Actions tab](../resources/screenshots/GitHubActionSuccess.png)
+
+2. Checking Kubeflow Pipeline UI:
+    - Open the Kubeflow instance on [localhost:8080](http://localhost:8080/)
+    - Navigate to the runs tab and find the pipeline run triggered by your latest commit
+    - Monitor the execution and logs to confirm it is running as expected
+  
+![Kubeflow Pipeline UI](../resources/screenshots/succesfulRun.png)
+
+3. If the run hasn't started:
+    - Verify that the commit was pushed to the correct branch
+    - Ensure the GitHub Actions workflow is configured correctly
+    - Check the logs in GitHub Actions UI and Kubeflow UI for error messages
 
 ### Possible problems
 If commit fails due to the wrong python version, go to .github/workflows ->  run-notebook-in-development-environment.yml, and delete this part of the code: 

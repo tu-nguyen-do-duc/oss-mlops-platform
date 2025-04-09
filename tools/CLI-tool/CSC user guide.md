@@ -75,4 +75,5 @@ The rest of the setup will then be universal!
 
 **\---------End\---------**
 
-12. Follow the rest of the tutorial in `Starting a local run guide.md`
+12. Follow the rest of the tutorial in [Installation guide](https://github.com/Softala-MLOPS/oss-mlops-platform/blob/main/tools/CLI-tool/Installations%2C%20setups%20and%20usage.md#installations-setups-and-usage)
+

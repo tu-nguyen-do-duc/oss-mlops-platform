@@ -5,10 +5,11 @@ import sys
 sys.path.append('../src')
 from pipelines.pipeline_definitions.pipeline_definition import pipeline
 from pipelines.pipeline_arg.pipeline_arg import arguments
+from pipelines.client_connection.client_connection import client_connect
 
 def submit_pipeline():
 
-    client = kfp.Client() 
+    client = client_connect() 
     
 
     # Define your experiment and run name
@@ -23,6 +24,7 @@ def submit_pipeline():
         experiment_name=experiment_name,
         mode=kfp.dsl.PipelineExecutionMode.V2_COMPATIBLE,
         enable_caching=False,
+        namespace="kubeflow-user-example-com"
     )
 
 if __name__ == "__main__":

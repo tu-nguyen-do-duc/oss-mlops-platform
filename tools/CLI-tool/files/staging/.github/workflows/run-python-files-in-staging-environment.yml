@@ -22,7 +22,7 @@ jobs:
         python -m pip install --upgrade pip
         pip install pandas
         pip install numpy
-        pip install kfp
+        pip install kfp~=1.8.14
         pip install scikit-learn
         
     - name: Connect to remote server and run the Python files
