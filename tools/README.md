@@ -66,4 +66,4 @@ Documentation needed:
 ------
 
 
-![MLOPS Diagram](https://github.com/Softala-MLOPS/oss-mlops-platform/blob/main/tools/MLOPS%20Diagram.png)
+![MLOPS Diagram](./resources/diagrams/MLOPSDiagram.png)
