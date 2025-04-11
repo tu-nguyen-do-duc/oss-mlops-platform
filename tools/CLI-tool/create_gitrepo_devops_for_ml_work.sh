@@ -1,7 +1,9 @@
 #!/bin/bash
 set -e
 
-# Navigate to the directory containing the script
+# Navigate to the directory containing the script:
+# ${BASH_SOURCE[0]} - resolve full file path of script
+# "$(dirname "${BASH_SOURCE[0]}")" - extract directory portion from full file path of script
 cli_tool_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 # Install the requirements
@@ -9,6 +11,7 @@ python3 -m venv venv
 source venv/bin/activate
 python3 -m pip install -r "${cli_tool_dir}/requirements.txt"
 
+# Check if script is run outside of git repository
 if ! python3 "${cli_tool_dir}/check_git_repo.py"; then
     echo "The script must be run from outside any git repository to create working and configuration repositories correctly."
     exit 1
