@@ -241,8 +241,10 @@
       ```
 
   - **Install Kubernetes CLI (kubectl):**
+
  
     Version of atleast 1.28 of Kubernetes needed.
+
 
       ```bash
       # Download the latest Kubectl
@@ -315,6 +317,7 @@ pip3 --version
 ```
 
 - Kubernetes CLI (atleast 1.28 required)
+
 ```
 brew install kubectl
 ```
@@ -401,6 +404,7 @@ kubectl delete pod -n <namespace> <pod_name>
 
 The guides for this are scattered in here ./oss-mlops-platform/tree/main/tutorials/local_deployment but they predate the installer which is prefered to be used.
 
+
 2. The run might fail at deploy-model step due to wine-quality inference service being already running. This can be solved by deleting the service:
 
 ```
@@ -462,7 +466,8 @@ You need an GitHub organization where you have the permissions to create and mod
 
 ### Run the tool on the terminal
 -  Navigate to the same level where the oss-mlops-project folder (but have to be outside of a repo folder) is on and run
-  -  REASON: The tool will create repos in the folder you run the command in and you don't want to create git tracked folders within git tracked folder
+
+-  REASON: The tool will create repos in the folder you run the command in and you don't want to create git tracked folders within git tracked folder
     
 ```
 oss-mlops-platform/tools/CLI-tool/create_gitrepo_devops_for_ml_work.sh

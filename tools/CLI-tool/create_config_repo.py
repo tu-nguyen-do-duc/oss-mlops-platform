@@ -171,25 +171,28 @@ def copy_files():
         typer.echo("Failed to create branch 'staging'. Exiting...")
         sys.exit(1)
 
-#for deleting the main branch
-def delete_extra_branch():
+#finding the ex main branch to be deleted
+def find_ex_main_branch():
     output = subprocess.run("git remote show origin", text=True,shell=True, capture_output=True)
     existing_branches = output.stdout.splitlines()
-    branch_to_be_delete = ""
+    ex_main_branch = ""
     for branch in existing_branches:
         #expected output = HEAD branch: branch_name
         #current head/default branch -> master
         if "HEAD" in branch:
-            branch_to_be_delete = branch.split()[2]
-    if branch_to_be_delete:
-        subprocess.run(["git", "push", "origin", "--delete", branch_to_be_delete], capture_output=True, text=True,shell=True)
+          automate_deletion_of_master_branch
+          ex_main_branch = branch.split()[2]
+    return ex_main_branch
+        
         
 
 def set_default_branch(repo_name, org_name):
-    delete_extra_branch()
+    branch_name = find_ex_main_branch()
     """Set the default branch to development."""
     try:
         subprocess.run(f"gh api -X PATCH repos/{org_name}/{repo_name} -f default_branch=development", shell=True, capture_output=True)
+        if branch_name:
+            subprocess.run(["git", "push", "origin", "--delete", branch_name], capture_output=True, text=True)
     except subprocess.CalledProcessError as e:
         typer.echo(f"Error setting default branch: {e.stderr}")
     except FileNotFoundError:
