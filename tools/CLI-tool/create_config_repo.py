@@ -180,7 +180,6 @@ def find_ex_main_branch():
         #expected output = HEAD branch: branch_name
         #current head/default branch -> master
         if "HEAD" in branch:
-          automate_deletion_of_master_branch
           ex_main_branch = branch.split()[2]
     return ex_main_branch
         
