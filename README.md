@@ -60,7 +60,8 @@ Dive into our demo examples to see the platform in action:
 - **Project Use-Cases (e2e)**:
 
   - [Fashion-MNIST MLOPS pipeline](https://github.com/OSS-MLOPS-PLATFORM/demo-fmnist-mlops-pipeline)
-
+## Using the CLI tool 
+Use the tool in your terminal to create/import config repositories or create work repositories. To get start please refer to the instructions on [Installations, setups and usage.md](../tools/CLI-tool/Installations, setups and usage.md). For deploying the platform to a remote server you can also take a look at the [Generic guide to start a remote server.md](../tools/CLI-tool/Generic guide to start a remote server.md)
 ## High-Level Architecture Overview
 
 The following diagram illustrates the architectural design of the MLOps platform:
