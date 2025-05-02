@@ -55,17 +55,17 @@ Fraunhofer Institute:
 
 Haaga-Helia University of Applied Sciences (DevOps tooling):
 
-Jukka Remes
-Aleksi Hyppönen
-Tuukka Heinonen
-Alex Kiippa
-Emilio Lehto Neira
-Thien Nguyen
-Egor Chumakov
-Alisa Dunaeva
-Nikolai Ylänne
-Prasanna Tamang Bomjan
-Tommi Lavi
+- Jukka Remes
+- Aleksi Hyppönen
+- Tuukka Heinonen
+- Alex Kiippa
+- Emilio Lehto Neira
+- Thien Nguyen
+- Egor Chumakov
+- Alisa Dunaeva
+- Nikolai Ylänne
+- Prasanna Tamang Bomjan
+- Tommi Lavi
 
 ### Special Thanks
 
