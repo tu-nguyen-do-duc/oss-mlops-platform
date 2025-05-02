@@ -20,6 +20,13 @@ Welcome to the OSS MLOps Platform, a comprehensive suite designed to streamline 
     - [`gcp_deployment/`](tutorials/gcp_deployment): A guide for a production-ready deployment of the platform to GCP.
     - [`demo_notebooks/`](tutorials/demo_notebooks): A set of Jupyter notebooks showcasing example ML pipelines.
     - [`ray/`](tutorials/ray): A guide for setting up and using [Ray](https://docs.ray.io/en/latest/index.html).
+   
+- **Tooling**
+  - [`tools/CLI-tool/`](tools/CLI-tool): A CLI-tool for creating a GitHub repositories for ML project along with guides
+    - [`Components/`](tools/CLI-tool/Components): The ML pipeline Python files for the tool to place into ML project repositories
+    - [`files/`](tools/CLI-tool/files): File structures for the tool to place into ML project repositories
+    - [`Installations, setups and usage.md`](tools/CLI-tool/Installations,%20setups%20and%20usage.md): A comprehensive guide on setting up the platform and ML project repositories that can use the platform
+
 
 - **Testing Suite**
   - [`tests/`](tests): A suite of tests designed to ensure the platform's integrity post-deployment.
@@ -60,7 +67,8 @@ Dive into our demo examples to see the platform in action:
 - **Project Use-Cases (e2e)**:
 
   - [Fashion-MNIST MLOPS pipeline](https://github.com/OSS-MLOPS-PLATFORM/demo-fmnist-mlops-pipeline)
-
+## Using the CLI tool 
+Use the tool in your terminal to create/import config repositories or create work repositories. To get start please refer to the instructions on [Installations, setups and usage.md](tools/CLI-tool/Installations,%20setups%20and%20usage.md). For deploying the platform to a remote server you can also take a look at the [Generic guide to start a remote server.md](tools/CLI-tool/Generic%20guide%20to%20start%20a%20remote%20server.md)
 ## High-Level Architecture Overview
 
 The following diagram illustrates the architectural design of the MLOps platform:

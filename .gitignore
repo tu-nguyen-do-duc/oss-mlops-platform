@@ -16,7 +16,8 @@ dist/
 .pytest_cache/
 *.ipynb_checkpoints
 __pycache__/
-
+# ignore the Python virtual environment
+venv/
 # Log files
 *.log
 
@@ -64,3 +65,5 @@ old/
 istio*
 temp/
 .platform/
+env/
+config.yaml
