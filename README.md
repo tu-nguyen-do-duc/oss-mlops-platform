@@ -95,6 +95,8 @@ Alternatively, feel free to use GitHub Issues for bugs, tasks or ideas to be dis
 
 Contact people:
 
-Harry Souris - harry.souris@silo.ai
+Jukka Remes - jukka.remes@haaga-helia.fi
 
 Joaquin Rives - joaquin.rives@silo.ai
+
+Harry Souris - harry.souris@silo.ai
